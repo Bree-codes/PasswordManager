@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class RegistrationResponse {
 
     private Long id;
