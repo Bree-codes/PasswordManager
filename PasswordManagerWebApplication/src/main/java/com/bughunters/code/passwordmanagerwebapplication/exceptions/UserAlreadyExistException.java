@@ -1,4 +1,4 @@
-package com.bughunters.code.passwordmanagerwebapplication.exceptionHandler;
+package com.bughunters.code.passwordmanagerwebapplication.exceptions;
 
 public class UserAlreadyExistException extends RuntimeException {
 
