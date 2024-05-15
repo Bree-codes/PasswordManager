@@ -45,18 +45,19 @@ public class AuthenticationService {
         user.setEmail(registrationRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 
+        /*Send the user email.*/
+
+
         //adding the new user to the database
         userRepository.save(user);
 
         //response to the user
         RegistrationResponse registrationResponse = new RegistrationResponse();
 
-        registrationResponse.setId(user.getId());
-        registrationResponse.setMessage("Registration Successful");
-        registrationResponse.setStatus(HttpStatus.OK);
+        registrationResponse.setMessage("Check Your Email For a Verification Code.");
+        registrationResponse.setStatus(HttpStatus.CREATED);
 
         return new ResponseEntity<>(registrationResponse,HttpStatus.OK);
-
     }
 
 }
