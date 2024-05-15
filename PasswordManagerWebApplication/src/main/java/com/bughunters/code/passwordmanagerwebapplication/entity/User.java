@@ -1,6 +1,6 @@
 package com.bughunters.code.passwordmanagerwebapplication.entity;
 
-import com.bughunters.code.passwordmanagerwebapplication.Models.Role;
+import com.bughunters.code.passwordmanagerwebapplication.models.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
