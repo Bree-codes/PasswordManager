@@ -15,12 +15,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Filter(name = "jwtFilterChain")
+
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class JwtFilterChain extends OncePerRequestFilter {
 
