@@ -31,13 +31,6 @@ public class AuthenticationService {
         user.setEmail(registrationRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 
-       /* //verifying that the email is registered once for a single user
-        userRepository.findByEmail(registrationRequest.getEmail()).ifPresent(
-                (user1) -> {
-                    throw new UserAlreadyExistException("The Email your entered is already in use");
-                }
-        );*/
-
         //adding the new user to the database
         userRepository.save(user);
 
