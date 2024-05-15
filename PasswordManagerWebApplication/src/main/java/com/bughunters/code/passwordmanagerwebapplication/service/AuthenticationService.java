@@ -1,12 +1,10 @@
 package com.bughunters.code.passwordmanagerwebapplication.service;
 
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
-import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationRequest;
 import com.bughunters.code.passwordmanagerwebapplication.response.RegistrationResponse;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +31,6 @@ public class AuthenticationService {
         user.setEmail(registrationRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 
-        //verifying that the email is registered once for a single user
-
-
         //adding the new user to the database
         userRepository.save(user);
 
@@ -51,3 +46,5 @@ public class AuthenticationService {
     }
 
 }
+
+

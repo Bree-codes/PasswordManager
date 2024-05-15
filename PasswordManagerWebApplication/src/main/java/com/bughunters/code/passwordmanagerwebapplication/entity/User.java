@@ -1,10 +1,13 @@
 package com.bughunters.code.passwordmanagerwebapplication.entity;
 
+import com.bughunters.code.passwordmanagerwebapplication.models.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -26,11 +29,20 @@ public class User implements UserDetails {
     private String email;
 
     private String username;
+
     private String password;
+
+    @JsonIgnore
+    private Role role;
+
+    @PrePersist
+    public void defaults(){
+        this.role = Role.USER;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority(Role.USER.toString()));
     }
 
     @Override
