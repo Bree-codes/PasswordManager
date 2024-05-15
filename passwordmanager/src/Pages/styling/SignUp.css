@@ -1,0 +1,35 @@
+.Registration-form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 400px;
+}
+.h1{
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.name{
+    font-size: 20px;
+
+
+}
+input{
+    margin-bottom: 15px;
+    font-size: 16px;
+    padding: 10px 7px;
+    width: 90%;
+    border-radius: 5px;
+    outline: none;
+}
+button{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 7px 10px;
+    width: 50%;
+    border: 0;
+    border-radius: 5px;
+    background-color: #fff;
+}
