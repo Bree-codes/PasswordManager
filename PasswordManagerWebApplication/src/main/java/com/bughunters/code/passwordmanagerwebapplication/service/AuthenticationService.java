@@ -1,6 +1,7 @@
 package com.bughunters.code.passwordmanagerwebapplication.service;
 
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationRequest;
 import com.bughunters.code.passwordmanagerwebapplication.response.RegistrationResponse;
@@ -33,11 +34,7 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 
         //verifying that the email is registered once for a single user
-        userRepository.findByEmail(registrationRequest.getEmail()).ifPresent(
-                (user1) -> {
-                    throw new UserAlreadyExistException("The Email your entered is already in use");
-                }
-        );
+
 
         //adding the new user to the database
         userRepository.save(user);
