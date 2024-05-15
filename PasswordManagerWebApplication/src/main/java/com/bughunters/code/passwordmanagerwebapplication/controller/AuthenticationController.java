@@ -4,6 +4,7 @@ import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationReq
 import com.bughunters.code.passwordmanagerwebapplication.response.RegistrationResponse;
 import com.bughunters.code.passwordmanagerwebapplication.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/password-manager/auth")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-    @Autowired
-    public AuthenticationController(AuthenticationService authenticationService1) {
-        this.authenticationService = authenticationService1;
-    }
 
     @PostMapping("/register")
     public ResponseEntity<RegistrationResponse> registerUser(

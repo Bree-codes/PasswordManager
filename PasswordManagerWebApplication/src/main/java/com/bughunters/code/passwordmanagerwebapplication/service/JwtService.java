@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -13,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+@Service
 public class JwtService {
 
     @Value("${key}")
@@ -60,5 +63,11 @@ public class JwtService {
     private SecretKey generateSecretKey(){
         byte[] bytes = Decoders.BASE64.decode(key);
         return Keys.hmacShaKeyFor(bytes);
+    }
+
+
+    public Boolean isValid(String token, UserDetails userDetails){
+        return extractExpirationDate(token).compareTo(new Date()) < 0
+                && getExtractUsername(token).equals(userDetails.getUsername());
     }
 }

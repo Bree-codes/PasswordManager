@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 public class RegistrationResponse {
 
-    private Long id;
-
     private HttpStatus status;
 
     private String message;
