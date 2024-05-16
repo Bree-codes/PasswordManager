@@ -1,1 +1,28 @@
 
+.Registration-component {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin-top: 20px;
+}
+
+.registration-form {
+    width: 25%;
+    padding: 15px 20px;
+    border: #808080 solid 1px;
+    border-radius: 20px;
+}
+
+.reg-title {
+    display: flex;
+    justify-content: end;
+    font-size: 150%;
+    width: 100%;
+    height: 100%;
+}
+
+.username, .email, .password, .confirm-password {
+    margin: 15px;
+    font-size: 130%;
+}

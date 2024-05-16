@@ -2,15 +2,15 @@ import "./styling/SignUp.css"
 import {Button, Form} from "react-bootstrap";
 export const SignUp = () => {
     return(
-        <div className="Registration-form">
+        <div className="Registration-component">
 
-            <Form>
+            <Form className={"registration-form"}>
 
-                <Form.Label>Registration Form</Form.Label>
+                <Form.Label className={"reg-title"}>Registration Form</Form.Label>
 
                 <Form.Group>
-                    <Form.Label className="name" htmlFor="name"> Username:</Form.Label>
-                    <Form.Control id="name" type="text" name="Username" placeholder="Username"/>
+                    <Form.Label className="username" htmlFor="username"> Username:</Form.Label>
+                    <Form.Control id="username" type="text" name="Username" placeholder="Username"/>
                 </Form.Group>
 
                 <Form.Group>
