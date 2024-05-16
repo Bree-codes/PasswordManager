@@ -1,4 +1,4 @@
-package com.bughunters.code.passwordmanagerwebapplication.controllerAdvice;
+package com.bughunters.code.passwordmanagerwebapplication.models;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;
