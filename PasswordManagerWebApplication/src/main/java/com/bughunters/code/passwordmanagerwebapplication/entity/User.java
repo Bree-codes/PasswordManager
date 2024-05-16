@@ -35,6 +35,10 @@ public class User implements UserDetails {
     @JsonIgnore
     private Role role;
 
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private VerificationCodes verificationCodes;
+
     @PrePersist
     public void defaults(){
         this.role = Role.USER;

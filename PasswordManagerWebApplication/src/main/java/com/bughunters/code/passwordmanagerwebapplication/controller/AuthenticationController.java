@@ -22,10 +22,9 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<RegistrationResponse> registerUser(
-            @RequestBody RegistrationRequest registrationRequest, HttpServletResponse response){
+    public ResponseEntity<RegistrationResponse> registerUser(@RequestBody RegistrationRequest registrationRequest){
         log.info("Registration Request");
-        return authenticationService.registerUser(registrationRequest, response);
+        return authenticationService.registerUser(registrationRequest);
     }
 
 }
