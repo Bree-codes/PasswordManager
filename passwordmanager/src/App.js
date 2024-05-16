@@ -1,11 +1,11 @@
 import {Route, Routes} from "react-router-dom";
 import {SignUp} from "./Pages/SignUp";
 import {Login} from "./Pages/Login";
-import {Navbar} from "./Pages/Navbar";
+import {NavigationBar} from "./Pages/NavigationBar";
 function App() {
   return (
     <div className="App">
-        <Navbar/>
+        <NavigationBar/>
         <Routes>
             <Route path="/SignUp" element={<SignUp/>}/>
             <Route path="/Login" element={<Login/>}/>
