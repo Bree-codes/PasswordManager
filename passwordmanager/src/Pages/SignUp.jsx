@@ -10,25 +10,25 @@ export const SignUp = () => {
 
                 <Form.Group>
                     <Form.Label className="name" htmlFor="name"> Username:</Form.Label>
-                    <Form.Control type="text" name="Username" placeholder="Username"/>
+                    <Form.Control id="name" type="text" name="Username" placeholder="Username"/>
                 </Form.Group>
 
                 <Form.Group>
-                    <Form.Label className="name" htmlFor="name"> Email:</Form.Label>
-                    <Form.Control type="text" name="Email" placeholder="email"/>
+                    <Form.Label className="email" htmlFor="email"> Email:</Form.Label>
+                    <Form.Control id={"email"} type="email" name="Email" placeholder="email"/>
                 </Form.Group>
 
                 <Form.Group>
-                    <Form.Label className="name" htmlFor="name"> Password:</Form.Label>
-                    <Form.Control type="text" name="password" placeholder="password"/>
+                    <Form.Label className="password" htmlFor="password"> Password:</Form.Label>
+                    <Form.Control id="password" type="password" name="password" placeholder="password"/>
                 </Form.Group>
 
                 <Form.Group>
-                    <Form.Label className="name" htmlFor="name"> Confirm password:</Form.Label>
-                    <Form.Control type="text" name="cornfirm password" placeholder="confirm password"/>
+                    <Form.Label className="confirm-password" htmlFor="confirm-password"> Confirm password:</Form.Label>
+                    <Form.Control id={"confirm-password"} type="password" name="cornfirm password" placeholder="confirm password"/>
                 </Form.Group>
 
-                <Button className={"submit"} type="submit">Submit</Button>
+                <Button id={"submit"} type="submit" >Submit</Button>
 
             </Form>
 
