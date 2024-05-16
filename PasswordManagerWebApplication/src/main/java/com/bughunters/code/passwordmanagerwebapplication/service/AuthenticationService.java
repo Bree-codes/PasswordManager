@@ -28,7 +28,7 @@ public class AuthenticationService {
     private final MailingService mailingService;
 
     public ResponseEntity<RegistrationResponse> registerUser(
-            RegistrationRequest registrationRequest, HttpServletResponse response) {
+            RegistrationRequest registrationRequest) {
 
         //check if the username already exist.
         userRepository.findByUsername(registrationRequest.getUsername()).ifPresent(
@@ -50,15 +50,17 @@ public class AuthenticationService {
         /*Send the user email.*/
         mailingService.sendMails(user);
 
+        log.info("Email sent.");
+
         //adding the new user to the database
         userRepository.save(user);
 
         //response to the user
         RegistrationResponse registrationResponse = new RegistrationResponse();
-
         registrationResponse.setMessage("Check Your Email For a Verification Code.");
         registrationResponse.setStatus(HttpStatus.CREATED);
 
+        log.info("Registration complete");
         return new ResponseEntity<>(registrationResponse,HttpStatus.OK);
     }
 
