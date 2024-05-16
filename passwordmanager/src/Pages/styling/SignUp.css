@@ -1,46 +1,28 @@
-.Registration-form{
+
+.Registration-component {
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    align-items: start;
+    margin-top: 20px;
+}
+
+.registration-form {
+    width: 25%;
+    padding: 15px 20px;
+    border: #808080 solid 1px;
+    border-radius: 20px;
+}
+
+.reg-title {
+    display: flex;
+    justify-content: end;
+    font-size: 150%;
     width: 100%;
-}
-.h1{
-    font-size: 20px;
-    text-align: center;
-    text-transform: uppercase;
-}
-.name{
-    font-size: 20px;
-
-
-}
-input{
-    margin-bottom: 15px;
-    font-size: 16px;
-    padding: 10px 7px;
-    width: 90%;
-    border-radius: 5px;
-    outline: none;
-}
-button{
-    font-size: 18px;
-    font-weight: bold;
-    margin: 10px 0;
-    padding: 7px 10px;
-    width: 50%;
-    border: 0;
-    border-radius: 5px;
-    background-color: #fff;
+    height: 100%;
 }
 
-.submit:hover {
-    background: lawngreen;
-}
-
-
-@media screen and (max-width: 455px) {
-    .Registration-form {
-    }
-
+.username, .email, .password, .confirm-password {
+    margin: 15px;
+    font-size: 130%;
 }

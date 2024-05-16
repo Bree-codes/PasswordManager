@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/password-manager/auth")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -39,5 +40,4 @@ public class AuthenticationController {
         log.info("User requesting to log in..");
         return authenticationService.loginUser(loginRequest);
     }
-
 }
