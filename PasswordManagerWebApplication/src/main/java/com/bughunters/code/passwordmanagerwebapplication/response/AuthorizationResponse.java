@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegistrationResponse {
+public class AuthorizationResponse {
+
+    private Long id;
 
     private HttpStatus status;
 

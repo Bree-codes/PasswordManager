@@ -1,7 +1,9 @@
 package com.bughunters.code.passwordmanagerwebapplication.controller;
 
+import com.bughunters.code.passwordmanagerwebapplication.request.LoginRequest;
 import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationRequest;
-import com.bughunters.code.passwordmanagerwebapplication.response.RegistrationResponse;
+import com.bughunters.code.passwordmanagerwebapplication.response.EmailVerificationResponse;
+import com.bughunters.code.passwordmanagerwebapplication.response.AuthorizationResponse;
 import com.bughunters.code.passwordmanagerwebapplication.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +20,24 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<RegistrationResponse> registerUser(@RequestBody RegistrationRequest registrationRequest){
-        log.info("Registration Request");
+    public ResponseEntity<AuthorizationResponse> registerUser(@RequestBody RegistrationRequest registrationRequest){
+        log.info("User requesting to register..");
         return authenticationService.registerUser(registrationRequest);
+    }
+
+    /*@PutMapping("/verify/email")
+    public ResponseEntity<EmailVerificationResponse> verifyEmail(
+            @RequestParam ("code") Integer code,
+            @RequestParam ("userId") Long userId
+    ){
+        log.info("email verification request.");
+
+        return null;
+    }*/
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthorizationResponse> loginUser(@RequestBody LoginRequest loginRequest){
+        log.info("User requesting to log in..");
+        return authenticationService.loginUser(loginRequest);
     }
 }

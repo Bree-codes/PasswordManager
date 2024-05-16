@@ -1,19 +1,21 @@
 .nav{
-    height: 60px;
+    height: 50px;
     position: sticky;
     top: 0;
-    background-color: gold;
+
+
 
 }
+
 nav ul{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+
 
 }
-nav ul li {
+nav ul li  {
     list-style: none;
     margin-top: 10px;
+
 }
 nav ul li a{
     display: block;
@@ -25,8 +27,65 @@ nav ul li a{
     border-radius: 8px;
 }
 .sign{
-    margin-right: -1000px;
+list-style: none;
+
 }
 .login{
+<<<<<<< HEAD
     margin-right: 20px;
+=======
+
+
+}
+
+.nav {
+    background-color: aqua;
+}
+
+.home, .home-md {
+    display: flex;
+    justify-content: start;
+    height: 100%;
+    width: 100%;
+    background-color: gold;
+}
+
+.home-icon {
+    width: 30%;
+    list-style: none;
+    margin:0 10px;
+    display: block;
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    padding: 8px;
+
+    border-radius: 8px;
+}
+
+.links {
+    display: flex;
+    justify-content: flex-end;
+    width: 70%;
+    height: 100%;
+    list-style: none;
+    margin: 0 10px;
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+@media screen and (max-width: 768px){
+    .home-md {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .home {
+        display: none;
+    }
+>>>>>>> 7f9854b73c354a472b76334a81f01378a9f664a7
 }
