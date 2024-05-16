@@ -1,18 +1,32 @@
 import "./styling/SignUp.css"
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
+import {userRegistration} from "./DataSource/backendUtils";
 export const SignUp = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
+        const registrationRequest= {
+            username:username,
+            email:email,
+            password:password
+        }
 
+        userRegistration(registrationRequest).then((respose) => {
+            //logic after registration is successful
+        }).catch((error) => {
+            //login for error
+        })
+    }
 
     return(
         <div className="Registration-component">
 
-            <Form className={"registration-form"}>
+            <Form className={"registration-form"} onSubmit={handleSubmit}>
 
                 <Form.Label className={"reg-title"}>Registration Form</Form.Label>
 
