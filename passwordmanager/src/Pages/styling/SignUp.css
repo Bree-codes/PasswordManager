@@ -1,12 +1,12 @@
 .Registration-form{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
 }
 .h1{
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     text-transform: uppercase;
 }
@@ -36,4 +36,11 @@ button{
 
 .submit:hover {
     background: lawngreen;
+}
+
+
+@media screen and (max-width: 455px) {
+    .Registration-form {
+    }
+
 }

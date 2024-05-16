@@ -5,7 +5,6 @@ export const SignUp=()=>{
             <form>
                 <fieldset>
                     <legend className="h1"> Registration Form</legend>
-
                     <label className="name" htmlFor="name"> Username:</label><br/><br/>
                     <input type="text" name="Username" placeholder="Username"/><br/>
                     <label className="name" htmlFor="name"> Email:</label><br/><br/>
