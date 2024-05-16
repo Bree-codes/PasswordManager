@@ -47,7 +47,7 @@ public class MailingService {
             /*feeding data to the email object.*/
             helper.setSubject("VERIFY YOUR EMAIL");
             helper.setText(email, true);
-            helper.setFrom("password manager");
+            helper.setFrom("brendamukami04@gmail.com");
             helper.setTo(user.getEmail());
 
             /*Send the email.*/
