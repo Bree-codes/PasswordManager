@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(req -> req.requestMatchers("/api/password-manager/auth/**")
-                        .permitAll())
+                        .permitAll().anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
                .addFilterBefore(jwtFilterChain, UsernamePasswordAuthenticationFilter.class)
                 .build();
