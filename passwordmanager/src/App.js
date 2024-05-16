@@ -1,8 +1,7 @@
-
-import './App.css';
+import {Route, Routes} from "react-router-dom";
 import {SignUp} from "./Pages/SignUp";
 import {Login} from "./Pages/Login";
-import {Route, Routes} from "react-router-dom";
+
 
 function App() {
   return (
@@ -10,7 +9,6 @@ function App() {
         <Routes>
             <Route path="/SignUp" element={<SignUp/>}/>
             <Route path="/Login" element={<Login/>}/>
-
         </Routes>
     </div>
   );
