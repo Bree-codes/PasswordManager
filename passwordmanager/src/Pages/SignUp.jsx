@@ -1,23 +1,36 @@
 import "./styling/SignUp.css"
-export const SignUp=()=>{
+import {Button, Form} from "react-bootstrap";
+export const SignUp = () => {
     return(
         <div className="Registration-form">
-            <form>
-                <fieldset>
-                    <legend className="h1"> Registration Form</legend>
-                    <label className="name" htmlFor="name"> Username:</label><br/><br/>
-                    <input type="text" name="Username" placeholder="Username"/><br/>
-                    <label className="name" htmlFor="name"> Email:</label><br/><br/>
-                    <input type="text" name="Email" placeholder="email"/><br/>
-                    <label className="name" htmlFor="name"> Password:</label><br/><br/>
-                    <input type="text" name="password" placeholder="password"/><br/>
-                    <label className="name" htmlFor="name"> Confirm password:</label><br/><br/>
-                    <input type="text" name="cornfirm password" placeholder="confirm password"/><br/>
 
-                    <button className={"submit"} type="submit">Submit</button>
-                </fieldset>
-            </form>
-        </div>
-    )
+            <Form>
 
+                <Form.Label>Registration Form</Form.Label>
+
+                <Form.Group>
+                    <Form.Label className="name" htmlFor="name"> Username:</Form.Label>
+                    <Form.Control type="text" name="Username" placeholder="Username"/>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label className="name" htmlFor="name"> Email:</Form.Label>
+                    <Form.Control type="text" name="Email" placeholder="email"/>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label className="name" htmlFor="name"> Password:</Form.Label>
+                    <Form.Control type="text" name="password" placeholder="password"/>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label className="name" htmlFor="name"> Confirm password:</Form.Label>
+                    <Form.Control type="text" name="cornfirm password" placeholder="confirm password"/>
+                </Form.Group>
+
+                <Button className={"submit"} type="submit">Submit</Button>
+
+            </Form>
+
+        </div>);
 }
