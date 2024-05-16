@@ -11,7 +11,7 @@ public class VerificationCodes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long code;
+    private Integer code;
 
     @OneToOne
     @JoinColumn(name = "code_fk")

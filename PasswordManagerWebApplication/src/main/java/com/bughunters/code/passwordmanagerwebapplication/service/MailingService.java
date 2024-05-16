@@ -25,6 +25,8 @@ public class MailingService {
 
     private final Configuration configuration;
 
+    private final VerificationCodeManagementService verificationCodeManagementService;
+
     public void sendMails(User user){
 
         MimeMessage mailMessage = javaMailSender.createMimeMessage();
@@ -35,7 +37,7 @@ public class MailingService {
 
 
             Map<String, Integer> emailDetails = new HashMap<>();
-            emailDetails.put("verificationCode", 2345);
+            emailDetails.put("verificationCode", verificationCodeManagementService.generateVerificationCode(user));
 
             /*Configuring the email freemarker template.*/
             Template emailTemplate = configuration.getTemplate("verificationMail.ftl");
