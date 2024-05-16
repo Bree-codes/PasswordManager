@@ -47,13 +47,13 @@ public class AuthenticationService {
         user.setEmail(registrationRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 
+        //adding the new user to the database
+        userRepository.save(user);
+
         /*Send the user email.*/
         mailingService.sendMails(user);
 
         log.info("Email sent.");
-
-        //adding the new user to the database
-        userRepository.save(user);
 
         //response to the user
         RegistrationResponse registrationResponse = new RegistrationResponse();
