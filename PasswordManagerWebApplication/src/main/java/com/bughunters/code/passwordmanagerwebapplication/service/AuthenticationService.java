@@ -5,16 +5,13 @@ import com.bughunters.code.passwordmanagerwebapplication.exceptions.EmailAlready
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationRequest;
-import com.bughunters.code.passwordmanagerwebapplication.response.RegistrationResponse;
-import jakarta.servlet.http.HttpServletResponse;
+import com.bughunters.code.passwordmanagerwebapplication.response.AuthorizationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Service
@@ -27,7 +24,7 @@ public class AuthenticationService {
 
     private final MailingService mailingService;
 
-    public ResponseEntity<RegistrationResponse> registerUser(
+    public ResponseEntity<AuthorizationResponse> registerUser(
             RegistrationRequest registrationRequest) {
 
         //check if the username already exist.
@@ -56,7 +53,8 @@ public class AuthenticationService {
         log.info("Email sent.");
 
         //response to the user
-        RegistrationResponse registrationResponse = new RegistrationResponse();
+        AuthorizationResponse registrationResponse = new AuthorizationResponse();
+        registrationResponse.setId(user.getId());
         registrationResponse.setMessage("Check Your Email For a Verification Code.");
         registrationResponse.setStatus(HttpStatus.CREATED);
 
