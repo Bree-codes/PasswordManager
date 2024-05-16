@@ -6,15 +6,13 @@ import com.bughunters.code.passwordmanagerwebapplication.service.AuthenticationS
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/password-manager/auth")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -24,5 +22,4 @@ public class AuthenticationController {
         log.info("Registration Request");
         return authenticationService.registerUser(registrationRequest);
     }
-
 }
