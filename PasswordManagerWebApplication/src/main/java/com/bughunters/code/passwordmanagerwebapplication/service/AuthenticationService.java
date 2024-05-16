@@ -25,17 +25,19 @@ public class AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final MailingService mailingService;
+
     public ResponseEntity<RegistrationResponse> registerUser(
             RegistrationRequest registrationRequest, HttpServletResponse response) {
 
         //check if the username already exist.
         userRepository.findByUsername(registrationRequest.getUsername()).ifPresent(
-                (user) -> { throw new UserAlreadyExistException("Username Already Exist");}
+                (user) -> { throw new UserAlreadyExistException("Username Already Exist");} /*1*/
         );
 
         /*Check if the email is already in use.*/
         userRepository.findByEmail(registrationRequest.getEmail()).ifPresent(
-                (user -> {throw new EmailAlreadyExistException("User Email Already Exist");})
+                (user -> {throw new EmailAlreadyExistException("User Email Already Exist");}) /*2*/
         );
 
         log.info("request passed the redundancy check");
@@ -46,7 +48,7 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 
         /*Send the user email.*/
-
+        mailingService.sendMails(user);
 
         //adding the new user to the database
         userRepository.save(user);
