@@ -40,8 +40,8 @@ public class User implements UserDetails {
     private VerificationCodes verificationCodes;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private RefreshTokenTable refreshTokenTable;
+    @OneToMany(mappedBy = "user")
+    private List<RefreshTokenTable> refreshTokenTable;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")

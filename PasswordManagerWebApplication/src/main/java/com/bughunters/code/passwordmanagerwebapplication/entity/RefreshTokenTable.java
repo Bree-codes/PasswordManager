@@ -17,7 +17,7 @@ public class RefreshTokenTable {
 
     private String refreshToken;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "refresh_token_fk")
     private User user;
 
