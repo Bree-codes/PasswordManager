@@ -78,7 +78,7 @@ public class AuthenticationService {
     }
 
     public ResponseEntity<AuthorizationResponse> loginUser(
-            LoginRequest loginRequest){
+            LoginRequest loginRequest, HttpServletResponse response){
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -90,6 +90,13 @@ public class AuthenticationService {
         authorizationResponse.setId(user.getId());
         authorizationResponse.setStatus(HttpStatus.OK);
         authorizationResponse.setMessage("Login successful!");
+        authorizationResponse.setToken(accessTokenManagementService.generateAccessToken(user));
+
+
+        response.addCookie(refreshCookieManagementService.generateRefreshToken(
+                userRepository.findById(user.getId()).orElseThrow(
+                        () -> new UsernameNotFoundException("User Not Found.")))); //getting and passing the user
+
 
         log.info("Login completed");
         return new ResponseEntity<>(authorizationResponse,HttpStatus.OK);
