@@ -1,19 +1,19 @@
 package com.bughunters.code.passwordmanagerwebapplication.repository;
 
+import com.bughunters.code.passwordmanagerwebapplication.entity.AccessTokenTable;
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
-import com.bughunters.code.passwordmanagerwebapplication.entity.VerificationCodes;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 @Transactional
-public interface VerificationCodeRepository extends CrudRepository<VerificationCodes, Long> {
+public interface AccessTokenRepository extends CrudRepository<AccessTokenTable, Long> {
 
-    void deleteByUser(User user);
 
-    Optional<Integer> findVerificationCodesByUser(User user);
-
+    Optional<AccessTokenTable> findAllByUserAndIsLoggedOut(User user, Boolean isLoggedOut);
 }
