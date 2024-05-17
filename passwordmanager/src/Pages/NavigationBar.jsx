@@ -1,7 +1,6 @@
 import {Link} from "react-router-dom";
 import {Container, Nav, Navbar} from "react-bootstrap";
 import "./styling/NavigationBar.css"
-
 export const NavigationBar = () => {
     return (
             <Navbar expand="md" className="bg-body-tertiary">

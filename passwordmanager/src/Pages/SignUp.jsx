@@ -1,23 +1,63 @@
 import "./styling/SignUp.css"
-export const SignUp=()=>{
+import {Button, Form} from "react-bootstrap";
+import {useState} from "react";
+import {userRegistration} from "./DataSource/backendUtils";
+export const SignUp = () => {
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const registrationRequest= {
+            username:username,
+            email:email,
+            password:password
+        }
+
+        userRegistration(registrationRequest).then((respose) => {
+            //logic after registration is successful
+        }).catch((error) => {
+            //login for error
+        })
+    }
+
     return(
-        <div className="Registration-form">
-            <form>
-                <fieldset>
-                    <legend className="h1"> Registration Form</legend>
-                    <label className="name" htmlFor="name"> Username:</label><br/><br/>
-                    <input type="text" name="Username" placeholder="Username"/><br/>
-                    <label className="name" htmlFor="name"> Email:</label><br/><br/>
-                    <input type="text" name="Email" placeholder="email"/><br/>
-                    <label className="name" htmlFor="name"> Password:</label><br/><br/>
-                    <input type="text" name="password" placeholder="password"/><br/>
-                    <label className="name" htmlFor="name"> Confirm password:</label><br/><br/>
-                    <input type="text" name="cornfirm password" placeholder="confirm password"/><br/>
+        <div className="Registration-component">
 
-                    <button className={"submit"} type="submit">Submit</button>
-                </fieldset>
-            </form>
-        </div>
-    )
+            <Form className={"registration-form"} onSubmit={handleSubmit}>
 
+                <Form.Label className={"reg-title"}>Registration Form</Form.Label>
+
+                <Form.Group>
+                    <Form.Label className="username" htmlFor="username"> Username:</Form.Label>
+                    <Form.Control id="username" type="text"
+                                  name="Username" placeholder="Username" value={username}
+                    onChange={(e) => {setUsername(e.target.value)}}/>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label className="email" htmlFor="email"> Email:</Form.Label>
+                    <Form.Control id={"email"} type="email" name="Email" placeholder="email"
+                    value={email}
+                    onChange={(e) => {setEmail(e.target.value)}}/>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label className="password" htmlFor="password"> Password:</Form.Label>
+                    <Form.Control id="password" type="password" name="password" placeholder="password"
+                    value={password} onChange={(e) => {setPassword(e.target.value)}}/>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label className="confirm-password" htmlFor="confirm-password"> Confirm password:</Form.Label>
+                    <Form.Control id={"confirm-password"} type="password" name="cornfirm password" placeholder="confirm password"/>
+                </Form.Group>
+
+                <Button id={"submit"} type="submit" >Submit</Button>
+
+            </Form>
+
+        </div>);
 }
