@@ -15,7 +15,7 @@ export const    Login=()=>{
 
                 <Form.Group>
                     <Form.Label className="password" htmlFor="password"> Password:</Form.Label>
-                    <Form.Control id="password" type="password" name="password" placeholder="password"/>
+                    <Form.Control id="passwords" type="password" name="password" placeholder="password"/>
 
                 </Form.Group>
 
