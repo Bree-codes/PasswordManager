@@ -5,6 +5,8 @@ import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationReq
 import com.bughunters.code.passwordmanagerwebapplication.response.EmailVerificationResponse;
 import com.bughunters.code.passwordmanagerwebapplication.response.AuthorizationResponse;
 import com.bughunters.code.passwordmanagerwebapplication.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +30,11 @@ public class AuthenticationController {
     @PutMapping("/verify/email")
     public ResponseEntity<EmailVerificationResponse> verifyEmail(
             @RequestParam ("code") Integer code,
-            @RequestParam ("userId") Long userId){
+            @RequestParam ("userId") Long userId,
+            HttpServletResponse response){
         log.info("email verification request.");
 
-        return authenticationService.verifyUserEmail(code, userId);
+        return authenticationService.verifyUserEmail(code, userId, response);
     }
 
     @PostMapping("/login")

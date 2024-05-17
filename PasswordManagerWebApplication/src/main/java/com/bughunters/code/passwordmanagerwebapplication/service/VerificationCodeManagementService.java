@@ -34,6 +34,13 @@ public class VerificationCodeManagementService {
         return code.getCode();
     }
 
+    public boolean matchesVerificationCode(User user, Integer verificationCode){
 
-
+       if(verificationCodeRepository.findVerificationCodesByUser(user).orElseThrow().equals(verificationCode)){
+           /*Deleting the user code.*/
+           verificationCodeRepository.deleteByUser(user);
+           return true;
+       }
+        return false;
+    }
 }
