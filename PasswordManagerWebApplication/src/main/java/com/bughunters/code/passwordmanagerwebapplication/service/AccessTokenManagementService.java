@@ -23,10 +23,15 @@ public class AccessTokenManagementService {
         accessTokenTable.setIsLoggedOut(false);
         accessTokenTable.setUser(user);
 
-        //delete any previous token.
-        accessTokenRepository.findAllByUserAndIsLoggedOutEqualsFalse(user).orElseThrow().forEach((token) -> {
-            token.setIsLoggedOut(true);
-        });
+        //set any previous token as loggedOut.
+        accessTokenRepository.findAllByUserAndIsLoggedOut(user, false).ifPresent(
+                (accessToken -> {
+                    accessToken.setIsLoggedOut(true);
+
+                    accessTokenRepository.save(accessToken);
+                })
+        );
+
 
         //save the new access token.
         //accessTokenRepository.save(accessTokenTable);
