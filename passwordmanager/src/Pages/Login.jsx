@@ -1,17 +1,27 @@
 import "./styling/login.css"
-export const Login=()=>{
+
+import {Button, Form} from "react-bootstrap";
+export const    Login=()=>{
     return(
         <div className="Login ">
-            <form>
-                <fieldset>
-                    <legend className="h1">Login</legend>
-                    <label className="name"  htmlFor="name"> Username:</label><br/>
-                    <input type="text" name="Username" placeholder="Username"/><br/>
-                    <label className="name"  htmlFor="name"> Password:</label><br/>
-                    <input type="text" name="password" placeholder="password"/><br/>
-                    <button type="submit">Login</button><br/>
-                </fieldset>
-            </form>
+            <Form className={"login-form"}>
+                <Form.Label className={"login-title"}>Login</Form.Label>
+
+                 <Form.Group>
+                     <Form.Label className="name"  htmlFor="name">  Username:</Form.Label>
+                     <Form.Control id="username" type="text"
+                                   name="Username" placeholder="Username"/>
+                 </Form.Group>
+
+
+                <Form.Group>
+                    <Form.Label className="password" htmlFor="password"> Password:</Form.Label>
+                    <Form.Control id="password" type="password" name="password" placeholder="password"/>
+
+                </Form.Group>
+
+                <Button id={"submit"} type="submit" >Submit</Button>
+            </Form>
         </div>
     )
 }
