@@ -2,17 +2,21 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.EmailAlreadyExistException;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.IncorrectVerificationCodeException;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.request.LoginRequest;
 import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationRequest;
 import com.bughunters.code.passwordmanagerwebapplication.response.AuthorizationResponse;
+import com.bughunters.code.passwordmanagerwebapplication.response.EmailVerificationResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +32,8 @@ public class AuthenticationService {
     private final MailingService mailingService;
 
     private final AuthenticationManager authenticationManager;
+
+    private final VerificationCodeManagementService verificationCodeManagementService;
 
     public ResponseEntity<AuthorizationResponse> registerUser(
             RegistrationRequest registrationRequest) {
@@ -84,6 +90,24 @@ public class AuthenticationService {
 
         log.info("Login completed");
         return new ResponseEntity<>(authorizationResponse,HttpStatus.OK);
+    }
+
+    public ResponseEntity<EmailVerificationResponse> verifyUserEmail(
+            Integer code, Long userId, HttpServletResponse response) {
+
+        /*Get the user by id.*/
+        if(!verificationCodeManagementService.matchesVerificationCode(
+                userRepository.findById(userId).orElseThrow(
+                () -> new UsernameNotFoundException("User Not Found.")), code)){
+            log.error("Incorrect verification code entered.");
+            throw new IncorrectVerificationCodeException("You Entered An Incorrect Code!");
+        }
+
+        /*Code is correct prepare and give user response.*/
+
+
+
+        return null;
     }
 }
 
