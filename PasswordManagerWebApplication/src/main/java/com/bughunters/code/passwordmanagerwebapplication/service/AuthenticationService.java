@@ -111,7 +111,7 @@ public class AuthenticationService {
 
         //user authentication response.
         EmailVerificationResponse verificationResponse = new EmailVerificationResponse();
-        verificationResponse.setToken();
+        verificationResponse.setToken("");
         verificationResponse.setMessage("Email verification successful.");
 
 
