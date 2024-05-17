@@ -35,9 +35,13 @@ public class User implements UserDetails {
     @JsonIgnore
     private Role role;
 
-    @OneToOne(mappedBy = "user")
     @JsonIgnore
+    @OneToOne(mappedBy = "user")
     private VerificationCodes verificationCodes;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private RefreshTokenTable refreshTokenTable;
 
     @PrePersist
     public void defaults(){

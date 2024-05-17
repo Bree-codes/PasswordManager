@@ -35,6 +35,8 @@ public class AuthenticationService {
 
     private final VerificationCodeManagementService verificationCodeManagementService;
 
+    private final RefreshCookieManagementService refreshCookieManagementService;
+
     public ResponseEntity<AuthorizationResponse> registerUser(
             RegistrationRequest registrationRequest) {
 
@@ -79,8 +81,7 @@ public class AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
-                        loginRequest.getPassword())
-        );
+                        loginRequest.getPassword()));
 
         User user =  userRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
         AuthorizationResponse authorizationResponse = new AuthorizationResponse();
@@ -103,7 +104,15 @@ public class AuthenticationService {
             throw new IncorrectVerificationCodeException("You Entered An Incorrect Code!");
         }
 
-        /*Code is correct prepare and give user response.*/
+        /*Code is correct prepare and give user response cookie.*/
+        response.addCookie(refreshCookieManagementService.generateRefreshToken(
+                userRepository.findById(userId).orElseThrow(
+                () -> new UsernameNotFoundException("User Not Found."))));
+
+        //user authentication response.
+        EmailVerificationResponse verificationResponse = new EmailVerificationResponse();
+        verificationResponse.setToken();
+        verificationResponse.setMessage("Email verification successful.");
 
 
 
