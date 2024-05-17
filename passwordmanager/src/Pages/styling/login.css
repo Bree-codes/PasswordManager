@@ -21,11 +21,33 @@
     height: 100%;
     align-items: center;
 }
-.submit{
-    margin-top: 10px;
+button{
+    margin-top: 20px;
     padding: 0;
 }
-.username,  .password {
+.name,  .password {
     margin: 15px;
     font-size: 130%;
 }
+.passwords{
+    margin-top: 20px;
+}
+@media screen and (max-width: 875px) {
+    .login-form {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .login-form{
+        width: 40%;
+    }
+
+}
+@media screen and (max-width: 355px) {
+    .login-form{
+        width: 40%;
+    }
+
+}
+
