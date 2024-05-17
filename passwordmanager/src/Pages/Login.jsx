@@ -1,5 +1,5 @@
 import "./styling/login.css"
-export const    Login=()=>{
+export const Login=()=>{
     return(
         <div className="Login ">
             <form>

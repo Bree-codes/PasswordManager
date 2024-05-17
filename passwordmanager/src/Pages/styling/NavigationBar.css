@@ -31,11 +31,7 @@ list-style: none;
 
 }
 .login{
-<<<<<<< HEAD
     margin-right: 20px;
-=======
-
-
 }
 
 .nav {
@@ -87,5 +83,4 @@ list-style: none;
     .home {
         display: none;
     }
->>>>>>> 7f9854b73c354a472b76334a81f01378a9f664a7
 }
