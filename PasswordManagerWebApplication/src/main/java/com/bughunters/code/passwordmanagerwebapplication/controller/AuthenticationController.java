@@ -25,15 +25,14 @@ public class AuthenticationController {
         return authenticationService.registerUser(registrationRequest);
     }
 
-    /*@PutMapping("/verify/email")
+    @PutMapping("/verify/email")
     public ResponseEntity<EmailVerificationResponse> verifyEmail(
             @RequestParam ("code") Integer code,
-            @RequestParam ("userId") Long userId
-    ){
+            @RequestParam ("userId") Long userId){
         log.info("email verification request.");
 
-        return null;
-    }*/
+        return authenticationService.verifyUserEmail(code, userId);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthorizationResponse> loginUser(@RequestBody LoginRequest loginRequest){

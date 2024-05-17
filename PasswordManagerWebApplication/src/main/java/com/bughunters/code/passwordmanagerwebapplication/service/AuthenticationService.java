@@ -7,12 +7,14 @@ import com.bughunters.code.passwordmanagerwebapplication.repository.UserReposito
 import com.bughunters.code.passwordmanagerwebapplication.request.LoginRequest;
 import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationRequest;
 import com.bughunters.code.passwordmanagerwebapplication.response.AuthorizationResponse;
+import com.bughunters.code.passwordmanagerwebapplication.response.EmailVerificationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -84,6 +86,17 @@ public class AuthenticationService {
 
         log.info("Login completed");
         return new ResponseEntity<>(authorizationResponse,HttpStatus.OK);
+    }
+
+    public ResponseEntity<EmailVerificationResponse> verifyUserEmail(Integer code, Long userId) {
+
+        /*Get the user by id.*/
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> {return new UsernameNotFoundException("User Not Found.");});
+
+
+
+        return null;
     }
 }
 
