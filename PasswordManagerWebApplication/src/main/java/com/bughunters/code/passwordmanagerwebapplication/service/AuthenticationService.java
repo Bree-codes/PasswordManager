@@ -98,12 +98,14 @@ public class AuthenticationService {
         /*Get the user by id.*/
         if(!verificationCodeManagementService.matchesVerificationCode(
                 userRepository.findById(userId).orElseThrow(
-                () -> {return new UsernameNotFoundException("User Not Found.");}), code)){
+                () -> new UsernameNotFoundException("User Not Found.")), code)){
             log.error("Incorrect verification code entered.");
             throw new IncorrectVerificationCodeException("You Entered An Incorrect Code!");
         }
 
         /*Code is correct prepare and give user response.*/
+
+
 
         return null;
     }
