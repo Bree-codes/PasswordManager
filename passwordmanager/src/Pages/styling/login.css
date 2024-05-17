@@ -32,15 +32,22 @@ button{
 .passwords{
     margin-top: 20px;
 }
-@media screen and (min-width: 540px) {
-    .Login{
-        width: 100%;
+@media screen and (max-width: 875px) {
+    .login-form {
+        width: 40%;
     }
+}
 
-   }
-@media screen and (max-width: 540px) {
-    .Login{
-        width: 100%;
+@media screen and (max-width: 380px) {
+    .login-form{
+        width: 40%;
     }
 
 }
+@media screen and (max-width: 355px) {
+    .login-form{
+        width: 40%;
+    }
+
+}
+
