@@ -5,7 +5,6 @@ import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationReq
 import com.bughunters.code.passwordmanagerwebapplication.response.EmailVerificationResponse;
 import com.bughunters.code.passwordmanagerwebapplication.response.AuthorizationResponse;
 import com.bughunters.code.passwordmanagerwebapplication.service.AuthenticationService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
