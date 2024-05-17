@@ -32,9 +32,8 @@ nav ul li a{
 
 }
 .login{
+    margin-right: 20px;
     margin-left:50px;
-
-
 }
 
 .nav {
@@ -106,6 +105,7 @@ nav ul li a{
     .home {
         display: none;
     }
+
     .sign{
 
     }

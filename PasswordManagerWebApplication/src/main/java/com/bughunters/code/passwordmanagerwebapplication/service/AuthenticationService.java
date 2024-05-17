@@ -35,6 +35,10 @@ public class AuthenticationService {
 
     private final VerificationCodeManagementService verificationCodeManagementService;
 
+    private final RefreshCookieManagementService refreshCookieManagementService;
+
+    private final AccessTokenManagementService accessTokenManagementService;
+
     public ResponseEntity<AuthorizationResponse> registerUser(
             RegistrationRequest registrationRequest) {
 
@@ -74,19 +78,25 @@ public class AuthenticationService {
     }
 
     public ResponseEntity<AuthorizationResponse> loginUser(
-            LoginRequest loginRequest){
+            LoginRequest loginRequest, HttpServletResponse response){
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
-                        loginRequest.getPassword())
-        );
+                        loginRequest.getPassword()));
 
         User user =  userRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
         AuthorizationResponse authorizationResponse = new AuthorizationResponse();
         authorizationResponse.setId(user.getId());
         authorizationResponse.setStatus(HttpStatus.OK);
         authorizationResponse.setMessage("Login successful!");
+        authorizationResponse.setToken(accessTokenManagementService.generateAccessToken(user));
+
+
+        response.addCookie(refreshCookieManagementService.generateRefreshToken(
+                userRepository.findById(user.getId()).orElseThrow(
+                        () -> new UsernameNotFoundException("User Not Found.")))); //getting and passing the user
+
 
         log.info("Login completed");
         return new ResponseEntity<>(authorizationResponse,HttpStatus.OK);
@@ -99,15 +109,24 @@ public class AuthenticationService {
         if(!verificationCodeManagementService.matchesVerificationCode(
                 userRepository.findById(userId).orElseThrow(
                 () -> new UsernameNotFoundException("User Not Found.")), code)){
-            log.error("Incorrect verification code entered.");
+            log.error("Incorrect verification code entered."); //getting and passing the user
             throw new IncorrectVerificationCodeException("You Entered An Incorrect Code!");
         }
 
-        /*Code is correct prepare and give user response.*/
+        /*Code is correct prepare and give user response cookie.*/
+        response.addCookie(refreshCookieManagementService.generateRefreshToken(
+                userRepository.findById(userId).orElseThrow(
+                () -> new UsernameNotFoundException("User Not Found.")))); //getting and passing the user
+
+        //user authentication response.
+        EmailVerificationResponse verificationResponse = new EmailVerificationResponse();
+        verificationResponse.setToken(accessTokenManagementService.generateAccessToken(
+                userRepository.findById(userId).orElseThrow(
+                () -> new UsernameNotFoundException("User Not Found."))));
+        verificationResponse.setMessage("Email verification successful.");
 
 
-
-        return null;
+        return new ResponseEntity<>(verificationResponse,HttpStatus.OK);
     }
 }
 
