@@ -2,12 +2,28 @@ import "./styling/login.css"
 
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
+import {login, } from "./DataSource/backendUtils";
 export const    Login=()=>{
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const loginUser= {
+            username:username,
+            password:password
+        }
+
+        login(loginUser).then((respose) => {
+            //logic after registration is successful
+        }).catch((error) => {
+            //login for error
+        })
+    }
     return(
         <div className="Login ">
-            <Form className={"login-form"}>
+            <Form className={"login-form"} onSubmit={handleSubmit}>
                 <Form.Label className={"login-title"}>Login</Form.Label>
 
                  <Form.Group>

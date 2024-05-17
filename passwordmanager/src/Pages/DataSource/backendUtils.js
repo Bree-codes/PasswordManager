@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as url from "url";
+
 
 
 const permittedEndPoints = axios.create({
