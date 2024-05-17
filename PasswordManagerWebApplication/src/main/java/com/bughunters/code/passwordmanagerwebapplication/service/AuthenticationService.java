@@ -115,8 +115,7 @@ public class AuthenticationService {
         verificationResponse.setMessage("Email verification successful.");
 
 
-
-        return null;
+        return new ResponseEntity<>(verificationResponse,HttpStatus.OK);
     }
 }
 
