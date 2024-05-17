@@ -37,6 +37,8 @@ public class AuthenticationService {
 
     private final RefreshCookieManagementService refreshCookieManagementService;
 
+    private final AccessTokenManagementService accessTokenManagementService;
+
     public ResponseEntity<AuthorizationResponse> registerUser(
             RegistrationRequest registrationRequest) {
 
@@ -100,18 +102,20 @@ public class AuthenticationService {
         if(!verificationCodeManagementService.matchesVerificationCode(
                 userRepository.findById(userId).orElseThrow(
                 () -> new UsernameNotFoundException("User Not Found.")), code)){
-            log.error("Incorrect verification code entered.");
+            log.error("Incorrect verification code entered."); //getting and passing the user
             throw new IncorrectVerificationCodeException("You Entered An Incorrect Code!");
         }
 
         /*Code is correct prepare and give user response cookie.*/
         response.addCookie(refreshCookieManagementService.generateRefreshToken(
                 userRepository.findById(userId).orElseThrow(
-                () -> new UsernameNotFoundException("User Not Found."))));
+                () -> new UsernameNotFoundException("User Not Found.")))); //getting and passing the user
 
         //user authentication response.
         EmailVerificationResponse verificationResponse = new EmailVerificationResponse();
-        verificationResponse.setToken("");
+        verificationResponse.setToken(accessTokenManagementService.generateAccessToken(
+                userRepository.findById(userId).orElseThrow(
+                () -> new UsernameNotFoundException("User Not Found."))));
         verificationResponse.setMessage("Email verification successful.");
 
 

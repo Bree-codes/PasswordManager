@@ -32,10 +32,9 @@ public class AccessTokenManagementService {
                 })
         );
 
-
         //save the new access token.
-        //accessTokenRepository.save(accessTokenTable);
+        accessTokenRepository.save(accessTokenTable);
 
-        return null;
+        return accessTokenTable.getToken();
     }
 }
