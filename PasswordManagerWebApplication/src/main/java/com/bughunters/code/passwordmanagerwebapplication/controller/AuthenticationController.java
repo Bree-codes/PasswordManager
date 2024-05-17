@@ -38,8 +38,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthorizationResponse> loginUser(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<AuthorizationResponse> loginUser(@RequestBody LoginRequest loginRequest
+    , HttpServletResponse response){
         log.info("User requesting to log in..");
-        return authenticationService.loginUser(loginRequest);
+        return authenticationService.loginUser(loginRequest, response);
     }
 }

@@ -10,9 +10,5 @@ public class EmailVerificationResponse {
 
     private String token;
 
-    private Long id;
-
-    private String username;
-
     private String message;
 }
