@@ -7,10 +7,12 @@ export const NavigationBar = () => {
                 <Container fluid>
                     <Navbar.Toggle aria-controls="navbarScroll"/>
                     <div className={"home-md"}>
-                        <div className={"home-icon"}><Link to="/">Home</Link></div>
+                        <div className={"home-icon"}> <ul><li><Link to="/">Home</Link></li> </ul></div>
                         <div className={"links"}>
-                            <div className="sign"><Link to="/SignUp">SignUp</Link></div>
-                            <div className="login"><Link to="/Login">Login</Link></div>
+                            <ul>
+                            <div className="sign"><li><Link to="/SignUp">SignUp</Link></li></div>
+                            <div className="login"><li><Link to="/Login">Login</Link></li></div>
+                            </ul>
                         </div>
                     </div>
                     <Navbar.Collapse id="navbarScroll">
