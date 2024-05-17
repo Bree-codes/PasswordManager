@@ -4,7 +4,7 @@ import "./styling/NavigationBar.css"
 export const NavigationBar = () => {
     return (
             <Navbar expand="md" className="bg-body-tertiary">
-                <Container fluid>
+                <Container fluid className={"container"}>
                     <Navbar.Toggle aria-controls="navbarScroll"/>
                     <div className={"home-md"}>
                         <div className={"home-icon"}> <ul><li><Link to="/">Home</Link></li> </ul></div>
