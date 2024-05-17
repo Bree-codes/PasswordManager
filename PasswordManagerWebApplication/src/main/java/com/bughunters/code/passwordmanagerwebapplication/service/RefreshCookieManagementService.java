@@ -29,7 +29,7 @@ public class RefreshCookieManagementService {
         /*generate and configure user cookie.*/
         Cookie cookie = new Cookie("_token", refreshTokenTable.getRefreshToken());
 
-        cookie.setMaxAge(60*60*24*14);
+        cookie.setMaxAge(1000 * 60 * 60 * 24 * 14);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
 
