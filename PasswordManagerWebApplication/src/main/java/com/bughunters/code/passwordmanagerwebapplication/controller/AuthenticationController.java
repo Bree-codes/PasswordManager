@@ -45,11 +45,11 @@ public class AuthenticationController {
         return authenticationService.loginUser(loginRequest, response);
     }
 
-    @PutMapping("/refresh/token/{userId}")
+    @PutMapping("/refresh/token")
     public ResponseEntity<RefreshTokenResponse> refreshAccessToken(
-            HttpServletRequest request, HttpServletResponse response, @PathVariable ("userId") Long userId){
+            HttpServletRequest request, HttpServletResponse response){
         log.info("Refresh To Refresh Access Token");
 
-        return authenticationService.refreshToken(request, response, userId);
+        return authenticationService.refreshToken(request, response);
     }
 }

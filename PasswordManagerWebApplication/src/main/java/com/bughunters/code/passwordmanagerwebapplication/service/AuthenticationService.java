@@ -133,7 +133,7 @@ public class AuthenticationService {
     }
 
     public ResponseEntity<RefreshTokenResponse> refreshToken(
-            HttpServletRequest request, HttpServletResponse response, Long userId) {
+            HttpServletRequest request, HttpServletResponse response) {
 
         /*get user refreshToken cookie*/
         String userRefreshCookie = request.getHeader("_token");
