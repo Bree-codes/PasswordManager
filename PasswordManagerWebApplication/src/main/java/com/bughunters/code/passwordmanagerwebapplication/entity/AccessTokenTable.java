@@ -3,22 +3,21 @@ package com.bughunters.code.passwordmanagerwebapplication.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
-public class RefreshTokenTable {
+public class AccessTokenTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date expirationDate;
+    private String token;
 
-    private String refreshToken;
+    private Boolean isLoggedOut;
 
-    @OneToOne
-    @JoinColumn(name = "refresh_token_fk")
+    @ManyToOne()
+    @JoinColumn(name = "access_token_fk")
     private User user;
-
 }

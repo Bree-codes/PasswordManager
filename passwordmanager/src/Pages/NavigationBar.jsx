@@ -4,15 +4,15 @@ import "./styling/NavigationBar.css"
 export const NavigationBar = () => {
     return (
             <Navbar expand="md" className="bg-body-tertiary">
-                <Container fluid>
+                <Container fluid className={"container"}>
                     <Navbar.Toggle aria-controls="navbarScroll"/>
                     <div className={"home-md"}>
                         <div className={"home-icon"}> <ul><li><Link to="/">Home</Link></li> </ul></div>
                         <div className={"links"}>
                             <ul>
-                            <div className="sign"><li><Link to="/SignUp">SignUp</Link></li></div>
-                            <div className="login"><li><Link to="/Login">Login</Link></li></div>
-                            </ul>
+                            <div className="sign"><li><Link to="/SignUp">SignUp</Link></li></div>  </ul>
+                           <ul> <div className="login"><li><Link to="/Login">Login</Link></li></div> </ul>
+
                         </div>
                     </div>
                     <Navbar.Collapse id="navbarScroll">
