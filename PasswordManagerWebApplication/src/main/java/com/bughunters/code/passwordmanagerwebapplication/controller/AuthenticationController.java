@@ -4,6 +4,7 @@ import com.bughunters.code.passwordmanagerwebapplication.request.LoginRequest;
 import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationRequest;
 import com.bughunters.code.passwordmanagerwebapplication.response.EmailVerificationResponse;
 import com.bughunters.code.passwordmanagerwebapplication.response.AuthorizationResponse;
+import com.bughunters.code.passwordmanagerwebapplication.response.RefreshTokenResponse;
 import com.bughunters.code.passwordmanagerwebapplication.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -44,6 +45,11 @@ public class AuthenticationController {
         return authenticationService.loginUser(loginRequest, response);
     }
 
-    @PutMapping
-    public ResponseEntity<>
+    @PutMapping("/refresh/token/{userId}")
+    public ResponseEntity<RefreshTokenResponse> refreshAccessToken(
+            HttpServletRequest request, HttpServletResponse response, @PathVariable ("userId") Long userId){
+        log.info("Refresh To Refresh Access Token");
+
+        return authenticationService.refreshToken(request, response, userId);
+    }
 }
