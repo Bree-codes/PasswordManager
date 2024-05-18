@@ -43,4 +43,7 @@ public class AuthenticationController {
         log.info("User requesting to log in..");
         return authenticationService.loginUser(loginRequest, response);
     }
+
+    @PutMapping
+    public ResponseEntity<>
 }
