@@ -4,7 +4,6 @@ import com.bughunters.code.passwordmanagerwebapplication.entity.RefreshTokenTabl
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.TokenRefreshmentException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.RefreshTokenRepository;
-import com.bughunters.code.passwordmanagerwebapplication.response.RefreshTokenResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.naming.AuthenticationException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -44,7 +42,7 @@ public class RefreshCookieManagementService {
         return cookie;
     }
 
-    public RefreshTokenResponse validateRefreshToken(String userRefreshCookie, HttpServletResponse response) {
+    public User validateRefreshToken(String userRefreshCookie, HttpServletResponse response) {
 
         /*Get the refreshToken details is exist.*/
         RefreshTokenTable refreshTokenTable = refreshTokenRepository.findByRefreshToken(userRefreshCookie)
@@ -60,8 +58,6 @@ public class RefreshCookieManagementService {
         /*generating a new refreshToken and setting it up as a cookie response.*/
         response.addCookie(generateRefreshToken(refreshTokenTable.getUser()));
 
-        //generate a new access token.
-
-        return null;
+        return refreshTokenTable.getUser();
     }
 }

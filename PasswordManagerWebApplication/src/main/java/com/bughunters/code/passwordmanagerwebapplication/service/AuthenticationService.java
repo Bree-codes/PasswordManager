@@ -145,9 +145,17 @@ public class AuthenticationService {
         }
 
         /*The cookie is present, lets validate it is still or is viable for token refreshing.*/
-       return new ResponseEntity<>(
-               refreshCookieManagementService.validateRefreshToken(userRefreshCookie, response), HttpStatus.OK);
+        User user = refreshCookieManagementService.validateRefreshToken(userRefreshCookie, response);
 
+        //User refresh token response.
+        RefreshTokenResponse refreshTokenResponse = new RefreshTokenResponse();
+        //generate new access token for the user.
+        refreshTokenResponse.setToken(accessTokenManagementService.generateAccessToken(user));
+        refreshTokenResponse.setUsername(user.getUsername());
+        refreshTokenResponse.setUserId(user.getId());
+
+        log.info("Token refreshed.");
+        return new ResponseEntity<>(refreshTokenResponse,HttpStatus.OK);
     }
 }
 
