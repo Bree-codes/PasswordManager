@@ -48,7 +48,7 @@ public class AuthenticationController {
     @PutMapping("/refresh/token")
     public ResponseEntity<RefreshTokenResponse> refreshAccessToken(
             HttpServletRequest request, HttpServletResponse response){
-        log.info("Refresh To Refresh Access Token");
+        log.info("request To Refresh Access Token");
 
         return authenticationService.refreshToken(request, response);
     }
