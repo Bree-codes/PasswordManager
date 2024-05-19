@@ -46,7 +46,7 @@ public class RefreshCookieManagementService {
 
         /*Get the refreshToken details is exist.*/
         RefreshTokenTable refreshTokenTable = refreshTokenRepository.findByRefreshToken(userRefreshCookie)
-                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("Invalid Refresh Token!"));
+                .orElseThrow(() -> new TokenRefreshmentException("Invalid Refresh Token!"));
 
         //check whether the token is expired.
         if(refreshTokenTable.getExpirationDate().compareTo(new Date(System.currentTimeMillis()) ) < 0 ){

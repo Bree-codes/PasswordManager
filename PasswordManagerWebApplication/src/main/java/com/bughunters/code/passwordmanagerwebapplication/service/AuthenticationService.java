@@ -3,6 +3,7 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.EmailAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.IncorrectVerificationCodeException;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.TokenRefreshmentException;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.request.LoginRequest;
@@ -142,7 +143,7 @@ public class AuthenticationService {
         /*Request validation.*/
         if(userRefreshCookie == null || !userRefreshCookie.startsWith("_token=")){
             log.error("Refresh Token Empty");
-            throw new AuthenticationCredentialsNotFoundException("Refresh Token Not Found or Corrupted!");
+            throw new TokenRefreshmentException("Refresh Token Not Found or Corrupted!");
         }
 
         /*The cookie is present, lets validate it is still or is viable for token refreshing.*/
