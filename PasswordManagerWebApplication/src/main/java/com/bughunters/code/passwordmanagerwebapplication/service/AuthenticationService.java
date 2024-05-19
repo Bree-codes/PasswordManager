@@ -136,16 +136,17 @@ public class AuthenticationService {
             HttpServletRequest request, HttpServletResponse response) {
 
         /*get user refreshToken cookie*/
-        String userRefreshCookie = request.getHeader("_token");
+        String userRefreshCookie = request.getHeader("cookie");
 
         /*Request validation.*/
-        if(userRefreshCookie == null){
+        if(userRefreshCookie == null || !userRefreshCookie.startsWith("_token=")){
             log.error("Refresh Token Empty");
-            throw new AuthenticationCredentialsNotFoundException("Refresh Token Not Found!");
+            throw new AuthenticationCredentialsNotFoundException("Refresh Token Not Found or Corrupted!");
         }
 
         /*The cookie is present, lets validate it is still or is viable for token refreshing.*/
-        User user = refreshCookieManagementService.validateRefreshToken(userRefreshCookie, response);
+        User user = refreshCookieManagementService.validateRefreshToken(
+                userRefreshCookie.substring(7), response);
 
         //User refresh token response.
         RefreshTokenResponse refreshTokenResponse = new RefreshTokenResponse();
