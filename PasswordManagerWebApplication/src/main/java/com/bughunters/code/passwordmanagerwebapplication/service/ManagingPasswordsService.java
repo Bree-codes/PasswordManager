@@ -106,11 +106,12 @@ public class ManagingPasswordsService {
         log.info("update success");
 
         passwordsRepository.save(updatePassword);
+        return null;
 
 
     }
 
-    public HttpStatus deleteDetails(Long id)throws Exception{
+    /*public HttpStatus deleteDetails(Long id)throws Exception{
         log.info("deleting the details managed for user with id {} ", id);
         Optional<Password> passwordToDelete = passwordsRepository.findById(id);
         if (passwordToDelete.isEmpty()){
@@ -122,5 +123,5 @@ public class ManagingPasswordsService {
         log.info("deletion success for user with id {} ", id);
 
         return HttpStatus.OK;
-    }
+    }*/
 }
