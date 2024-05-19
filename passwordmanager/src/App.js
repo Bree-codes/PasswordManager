@@ -12,7 +12,7 @@ function App() {
             <Route path={"/"}  element={(<RefreshAuthentication><NavigationBar /></RefreshAuthentication>)}>
                 <Route path="SignUp" element={<SignUp/>}/>
                 <Route path="Login" element={<Login/>}/>
-                <Route path={"Home"} element={Home}>
+                <Route path={"Home"} element={<Home/>}
                     <Route path={"view/passwords"} element={<h1>password view page.</h1>} />
                 </Route>
                 <Route path={"*"} element={<h1>Page Not Found</h1>} />
