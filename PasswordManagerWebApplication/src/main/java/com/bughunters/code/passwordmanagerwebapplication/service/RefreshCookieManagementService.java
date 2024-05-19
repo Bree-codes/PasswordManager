@@ -35,6 +35,8 @@ public class RefreshCookieManagementService {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
 
+        refreshTokenRepository.deleteAllByUser(user);
+
         //saving the refreshToken details.
         refreshTokenRepository.save(refreshTokenTable);
 
