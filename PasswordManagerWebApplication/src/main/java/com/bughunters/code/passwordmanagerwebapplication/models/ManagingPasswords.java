@@ -8,7 +8,7 @@ public class ManagingPasswords {
     private String websiteName;
     private String password;
 
-    public ManagingPasswords(int i, String user1, String password1, String website1) {
+    public ManagingPasswords( long user1, String password1, String website1) {
 
     }
 }
