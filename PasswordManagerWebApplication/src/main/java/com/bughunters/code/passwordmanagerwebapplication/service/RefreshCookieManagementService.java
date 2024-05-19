@@ -2,12 +2,17 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 
 import com.bughunters.code.passwordmanagerwebapplication.entity.RefreshTokenTable;
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.TokenRefreshmentException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.RefreshTokenRepository;
+import com.bughunters.code.passwordmanagerwebapplication.response.RefreshTokenResponse;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -37,5 +42,26 @@ public class RefreshCookieManagementService {
         refreshTokenRepository.save(refreshTokenTable);
 
         return cookie;
+    }
+
+    public RefreshTokenResponse validateRefreshToken(String userRefreshCookie, HttpServletResponse response) {
+
+        /*Get the refreshToken details is exist.*/
+        RefreshTokenTable refreshTokenTable = refreshTokenRepository.findByRefreshToken(userRefreshCookie)
+                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("Invalid Refresh Token!"));
+
+        //check whether the token is expired.
+        if(refreshTokenTable.getExpirationDate().compareTo(new Date(System.currentTimeMillis()) ) < 0 ){
+            throw new TokenRefreshmentException("Refresh Token Expired.");
+        }
+
+        log.info("token passed validation.");
+
+        /*generating a new refreshToken and setting it up as a cookie response.*/
+        response.addCookie(generateRefreshToken(refreshTokenTable.getUser()));
+
+        //generate a new access token.
+
+        return null;
     }
 }

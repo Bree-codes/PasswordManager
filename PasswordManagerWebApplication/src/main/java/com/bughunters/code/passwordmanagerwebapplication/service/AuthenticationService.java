@@ -144,8 +144,10 @@ public class AuthenticationService {
             throw new AuthenticationCredentialsNotFoundException("Refresh Token Not Found!");
         }
 
+        /*The cookie is present, lets validate it is still or is viable for token refreshing.*/
+       return new ResponseEntity<>(
+               refreshCookieManagementService.validateRefreshToken(userRefreshCookie, response), HttpStatus.OK);
 
-        return null;
     }
 }
 
