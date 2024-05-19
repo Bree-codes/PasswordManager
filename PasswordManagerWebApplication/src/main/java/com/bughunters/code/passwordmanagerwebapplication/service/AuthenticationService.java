@@ -3,12 +3,15 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.EmailAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.IncorrectVerificationCodeException;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.TokenRefreshmentException;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.request.LoginRequest;
 import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationRequest;
 import com.bughunters.code.passwordmanagerwebapplication.response.AuthorizationResponse;
 import com.bughunters.code.passwordmanagerwebapplication.response.EmailVerificationResponse;
+import com.bughunters.code.passwordmanagerwebapplication.response.RefreshTokenResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -127,6 +130,34 @@ public class AuthenticationService {
 
 
         return new ResponseEntity<>(verificationResponse,HttpStatus.OK);
+    }
+
+    public ResponseEntity<RefreshTokenResponse> refreshToken(
+            HttpServletRequest request, HttpServletResponse response) {
+
+        log.info("Validating the refresh token.");
+        /*get user refreshToken cookie*/
+        String userRefreshCookie = request.getHeader("cookie");
+
+        /*Request validation.*/
+        if(userRefreshCookie == null || !userRefreshCookie.startsWith("_token=")){
+            log.error("Refresh Token Empty");
+            throw new TokenRefreshmentException("Refresh Token Not Found or Corrupted!");
+        }
+
+        /*The cookie is present, lets validate it is still or is viable for token refreshing.*/
+        User user = refreshCookieManagementService.validateRefreshToken(
+                userRefreshCookie.substring(7), response);
+
+        //User refresh token response.
+        RefreshTokenResponse refreshTokenResponse = new RefreshTokenResponse();
+        //generate new access token for the user.
+        refreshTokenResponse.setToken(accessTokenManagementService.generateAccessToken(user));
+        refreshTokenResponse.setUsername(user.getUsername());
+        refreshTokenResponse.setUserId(user.getId());
+
+        log.info("Token refreshed.");
+        return new ResponseEntity<>(refreshTokenResponse,HttpStatus.OK);
     }
 }
 

@@ -14,3 +14,7 @@ export async function userRegistration(registrationRequest){
 export async function login(registrationRequest){
     return await permittedEndPoints.post("/login",registrationRequest);
 }
+
+export async function refreshToken(){
+    return await permittedEndPoints.put("/refresh/token");
+}
