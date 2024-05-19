@@ -135,6 +135,7 @@ public class AuthenticationService {
     public ResponseEntity<RefreshTokenResponse> refreshToken(
             HttpServletRequest request, HttpServletResponse response) {
 
+        log.info("Validating the refresh token.");
         /*get user refreshToken cookie*/
         String userRefreshCookie = request.getHeader("cookie");
 
