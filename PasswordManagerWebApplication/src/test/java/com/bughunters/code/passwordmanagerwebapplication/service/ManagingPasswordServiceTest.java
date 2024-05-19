@@ -36,8 +36,8 @@ public class ManagingPasswordServiceTest {
     void testManagingPasswords() throws Exception {
         // Given
         List<ManagingPasswords> passwords = Arrays.asList(
-                new ManagingPasswords(1, "user1", "password1", "website1"),
-                new ManagingPasswords(2, "user2", "password2", "website2")
+                new ManagingPasswords( 1, "password1", "website1"),
+                new ManagingPasswords(2, "password2", "website2")
         );
 
         // When
@@ -55,8 +55,8 @@ public class ManagingPasswordServiceTest {
     void testManagingPasswords_WhenExceptionOccurs() throws Exception {
         // Given
         List<ManagingPasswords> passwords = Arrays.asList(
-                new ManagingPasswords(1, "user1", "password1", "website1"),
-                new ManagingPasswords(2, "user2", "password2", "website2")
+                new ManagingPasswords( 1, "password1", "website1"),
+                new ManagingPasswords(2, "password2", "website2")
         );
 
         // When
