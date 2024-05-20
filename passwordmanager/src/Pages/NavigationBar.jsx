@@ -1,8 +1,9 @@
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import {Container, Nav, Navbar} from "react-bootstrap";
 import "./styling/NavigationBar.css"
 export const NavigationBar = () => {
     return (
+        <>
             <Navbar expand="md" className="bg-body-tertiary">
                 <Container fluid className={"container"}>
                     <Navbar.Toggle aria-controls="navbarScroll"/>
@@ -27,5 +28,8 @@ export const NavigationBar = () => {
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
-            </Navbar>);
+            </Navbar>
+
+            <Outlet></Outlet>
+        </>);
 }

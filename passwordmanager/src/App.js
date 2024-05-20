@@ -1,17 +1,27 @@
-import {Route, Routes} from "react-router-dom";
+import {Outlet, Route, Routes} from "react-router-dom";
 import {SignUp} from "./Pages/SignUp";
 import {Login} from "./Pages/Login";
 import {NavigationBar} from "./Pages/NavigationBar";
+import RefreshAuthentication from "./Pages/styling/RefreshAuthentication";
+
+import ProtectedRoutes from "./Pages/Components/ProtectedRoutes";
+import {Home} from "./Pages/Home";
+
+
 function App() {
   return (
     <div className="App">
-        <NavigationBar/>
         <Routes>
-            <Route path="/SignUp" element={<SignUp/>}/>
-            <Route path="/Login" element={<Login/>}/>
+            <Route path={"/"}  element={(<RefreshAuthentication><NavigationBar /></RefreshAuthentication>)}>
+                <Route path="SignUp" element={<SignUp/>}/>
+                <Route path="Login" element={<Login/>}/>
+                <Route path={"home"} element={<ProtectedRoutes><Home/></ProtectedRoutes>}>
+                    <Route path={"view/passwords"} element={<h2>password view page.</h2>} />
+                </Route>
+                <Route path={"*"} element={<h1>Page Not Found</h1>} />
+                </Route>
         </Routes>
-    </div>
-  );
+    </div>);
 }
 
 export default App;

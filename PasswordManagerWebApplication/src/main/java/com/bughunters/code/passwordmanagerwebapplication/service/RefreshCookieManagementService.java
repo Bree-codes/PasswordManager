@@ -2,8 +2,10 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 
 import com.bughunters.code.passwordmanagerwebapplication.entity.RefreshTokenTable;
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.TokenRefreshmentException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.RefreshTokenRepository;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,13 +31,34 @@ public class RefreshCookieManagementService {
         /*generate and configure user cookie.*/
         Cookie cookie = new Cookie("_token", refreshTokenTable.getRefreshToken());
 
-        cookie.setMaxAge(1000 * 60 * 60 * 24 * 14);
+        cookie.setMaxAge(60 * 60 * 24 * 14);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+
+        refreshTokenRepository.deleteByUser(user);
 
         //saving the refreshToken details.
         refreshTokenRepository.save(refreshTokenTable);
 
         return cookie;
+    }
+
+    public User validateRefreshToken(String userRefreshCookie, HttpServletResponse response) {
+
+        /*Get the refreshToken details is exist.*/
+        RefreshTokenTable refreshTokenTable = refreshTokenRepository.findByRefreshToken(userRefreshCookie)
+                .orElseThrow(() -> new TokenRefreshmentException("Refresh Token corrupted or Expired."));
+
+        //check whether the token is expired.
+        if(refreshTokenTable.getExpirationDate().compareTo(new Date(System.currentTimeMillis()) ) < 0 ){
+            throw new TokenRefreshmentException("Refresh Token Expired.");
+        }
+
+        log.info("token passed validation.");
+
+        /*generating a new refreshToken and setting it up as a cookie response.*/
+        response.addCookie(generateRefreshToken(refreshTokenTable.getUser()));
+
+        return refreshTokenTable.getUser();
     }
 }
