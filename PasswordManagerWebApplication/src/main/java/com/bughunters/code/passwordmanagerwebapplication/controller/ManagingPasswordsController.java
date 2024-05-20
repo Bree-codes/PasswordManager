@@ -28,7 +28,7 @@ public class ManagingPasswordsController {
     public ResponseEntity<List<ManagingPasswords>> managedPasswords(@RequestBody List<ManagingPasswords> passwords)
     {
         log.info("request to manage passwords");
-        List<ManagingPasswords> passwordsList = passwordsService.managingPasswords(passwords);
+        List<ManagingPasswords> passwordsList = passwordsService.managePasswords(passwords);
         return ResponseEntity.status(HttpStatus.OK).body(passwordsList);
     }
 }
