@@ -6,17 +6,16 @@ export const Home =()=>{
         <>
             <div className="container">
                 <div className="content">
-                    <h1>Say goodbye to forgetting passwords</h1>
-                    <h2>
-                        <span>Make life</span>
-                        <span>simple & safe</span>
-                    </h2>
+                    <h2 className="head">Say goodbye to forgetting passwords</h2>
+                    <h3 className="sub-head">
+                        <span className="span-1">Make life</span> <br/>
+                        <span className="span-1" >simple & safe</span>
+                    </h3>
                 </div>
                 <div className="image">
                     <img src={secure}  alt={" Security pic"} />
                 </div>
             </div>
-            );
 
 
             <Outlet />
