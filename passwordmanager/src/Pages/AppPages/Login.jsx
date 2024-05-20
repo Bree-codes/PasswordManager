@@ -1,8 +1,8 @@
-import "./styling/login.css"
+import "../styling/login.css"
 
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
-import {login, } from "./DataSource/backendUtils";
+import {login, } from "../DataSource/backendUtils";
 import {useNavigate} from "react-router-dom";
 export const    Login=()=>{
     const [username,setUsername]=useState("");

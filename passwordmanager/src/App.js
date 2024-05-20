@@ -1,11 +1,11 @@
 import {Route, Routes} from "react-router-dom";
-import {SignUp} from "./Pages/SignUp";
-import {Login} from "./Pages/Login";
-import {NavigationBar} from "./Pages/NavigationBar";
-import RefreshAuthentication from "./Pages/styling/RefreshAuthentication";
+import {SignUp} from "./Pages/AppPages/SignUp";
+import {Login} from "./Pages/AppPages/Login";
+import {NavigationBar} from "./Pages/Components/NavigationBar";
+import RefreshAuthentication from "./Pages/Components/RefreshAuthentication";
 
 import ProtectedRoutes from "./Pages/Components/ProtectedRoutes";
-import {Home} from "./Pages/Home";
+import {Home} from "./Pages/AppPages/Home";
 
 
 function App() {

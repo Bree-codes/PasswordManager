@@ -1,7 +1,7 @@
-import "./styling/SignUp.css"
+import "../styling/SignUp.css"
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
-import {userRegistration} from "./DataSource/backendUtils";
+import {userRegistration} from "../DataSource/backendUtils";
 import {useNavigate} from "react-router-dom";
 export const SignUp = () => {
     const [username, setUsername] = useState("");
