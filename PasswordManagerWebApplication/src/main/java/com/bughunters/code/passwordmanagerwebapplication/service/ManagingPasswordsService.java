@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -122,4 +124,26 @@ public class ManagingPasswordsService {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+    public ResponseEntity<String> deletePasswordByUserIdAndPasswordId(long userId, long passwordId) {
+        log.info("Deleting password with ID {} for userId: {}", passwordId, userId);
+
+        try {
+            Optional<ManagedPassword> toDelete = passwordsRepository.findByUserIdAndPasswordId(userId, passwordId);
+            if (toDelete.isEmpty()) {
+                log.warn("Password with ID {} not found for userId: {}", passwordId, userId);
+                throw new IllegalArgumentException("Password with ID " + passwordId + " not found for userId " + userId);
+            }
+
+            passwordsRepository.delete(toDelete.get());
+            log.info("Password with ID {} deleted successfully for userId: {}", passwordId, userId);
+            return ResponseEntity.status(HttpStatus.OK).body("deleted successfully");
+        } catch (Exception e) {
+            log.error("Error deleting password with ID {} for userId: {}", passwordId, userId, e);
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+
+
+
 }
