@@ -3,19 +3,20 @@ import {Outlet} from "react-router-dom";
 export const Home =()=>{
     return(
         <>
-        <div>
-        <div>
-            <h1> Say goodbye to forgetting password</h1>
-            <h2>
-                <span> Make life</span>
-                <span> simple & safe</span>
-
-            </h2>
-        </div>
-            <div>
-
+            <div className="container">
+                <div className="content">
+                    <h1>Say goodbye to forgetting passwords</h1>
+                    <h2>
+                        <span>Make life</span>
+                        <span>simple & safe</span>
+                    </h2>
+                </div>
+                <div className="image">
+                    <img src="secure-image.jpg" alt="Secure Image" />
+                </div>
             </div>
-        </div>
+            );
+
 
             <Outlet />
         </>
