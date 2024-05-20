@@ -2,10 +2,12 @@ import "./styling/SignUp.css"
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
 import {userRegistration} from "./DataSource/backendUtils";
+import {useNavigate} from "react-router-dom";
 export const SignUp = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -17,7 +19,11 @@ export const SignUp = () => {
         }
 
         userRegistration(registrationRequest).then((respose) => {
-            //logic after registration is successful
+            sessionStorage.setItem("token", respose.data.token);
+            sessionStorage.setItem("id", respose.data.id);
+            sessionStorage.setItem("isLoggedIn", "true");
+
+            navigate("/home")
         }).catch((error) => {
             //login for error
         })

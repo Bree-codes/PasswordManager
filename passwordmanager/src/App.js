@@ -10,18 +10,18 @@ import {Home} from "./Pages/Home";
 
 function App() {
   return (
-    <div className="App">
+      <>
         <Routes>
             <Route path={"/"}  element={(<RefreshAuthentication><NavigationBar /></RefreshAuthentication>)}>
                 <Route path="SignUp" element={<SignUp/>}/>
                 <Route path="Login" element={<Login/>}/>
-                <Route path={"Home"} element={<ProtectedRoutes><Home/></ProtectedRoutes>}>
-                    <Route path={"view/passwords"} element={<h1>password view page.</h1>} />
-                </Route>
-                <Route path={"*"} element={<h1>Page Not Found</h1>} />
             </Route>
+            <Route path={"home"} element={<ProtectedRoutes><Home/></ProtectedRoutes>}>
+                <Route path={"view/passwords"} element={<h1>password view page.</h1>} />
+            </Route>
+            <Route path={"*"} element={<h1>Page Not Found</h1>} />
         </Routes>
-    </div>);
+      </>);
 }
 
 export default App;

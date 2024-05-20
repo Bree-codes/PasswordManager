@@ -3,9 +3,11 @@ import "./styling/login.css"
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
 import {login, } from "./DataSource/backendUtils";
+import {useNavigate} from "react-router-dom";
 export const    Login=()=>{
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -15,8 +17,14 @@ export const    Login=()=>{
             password:password
         }
 
-        login(loginUser).then((respose) => {
-            //logic after registration is successful
+        login(loginUser).then((response) => {
+
+            sessionStorage.setItem("token", response.data.token);
+            sessionStorage.setItem("id", response.data.id);
+            sessionStorage.setItem("isLoggedIn", "true");
+
+            navigate("/home");
+
         }).catch((error) => {
             //login for error
         })
