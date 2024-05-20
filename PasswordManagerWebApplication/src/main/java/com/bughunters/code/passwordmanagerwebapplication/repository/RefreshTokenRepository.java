@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface RefreshTokenRepository extends CrudRepository<RefreshTokenTable, Long> {
     Optional<RefreshTokenTable> findByRefreshToken(String refreshToken);
 
-    void deleteAllByUser(User user);
+    void deleteByUser(User user);
 
 }
