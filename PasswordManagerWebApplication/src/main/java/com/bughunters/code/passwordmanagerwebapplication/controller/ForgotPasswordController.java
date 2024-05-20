@@ -38,7 +38,7 @@ public class ForgotPasswordController {
 
         MailBody mailBody = MailBody.builder()
                 .to(email)
-                .text("This is the OTP for your forgot password request" + otp)
+                .text("This is the OTP for your forgot password request: " + otp)
                 .subject("OTP for forgot password request")
                 .build();
 
