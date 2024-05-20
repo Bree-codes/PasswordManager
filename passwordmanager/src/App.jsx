@@ -1,8 +1,10 @@
 import {Route, Routes} from "react-router-dom";
+
 import {SignUp} from "./Pages/AppPages/SignUp";
 import {Login} from "./Pages/AppPages/Login";
 import {NavigationBar} from "./Pages/Components/NavigationBar";
 import RefreshAuthentication from "./Pages/Components/RefreshAuthentication";
+
 
 import ProtectedRoutes from "./Pages/Components/ProtectedRoutes";
 import {Home} from "./Pages/AppPages/Home";
