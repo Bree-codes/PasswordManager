@@ -7,6 +7,7 @@ import com.bughunters.code.passwordmanagerwebapplication.repository.ForgotPasswo
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.service.MailingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.Random;
 
@@ -55,9 +57,25 @@ public class ForgotPasswordController {
 
     @PostMapping("/verifyOTP/{otp}/{Email}")
     public ResponseEntity<String> verifyOTP(@PathVariable Integer otp,@PathVariable String email){
+
+        //checking if user exists
         User user = userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("Please enter a valid Email!"));
 
+        //checking if OTP entered by the user exists
+        ForgotPassword forgotPassword = forgotPasswordRepo.findByOtpAndUser(otp,user)
+                .orElseThrow(()-> new RuntimeException("Invalid OTP!"));
+
+        //checking if OTP is expired
+
+        if(forgotPassword.getExpirationTime().before(Date.from(Instant.now()))){
+            forgotPasswordRepo.deleteById(forgotPassword.getForgotPasswordId());
+            return new ResponseEntity<>("OTP is expired!", HttpStatus.EXPECTATION_FAILED);
+        }
+        return ResponseEntity.ok("OTP Verified!");
     }
+
+    @PostMapping("/ResetPassword/{email}")
+
 
 
 
