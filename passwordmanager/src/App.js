@@ -15,12 +15,11 @@ function App() {
             <Route path={"/"}  element={(<RefreshAuthentication><NavigationBar /></RefreshAuthentication>)}>
                 <Route path="SignUp" element={<SignUp/>}/>
                 <Route path="Login" element={<Login/>}/>
-
-            <Route path={"home"} element={<ProtectedRoutes><Home/></ProtectedRoutes>}>
-                <Route path={"view/passwords"} element={<h2>password view page.</h2>} />
-            </Route>
-            <Route path={"*"} element={<h1>Page Not Found</h1>} />
-            </Route>
+                <Route path={"home"} element={<ProtectedRoutes><Home/></ProtectedRoutes>}>
+                    <Route path={"view/passwords"} element={<h2>password view page.</h2>} />
+                </Route>
+                <Route path={"*"} element={<h1>Page Not Found</h1>} />
+                </Route>
         </Routes>
     </div>);
 }
