@@ -18,9 +18,9 @@ export const SignUp = () => {
             password:password
         }
 
-        userRegistration(registrationRequest).then((respose) => {
-            sessionStorage.setItem("token", respose.data.token);
-            sessionStorage.setItem("id", respose.data.id);
+        userRegistration(registrationRequest).then((response) => {
+            sessionStorage.setItem("token", response.data.token);
+            sessionStorage.setItem("id", response.data.id);
             sessionStorage.setItem("isLoggedIn", "true");
 
             navigate("/home")
@@ -58,7 +58,8 @@ export const SignUp = () => {
 
                 <Form.Group>
                     <Form.Label className="confirm-password" htmlFor="confirm-password"> Confirm password:</Form.Label>
-                    <Form.Control id={"confirm-password"} type="password" name="cornfirm password" placeholder="confirm password"/>
+                    <Form.Control id={"confirm-password"} type="password" name="cornfirm password"
+                                  placeholder="confirm password"/>
                 </Form.Group>
 
                 <Button id={"submit"} type="submit" >Submit</Button>
