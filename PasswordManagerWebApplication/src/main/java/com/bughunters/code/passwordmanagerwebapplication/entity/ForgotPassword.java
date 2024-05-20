@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @Builder
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ForgotPassword {
 
     @Id
@@ -23,5 +25,6 @@ public class ForgotPassword {
 
     @OneToOne
     private User user;
+
 }
 

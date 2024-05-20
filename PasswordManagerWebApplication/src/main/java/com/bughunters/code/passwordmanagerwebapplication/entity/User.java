@@ -47,6 +47,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<AccessTokenTable> accessTokenTable;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private ForgotPassword forgotPassword;
+
 
     @PrePersist
     public void defaults(){
