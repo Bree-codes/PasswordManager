@@ -8,7 +8,7 @@ export const Home =()=>{
                 <div className="content">
                     <h2 className="head">Say goodbye to forgetting passwords</h2>
                     <h3 className="sub-head">
-                        <span className="spann-1">Make life</span>
+                        <span className="span-1">Make life</span> <br/>
                         <span className="span-1" >simple & safe</span>
                     </h3>
                 </div>
