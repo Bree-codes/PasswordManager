@@ -14,8 +14,11 @@ import {Footer} from "./Pages/AppPages/Footer";
 function App() {
   return (
       <>
+
         <Routes>
+
             <Route path={"/"}  element={(<RefreshAuthentication><NavigationBar /></RefreshAuthentication>)}>
+                <Route index element={<Home/>}/>
                 <Route path="SignUp" element={<SignUp/>}/>
                 <Route path="Login" element={<Login/>}/>
             </Route>
