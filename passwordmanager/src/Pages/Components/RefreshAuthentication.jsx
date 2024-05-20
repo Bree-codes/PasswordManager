@@ -1,9 +1,9 @@
-import {Navigate, Outlet, useLocation} from "react-router-dom";
+import {Navigate, Outlet, useLocation, useNavigate} from "react-router-dom";
 import {refreshToken} from "../DataSource/backendUtils";
 import {useEffect} from "react";
 
 function RefreshAuthentication({redirectPath="/home", children}){
-    const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if(!sessionStorage.getItem("isLoggedIn")) {
@@ -14,6 +14,7 @@ function RefreshAuthentication({redirectPath="/home", children}){
                 sessionStorage.setItem("token", response.data.token);
                 sessionStorage.setItem("username", response.data.username);
 
+                navigate(redirectPath);
 
             }).catch(() => {
                 console.log("Refresh Token Failed")
@@ -21,12 +22,6 @@ function RefreshAuthentication({redirectPath="/home", children}){
         }
     }, []);
 
-    if(sessionStorage.getItem("isLoggedIn")){
-        return <Navigate to={redirectPath} replace state={{from:location}} />
-    }else {
-        return children || <Outlet />;
-    }
-
+    return children || <Outlet />;
 }
-
 export default RefreshAuthentication;

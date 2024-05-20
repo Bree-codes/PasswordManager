@@ -1,4 +1,3 @@
-
 .Registration-component {
     width: 100%;
     display: flex;
@@ -25,4 +24,70 @@
 .username, .email, .password, .confirm-password {
     margin: 15px;
     font-size: 130%;
+}
+
+#submit {
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 1025px){
+    .registration-form {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 854px){
+    .registration-form {
+        width: 35%;
+    }
+}
+
+@media screen and (max-width: 732px){
+    .registration-form {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 640px){
+    .registration-form {
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 569px){
+    .registration-form {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 512px){
+    .registration-form {
+        width: 55%;
+    }
+}
+
+@media screen and (max-width: 466px){
+    .registration-form {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 427px){
+    .registration-form {
+        width: 70%;
+        border: none;
+    }
+}
+
+@media screen and (max-width: 366px){
+    .registration-form {
+        width: 90%;
+    }
+
+}
+
+@media screen and (max-width: 282px){
+    .registration-form {
+        width: 100%;
+    }
 }
