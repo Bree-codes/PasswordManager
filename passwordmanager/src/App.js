@@ -6,6 +6,7 @@ import RefreshAuthentication from "./Pages/Components/RefreshAuthentication";
 
 import ProtectedRoutes from "./Pages/Components/ProtectedRoutes";
 import {Home} from "./Pages/AppPages/Home";
+import {VerifyEmail} from "./Pages/AppPages/VerifyEmail";
 
 
 function App() {
@@ -13,8 +14,9 @@ function App() {
       <>
         <Routes>
             <Route path={"/"}  element={(<RefreshAuthentication><NavigationBar /></RefreshAuthentication>)}>
-                <Route path="SignUp" element={<SignUp/>}/>
-                <Route path="Login" element={<Login/>}/>
+                <Route path={"SignUp"} element={<SignUp/>} />
+                <Route path={"verify/email"} element={<VerifyEmail/>} />
+                <Route path={"Login"} element={<Login/>} />
             </Route>
             <Route path={"home"} element={<ProtectedRoutes><Home/></ProtectedRoutes>}>
                 <Route path={"view/passwords"} element={<h1>password view page.</h1>} />
