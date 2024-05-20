@@ -42,7 +42,7 @@ public class ManagingPasswordsController {
     }
 
     @DeleteMapping("/{userId}/{passwordId}")
-    public ResponseEntity deletePasswordDetails(@PathVariable long passwordId, @PathVariable long userId){
+    public ResponseEntity<ResponseEntity<String>> deletePasswordDetails(@PathVariable long passwordId, @PathVariable long userId){
 
         return ResponseEntity.status(HttpStatus.OK).body(passwordsService.deletePasswordByUserIdAndPasswordId(userId,passwordId));
     }
