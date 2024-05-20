@@ -1,5 +1,6 @@
 package com.bughunters.code.passwordmanagerwebapplication.models;
 
+import com.bughunters.code.passwordmanagerwebapplication.configuration.CryptoDetailsUtils;
 import lombok.Data;
 
 @Data
@@ -11,4 +12,6 @@ public class ManagingPasswords {
     public ManagingPasswords( long user1, String password1, String website1) {
 
     }
+
+
 }
