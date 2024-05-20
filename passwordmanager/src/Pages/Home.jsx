@@ -1,6 +1,8 @@
+import {Outlet} from "react-router-dom";
 
 export const Home =()=>{
     return(
+        <>
         <div>
         <div>
             <h1> Say goodbye to forgetting password</h1>
@@ -13,7 +15,9 @@ export const Home =()=>{
             <div>
 
             </div>
-
         </div>
-    )
+
+            <Outlet />
+        </>
+    );
 }

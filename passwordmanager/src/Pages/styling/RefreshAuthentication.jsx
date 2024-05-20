@@ -6,17 +6,19 @@ function RefreshAuthentication({redirectPath="/home", children}){
     const location = useLocation();
 
     useEffect(() => {
-        refreshToken().then((response) => {
-            sessionStorage.setItem("isLoggedIn", "true");
-            sessionStorage.setItem("id", response.data.userId);
-            sessionStorage.setItem("token", response.data.token);
-            sessionStorage.setItem("username", response.data.username);
+        if(!sessionStorage.getItem("isLoggedIn")) {
+
+            refreshToken().then((response) => {
+                sessionStorage.setItem("isLoggedIn", "true");
+                sessionStorage.setItem("id", response.data.userId);
+                sessionStorage.setItem("token", response.data.token);
+                sessionStorage.setItem("username", response.data.username);
 
 
-        }).catch(() => {
-            console.log("Refresh Token Failed")
-        })
-
+            }).catch(() => {
+                console.log("Refresh Token Failed")
+            })
+        }
     }, []);
 
     if(sessionStorage.getItem("isLoggedIn")){

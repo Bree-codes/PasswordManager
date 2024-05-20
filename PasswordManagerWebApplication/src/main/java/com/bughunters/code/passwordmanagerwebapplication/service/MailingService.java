@@ -1,5 +1,6 @@
 package com.bughunters.code.passwordmanagerwebapplication.service;
 
+import com.bughunters.code.passwordmanagerwebapplication.DTO.MailBody;
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.MailSendingException;
 import freemarker.core.ParseException;
@@ -7,6 +8,7 @@ import freemarker.template.*;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -71,5 +73,16 @@ public class MailingService {
         } catch (TemplateException e) {
             throw new MailSendingException("Template error");
         }
+    }
+
+    //handling Forgot Password functionality
+    public void sendSimpleMessage(MailBody mailBody){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mailBody.to());
+        message.setSubject(mailBody.subject());
+        message.setText(mailBody.text());
+        message.setFrom("brendamukami04@gmail.com");
+
+        javaMailSender.send(message);
     }
 }
