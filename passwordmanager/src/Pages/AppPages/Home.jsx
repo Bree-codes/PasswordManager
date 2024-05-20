@@ -1,5 +1,6 @@
 import {Outlet} from "react-router-dom";
 import secure from "../pics/secure.jpeg"
+import "../styling/Home.css"
 export const Home =()=>{
     return(
         <>
