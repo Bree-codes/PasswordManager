@@ -4,7 +4,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+   padding: 10px;
+   margin: 0;
 }
 
 .content {
@@ -49,12 +50,12 @@ img {
 
 
 }
-@media screen  and (min-width:1000px ){
+/*@media screen  and (min-width:1000px ){
     .content{
         width: 90%;
     }
     .image {
-        width: 500px;
+        width: 600px;
         height: 400px;
     }
     .head {
@@ -63,4 +64,35 @@ img {
     }
 
 
+}*/
+
+@media screen  and (max-width:1000px ){
+
+    .image {
+        width: 500px;
+        height: 350px;
+    }
+    .head {
+        font-size: 28px;
+
+    }
+
+
 }
+@media screen  and (max-width:760px ){
+
+    .image{
+        width: 80%;
+    }
+    .img {
+        width:600px;
+        height: 350px;
+    }
+    .head {
+        font-size: 28px;
+
+    }
+
+
+}
+
