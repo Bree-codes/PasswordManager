@@ -1,12 +1,11 @@
-import {Navigate, Outlet, useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 function ProtectedRoutes({redirectPath="/login", children}){
-    const location = useLocation();
+    const navigate = useNavigate();
 
     if(!sessionStorage.getItem("isLoggedIn")){
-        return <Navigate to={redirectPath} replace state={{from:location}} />;
+        navigate(redirectPath);
     }
-    /*return children || <Outlet />;*/
 }
 
 export default ProtectedRoutes;
