@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class ChangePasswordService {
@@ -19,28 +17,20 @@ public class ChangePasswordService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public void changePassword(String username,ChangePasswordRequest changePasswordRequest){
+    public void changePassword(Long Id, ChangePasswordRequest changePasswordRequest){
 
-        //we first retrieve the user from the database using findByUsername method
-        Optional<User> user = userRepository.findByUsername(username);
+        User user = userRepository.findById(Id).orElseThrow(()-> new UserNotFoundException("User not found!"));
 
-        if(user.isPresent()) {
-            User user1 = user.get();
 
-            //we check whether the old password the user entered and the one in the db match
-            if (passwordEncoder.matches(changePasswordRequest.getCurrentPassword(), user1.getPassword())) {
+        //we check whether the old password the user entered and the one in the db match
+            if (passwordEncoder.matches(changePasswordRequest.getCurrentPassword(), user.getPassword())) {
 
-                user1.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
-                userRepository.save(user1);
+                user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+                userRepository.save(user);
             } else {
                 throw new IncorrectPasswordException("Passwords don't match!");
             }
         }
 
-        else{
-            throw new UserNotFoundException("User does not exist!");
-            }
-
     }
 
-}
