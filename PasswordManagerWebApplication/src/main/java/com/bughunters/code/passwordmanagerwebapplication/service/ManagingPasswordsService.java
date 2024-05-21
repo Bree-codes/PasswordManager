@@ -3,6 +3,7 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 import com.bughunters.code.passwordmanagerwebapplication.configuration.CryptoDetailsUtils;
 import com.bughunters.code.passwordmanagerwebapplication.entity.ManagedPassword;
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
+import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
 import com.bughunters.code.passwordmanagerwebapplication.repository.ManagedPasswordsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -24,7 +25,9 @@ public class ManagingPasswordsService {
     private final ModelMapper modelMapper;
     private final ManagedPasswordsRepository passwordsRepository;
 
-    public ManagingPasswordsService(CryptoDetailsUtils cryptoDetailsUtils, ModelMapper modelMapper, ManagedPasswordsRepository passwordsRepository) {
+    public ManagingPasswordsService(CryptoDetailsUtils cryptoDetailsUtils,
+                                    ModelMapper modelMapper,
+                                    ManagedPasswordsRepository passwordsRepository) {
         this.cryptoDetailsUtils = cryptoDetailsUtils;
         this.modelMapper = modelMapper;
         this.passwordsRepository = passwordsRepository;
@@ -35,18 +38,19 @@ public class ManagingPasswordsService {
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
     }
 
-    public List<ManagingPasswords> managePasswords(List<ManagingPasswords> passwords) {
+    public List<MappedDetailsResponse> managePasswords(List<ManagingPasswords> passwords) {
         log.info("Service to manage passwords");
 
         try {
-            List<ManagedPassword> managedPasswordList = passwords.stream()
+            List<ManagedPassword> managedPasswordList;
+            managedPasswordList = passwords.stream()
                     .map(this::convertToManagedPassword)
                     .collect(Collectors.toList());
 
             passwordsRepository.saveAll(managedPasswordList);
 
             return managedPasswordList.stream()
-                    .map(p -> modelMapper.map(p, ManagingPasswords.class))
+                    .map(p -> modelMapper.map(p, MappedDetailsResponse.class))
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("Error managing passwords", e);
@@ -60,6 +64,7 @@ public class ManagingPasswordsService {
             ManagedPassword managedPassword = new ManagedPassword();
             managedPassword.setUserId(managingPasswords.getUserId());
             managedPassword.setWebsiteName(managingPasswords.getWebsiteName());
+            managedPassword.setUsername(managingPasswords.getUsername());
             managedPassword.setPassword(cryptoDetailsUtils.encrypt(managingPasswords.getPassword()));
             return managedPassword;
         } catch (Exception e) {
@@ -92,7 +97,7 @@ public class ManagingPasswordsService {
         try {
             cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=", "cfXyXPfwgggkgp0c");
             String decryptedPassword = cryptoDetailsUtils.decrypt(managedPassword.getPassword());
-            return new ManagingPasswords(managedPassword.getUserId(), decryptedPassword, managedPassword.getWebsiteName());
+            return new ManagingPasswords(managedPassword.getUserId(), decryptedPassword, managedPassword.getUsername(), managedPassword.getWebsiteName());
         } catch (Exception e) {
             log.error("Error decrypting password for managedPasswordId: {}", managedPassword.getUserId(), e);
             throw new RuntimeException("Decryption failed", e);
