@@ -134,20 +134,32 @@ public class AuthenticationService {
 
     public ResponseEntity<RefreshTokenResponse> refreshToken(
             HttpServletRequest request, HttpServletResponse response) {
+        User user = null;
 
         log.info("Validating the refresh token.");
         /*get user refreshToken cookie*/
         String userRefreshCookie = request.getHeader("cookie");
 
         /*Request validation.*/
-        if(userRefreshCookie == null || !userRefreshCookie.startsWith("_token=")){
+        if(userRefreshCookie == null){
             log.error("Refresh Token Empty");
             throw new TokenRefreshmentException("Refresh Token Not Found or Corrupted!");
         }
 
-        /*The cookie is present, lets validate it is still or is viable for token refreshing.*/
-        User user = refreshCookieManagementService.validateRefreshToken(
-                userRefreshCookie.substring(7), response);
+        String[] tokens = userRefreshCookie.split(";");
+
+        for(String token : tokens){
+            if(token.startsWith("_token=")){
+                /*The cookie is present, lets validate it is still or is viable for token refreshing.*/
+                user = refreshCookieManagementService.validateRefreshToken(
+                        token.substring(7), response);
+                break;
+            }
+        }
+
+        if(user == null){
+            throw new TokenRefreshmentException("Refresh Token NOt Found.");
+        }
 
         //User refresh token response.
         RefreshTokenResponse refreshTokenResponse = new RefreshTokenResponse();
