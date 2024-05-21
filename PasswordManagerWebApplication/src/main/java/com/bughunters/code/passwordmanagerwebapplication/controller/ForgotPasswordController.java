@@ -54,8 +54,9 @@ public class ForgotPasswordController {
         return ResponseEntity.ok("Email sent for Verification!");
     }
 
-    @PostMapping("/verifyOTP/{otp}/{Email}")
-    public ResponseEntity<String> verifyOTP(@PathVariable Integer otp,@PathVariable String email){
+    @PostMapping("/verifyOTP/{otp}/{email}")
+    public ResponseEntity<String> verifyOTP(@PathVariable Integer otp,
+                                            @PathVariable String email){
 
         //checking if user exists
         User user = userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("Please enter a valid Email!"));
@@ -72,13 +73,13 @@ public class ForgotPasswordController {
         return ResponseEntity.ok("OTP Verified!");
     }
 
-    @PostMapping("/ResetPassword/{email}")
+    @PostMapping("/resetPassword/{email}")
     public ResponseEntity<String> resetPassword(@RequestBody ResetPassword resetPassword,
                                                 @PathVariable String email){
 
         //checking if new password and confirm password are the same
         if(!Objects.equals(resetPassword.password(),resetPassword.confirmPassword())){
-            return new ResponseEntity<>("Please ReEnter the password!",HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>("Please Re-Enter the password!",HttpStatus.EXPECTATION_FAILED);
         }
         String encodedPassword = passwordEncoder.encode(resetPassword.password());
 
