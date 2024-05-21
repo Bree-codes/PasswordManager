@@ -11,6 +11,12 @@ const PasswordsPage = () => {
                 <PasswordLink />
                 <PasswordLink />
                 <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
             </div>
             <div className={"password-display"}>
                 view ...
