@@ -20,7 +20,7 @@
 .head {
     font-size: 28px;
     color: #282c34;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     font-weight: 700;
 }
 
@@ -53,6 +53,9 @@ img {
 
 }
 @media screen  and (min-width:1000px ){
+    .container{
+        width: 100%;
+    }
 
     .head {
         font-size: 25px;
@@ -105,7 +108,7 @@ img {
 
 
 }
-@media screen  and (max-width:450px ){
+@media screen  and (max-width:500px ){
     .container{
         display: flow;
     }
@@ -123,12 +126,73 @@ img {
         font-size: 20px;
         margin-left: 50px;
 
+
     }
     .sub-head{
-        margin-left: 70px;
+        margin-left: 150px;
         font-size: 16px;
     }
 
+
+
+}
+@media screen  and (max-width: 446px){
+
+    .head {
+        font-size: 20px;
+        margin-left: 20px;
+    }
+
+}
+@media screen  and (max-width: 417px){
+
+    .head {
+        font-size: 18px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+    .sub-head{
+        margin-left: 150px;
+        font-size: 14px;
+    }
+
+
+}
+@media screen  and (max-width: 381px){
+
+    .head {
+        font-size: 16px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+    .sub-head{
+        margin-left: 150px;
+        font-size: 10px;
+    }
+
+
+}
+@media screen  and (max-width: 347px){
+
+    .head {
+        font-size: 14px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+    .sub-head{
+        margin-left: 150px;
+        font-size: 9px;
+    }
+
+
+}
+@media screen  and (max-width: 238px){
+
+
+    .sub-head{
+        margin-left: 70px;
+        font-size: 9px;
+    }
 
 
 }
