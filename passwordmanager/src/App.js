@@ -7,6 +7,7 @@ import RefreshAuthentication from "./Pages/Components/RefreshAuthentication";
 import ProtectedRoutes from "./Pages/Components/ProtectedRoutes";
 import {Home} from "./Pages/AppPages/Home";
 import {VerifyEmail} from "./Pages/AppPages/VerifyEmail";
+import PasswordsPage from "./Pages/AppPages/PasswordsPage";
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
                 <Route path={"Login"} element={<Login/>} />
             </Route>
             <Route path={"home"} element={<ProtectedRoutes><Home/></ProtectedRoutes>}>
-                <Route path={"view/passwords"} element={<h1>password view page.</h1>} />
+                <Route path={"view/passwords"} element={<PasswordsPage />} />
             </Route>
             <Route path={"*"} element={<h1>Page Not Found</h1>} />
         </Routes>
