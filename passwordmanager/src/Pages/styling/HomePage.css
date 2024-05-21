@@ -1,6 +1,30 @@
 .home-header {
+    position: fixed;
     height: 100px;
     width: 100%;
     background: #ffe;
     border-bottom: gainsboro solid 2px;
+    z-index: 1;
+}
+
+.view-passwords {
+    display: flex;
+    justify-content: start;
+    height: auto;
+}
+
+.passwords-page {
+    margin-top: 100px;
+    width: 30%;
+    min-height: 84vh;
+    border-right: gainsboro solid 1px;
+    z-index: -1;
+}
+
+.password-display {
+    left: 30%;
+    position: fixed;
+    margin-top: 100px;
+    width: 70%;
+    min-height: 84vh;
 }
