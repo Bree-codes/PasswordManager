@@ -50,21 +50,19 @@ img {
 
 
 }
-/*@media screen  and (min-width:1000px ){
-    .content{
-        width: 90%;
-    }
-    .image {
-        width: 600px;
-        height: 400px;
-    }
+@media screen  and (min-width:1000px ){
+
     .head {
-        font-size: 28px;
+        font-size: 25px;
+        margin-left: 15px;
 
+    }
+    .sub-head{
+        font-size: 18px;
     }
 
 
-}*/
+}
 
 @media screen  and (max-width:1000px ){
 
@@ -72,10 +70,20 @@ img {
         width: 500px;
         height: 350px;
     }
+    .content{
+        width: 60%;
+    }
+
     .head {
-        font-size: 28px;
+        font-size: 20px;
+        margin-left: 50px;
 
     }
+    .sub-head{
+        margin-left: 70px;
+        font-size: 16px;
+    }
+
 
 
 }
