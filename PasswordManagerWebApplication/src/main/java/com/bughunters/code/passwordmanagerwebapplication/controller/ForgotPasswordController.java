@@ -80,6 +80,7 @@ public class ForgotPasswordController {
     public ResponseEntity<String> resetPassword(@RequestBody ResetPassword resetPassword,
                                                 @PathVariable String email){
         log.info("request to reset password.");
+
         //checking if new password and confirm password are the same
         if(!Objects.equals(resetPassword.password(),resetPassword.confirmPassword())){
             return new ResponseEntity<>("Please Re-Enter the password!",HttpStatus.EXPECTATION_FAILED);
