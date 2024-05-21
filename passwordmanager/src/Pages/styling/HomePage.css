@@ -18,7 +18,7 @@
     width: 30%;
     min-height: 84vh;
     border-right: gainsboro solid 1px;
-    z-index: -1;
+    z-index: 1;
 }
 
 .password-display {
@@ -30,9 +30,8 @@
 }
 
 #title-holder:hover {
-    outline-color: lightseagreen;
-    margin: 1px 1px;
-    cursor: crosshair;
+    color: #422d2d;
+    background-color: rgba(211, 211, 211, 0.5);
 }
 
 #title-holder {
