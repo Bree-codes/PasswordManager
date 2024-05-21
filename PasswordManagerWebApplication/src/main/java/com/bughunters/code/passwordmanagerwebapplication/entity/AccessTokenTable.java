@@ -15,7 +15,7 @@ public class AccessTokenTable {
 
     private String token;
 
-    private Boolean isLoggedOut;
+    private boolean isLoggedOut;
 
     @ManyToOne()
     @JoinColumn(name = "access_token_fk")

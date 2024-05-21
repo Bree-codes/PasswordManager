@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,23 @@ public class ManagingPasswordsController {
         log.info("request to manage passwords");
         List<ManagingPasswords> passwordsList = passwordsService.managePasswords(passwords);
         return ResponseEntity.status(HttpStatus.OK).body(passwordsList);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<ManagingPasswords>> findAll(@PathVariable long userId) throws Exception {
+        List<ManagingPasswords> decrypt = passwordsService.decrypt(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(decrypt);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<ManagingPasswords> update(@PathVariable long userId,@RequestBody ManagingPasswords passwords) throws Exception {
+        ManagingPasswords managingPasswords = passwordsService.updateDetails(userId, passwords);
+        return ResponseEntity.status(HttpStatus.OK).body(managingPasswords);
+    }
+
+    @DeleteMapping("/{userId}/{passwordId}")
+    public ResponseEntity deletePasswordDetails(@PathVariable long passwordId, @PathVariable long userId){
+
+        return ResponseEntity.status(HttpStatus.OK).body(passwordsService.deletePasswordByUserIdAndPasswordId(userId,passwordId));
     }
 }
