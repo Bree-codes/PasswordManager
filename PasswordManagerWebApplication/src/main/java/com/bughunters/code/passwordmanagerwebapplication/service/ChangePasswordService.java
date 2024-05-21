@@ -6,7 +6,6 @@ import com.bughunters.code.passwordmanagerwebapplication.exceptions.IncorrectPas
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserNotFoundException;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class ChangePasswordService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public void changePassword(String username, ChangePasswordRequest changePasswordRequest){
+    public void changePassword(String username,ChangePasswordRequest changePasswordRequest){
 
         //we first retrieve the user from the database using findByUsername method
         Optional<User> user = userRepository.findByUsername(username);
@@ -43,4 +42,5 @@ public class ChangePasswordService {
             }
 
     }
+
 }

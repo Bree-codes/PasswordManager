@@ -8,6 +8,8 @@ import com.bughunters.code.passwordmanagerwebapplication.repository.ForgotPasswo
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.service.MailingService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,6 +26,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class ForgotPasswordController {
 
+    private static final Logger log = LoggerFactory.getLogger(ForgotPasswordController.class);
     private final UserRepository userRepository;
     private final MailingService mailingService;
     private final ForgotPasswordRepo forgotPasswordRepo;
@@ -76,15 +79,20 @@ public class ForgotPasswordController {
     @PostMapping("/resetPassword/{email}")
     public ResponseEntity<String> resetPassword(@RequestBody ResetPassword resetPassword,
                                                 @PathVariable String email){
-
+        log.info("request to reset password.");
         //checking if new password and confirm password are the same
         if(!Objects.equals(resetPassword.password(),resetPassword.confirmPassword())){
             return new ResponseEntity<>("Please Re-Enter the password!",HttpStatus.EXPECTATION_FAILED);
         }
         String encodedPassword = passwordEncoder.encode(resetPassword.password());
 
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("User Not Found."));
+
+        log.info("updating the password.");
+        user.setPassword(encodedPassword);
         //updating in the db
-        userRepository.updatePassword(email,encodedPassword);
+        userRepository.save(user);
 
         return ResponseEntity.ok("Your Password has been reset successfully!");
     }
