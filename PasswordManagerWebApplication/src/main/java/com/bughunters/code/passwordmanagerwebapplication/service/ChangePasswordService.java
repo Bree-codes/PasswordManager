@@ -21,7 +21,7 @@ public class ChangePasswordService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<String> changePassword(Long id, ChangePasswordRequest changePasswordRequest) {
+    public void changePassword(Long id, ChangePasswordRequest changePasswordRequest) {
 
         // Fetch the user by ID, or throw an exception if not found
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found!"));
@@ -31,14 +31,15 @@ public class ChangePasswordService {
 
             // Check if the new password and the confirmation password match
             if (!Objects.equals(changePasswordRequest.getNewPassword(), changePasswordRequest.getConfirmNewPassword())) {
-                return new ResponseEntity<>("Passwords don't match! Enter the password again.", HttpStatus.CONFLICT);
+                new ResponseEntity<>("Passwords don't match! Enter the password again.", HttpStatus.CONFLICT);
+                return;
             }
 
             // Update the user's password with the new encoded password
             user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
             userRepository.save(user);
 
-            return new ResponseEntity<>("Password changed successfully!", HttpStatus.OK);
+            new ResponseEntity<>("Password changed successfully!", HttpStatus.OK);
         }
         else {
             // Throw an exception if the current password does not match with the password in the database
