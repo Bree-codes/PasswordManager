@@ -55,7 +55,7 @@ img {
 
 }
 @media screen  and (min-width:1000px ){
-    .container{
+    .Home{
         width: 100%;
         display: flex;
     }
@@ -97,7 +97,7 @@ img {
 }
 @media screen  and (max-width:768px ){
 
-   .container{
+   .Home{
         display: flow;
     }
 
@@ -125,7 +125,7 @@ img {
 
 }
 @media screen  and (max-width:500px ){
-    .container{
+    .Home{
         display: flow;
         height: 100%;
     }
@@ -176,7 +176,7 @@ img {
 
 }
 @media screen  and (max-width: 381px){
-    .container{
+    .Home{
         height: auto;
     }
 
