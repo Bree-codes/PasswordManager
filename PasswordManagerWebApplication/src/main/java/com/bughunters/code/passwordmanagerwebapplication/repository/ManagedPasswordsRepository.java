@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface ManagedPasswordsRepository extends JpaRepository<ManagedPassword,String> {
 
-
-
     Optional<List<ManagedPassword>> findAllByUserId(long userId);
 
     Optional<ManagedPassword> findByUserId(long userId);

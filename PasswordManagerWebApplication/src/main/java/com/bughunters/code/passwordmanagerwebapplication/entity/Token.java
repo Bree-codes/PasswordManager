@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "table")
+@Table(name = "token")
 public class Token {
 
     @Id
@@ -14,4 +14,5 @@ public class Token {
 
     private String token;
     private Boolean isLoggedOut;
+
 }
