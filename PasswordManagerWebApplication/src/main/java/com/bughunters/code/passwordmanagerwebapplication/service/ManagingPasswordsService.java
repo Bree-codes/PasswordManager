@@ -2,9 +2,11 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 
 import com.bughunters.code.passwordmanagerwebapplication.configuration.CryptoDetailsUtils;
 import com.bughunters.code.passwordmanagerwebapplication.entity.ManagedPassword;
+import com.bughunters.code.passwordmanagerwebapplication.entity.UpdatedPasswordsDetails;
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
 import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
 import com.bughunters.code.passwordmanagerwebapplication.repository.ManagedPasswordsRepository;
+import com.bughunters.code.passwordmanagerwebapplication.repository.UpdatedPasswordsRepositories;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
@@ -13,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,13 +28,16 @@ public class ManagingPasswordsService {
     private final CryptoDetailsUtils cryptoDetailsUtils;
     private final ModelMapper modelMapper;
     private final ManagedPasswordsRepository passwordsRepository;
+    private final UpdatedPasswordsRepositories updatedPasswordsRepository;
 
     public ManagingPasswordsService(CryptoDetailsUtils cryptoDetailsUtils,
                                     ModelMapper modelMapper,
-                                    ManagedPasswordsRepository passwordsRepository) {
+                                    ManagedPasswordsRepository passwordsRepository,
+                                    UpdatedPasswordsRepositories updatedPasswordsRepository) {
         this.cryptoDetailsUtils = cryptoDetailsUtils;
         this.modelMapper = modelMapper;
         this.passwordsRepository = passwordsRepository;
+        this.updatedPasswordsRepository = updatedPasswordsRepository;
 
         // Initialize model mapper configuration once
         this.modelMapper.getConfiguration()
@@ -118,9 +125,16 @@ public class ManagingPasswordsService {
             cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=", "cfXyXPfwgggkgp0c");
             updatePassword.setWebsiteName(passwords.getWebsiteName());
             updatePassword.setPassword(cryptoDetailsUtils.encrypt(passwords.getPassword()));
-            updatePassword.setUserId(userId);
 
             passwordsRepository.save(updatePassword);
+
+            // Save update details in UpdatedPassword table
+            UpdatedPasswordsDetails updatedPassword = new UpdatedPasswordsDetails();
+            updatedPassword.setUserid(userId);
+            updatedPassword.setManagedPasswordId(updatePassword.getManagedPasswordId());
+            updatedPassword.setUpdatedTime(Timestamp.valueOf(LocalDateTime.now()));
+            updatedPasswordsRepository.save(updatedPassword);
+
             log.info("Update success for userId: {}", userId);
 
             return modelMapper.map(updatePassword, ManagingPasswords.class);
@@ -129,6 +143,7 @@ public class ManagingPasswordsService {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+
     public ResponseEntity<String> deletePasswordByUserIdAndManaged(long userId, String passwordId) {
         log.info("Deleting password with ID {} for userId: {}", passwordId, userId);
 
@@ -147,8 +162,4 @@ public class ManagingPasswordsService {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
-
-
-
-
 }
