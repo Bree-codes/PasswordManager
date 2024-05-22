@@ -1,32 +1,48 @@
 package com.bughunters.code.passwordmanagerwebapplication.controller;
 
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
-import com.bughunters.code.passwordmanagerwebapplication.entity.UserProfiles;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserNotFoundException;
 import com.bughunters.code.passwordmanagerwebapplication.models.ProfileResponse;
 import com.bughunters.code.passwordmanagerwebapplication.models.ProfilesFromFront;
-import com.bughunters.code.passwordmanagerwebapplication.repository.UserProfileRepository;
+import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.service.UserProfileService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-
 public class ProfilesController {
-    private final UserProfileService userProfileService;
 
-    public ProfilesController(UserProfileService userProfileService) {
+    private final UserProfileService userProfileService;
+    private final UserRepository userRepository;
+
+    public ProfilesController(UserProfileService userProfileService, UserRepository userRepository) {
         this.userProfileService = userProfileService;
+        this.userRepository = userRepository;
     }
 
-    @PostMapping("/profile")
+    @PutMapping("/profiles")
     public ResponseEntity<ProfileResponse> updateProfile(@RequestBody ProfilesFromFront profilesFromFront,
-                                                         @AuthenticationPrincipal User user){
+                                                         @AuthenticationPrincipal User user) {
         ProfileResponse profileResponse = userProfileService.updateProfile(profilesFromFront, user);
-        return ResponseEntity.status(HttpStatus.OK).body(profileResponse);
+        return ResponseEntity.ok(profileResponse);
+    }
 
+    @GetMapping("/profiles/{userId}")
+    public ResponseEntity<?> getUserProfile(@PathVariable Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+        ProfileResponse userProfile = userProfileService.getUserProfile(user);
+        return ResponseEntity.ok(userProfile);
+    }
+
+    @DeleteMapping("/profiles/{userId}")
+    public ResponseEntity<String> deleteProfile(@PathVariable Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+        userProfileService.deleteUserProfile(user);
+        return ResponseEntity.ok("Profile deleted successfully");
     }
 }
+
+
