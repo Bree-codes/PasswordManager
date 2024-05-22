@@ -8,10 +8,14 @@ import lombok.Data;
 public class UserProfiles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String profileId;
-    private long userId;
+    private long profileId;
     @Lob
     private byte[] profileImage;
     private String firstName;
     private String lastName;
+
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }

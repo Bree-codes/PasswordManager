@@ -1,13 +1,14 @@
 
 
-.container {
-    display: flex;
+.Home {
+   display: flex;
     align-items: center;
     justify-content: space-between;
-   padding: 10px;
-   margin: 0;
+ /*  padding: 10px;
+   margin: 0;*/
     background-color:aqua;
-    width: 100%;
+   /* width: 100%;
+    height: 100%;*/
 }
 
 .content {
@@ -15,6 +16,7 @@
     padding-right: 20px;
     width: 50%;
     height: 100%;
+    margin-top: 100px;
 }
 
 .head {
@@ -53,8 +55,9 @@ img {
 
 }
 @media screen  and (min-width:1000px ){
-    .container{
+    .Home{
         width: 100%;
+        display: flex;
     }
 
     .head {
@@ -92,25 +95,39 @@ img {
 
 
 }
-@media screen  and (max-width:760px ){
+@media screen  and (max-width:768px ){
+
+   .Home{
+        display: flow;
+    }
+
 
     .image{
-        width: 80%;
+        width: 100%;
     }
-    .img {
+   /* .img {
         width:600px;
         height: 350px;
+    }*/
+    .content{
+        width: 100%;
+        background-color: gold;
     }
     .head {
-        font-size: 28px;
+        font-size: 25px;
 
+    }
+    .sub-head{
+        margin-left: 200px;
+        font-size: 16px;
     }
 
 
 }
 @media screen  and (max-width:500px ){
-    .container{
+    .Home{
         display: flow;
+        height: 100%;
     }
 
     .image {
@@ -159,6 +176,9 @@ img {
 
 }
 @media screen  and (max-width: 381px){
+    .Home{
+        height: auto;
+    }
 
     .head {
         font-size: 16px;

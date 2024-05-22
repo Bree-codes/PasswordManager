@@ -7,14 +7,19 @@ import RefreshAuthentication from "./Pages/Components/RefreshAuthentication";
 
 
 import ProtectedRoutes from "./Pages/Components/ProtectedRoutes";
+import {Home} from "./Pages/AppPages/Home";
+
+
 import PasswordsPage from "./Pages/AppPages/PasswordsPage";
 import {VerifyEmail} from "./Pages/AppPages/VerifyEmail";
 import {Home} from "./Pages/AppPages/Home";
 import PasswordsHome from "./Pages/AppPages/PasswordsHome";
 
+
 function App() {
   return (
       <>
+
         <Routes>
             <Route path={"/"}  element={(<RefreshAuthentication><NavigationBar /></RefreshAuthentication>)}>
                 <Route index element={<Home/>}/>
