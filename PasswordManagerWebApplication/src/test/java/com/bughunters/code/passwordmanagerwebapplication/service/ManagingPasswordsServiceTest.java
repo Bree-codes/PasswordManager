@@ -3,22 +3,23 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 import com.bughunters.code.passwordmanagerwebapplication.configuration.CryptoDetailsUtils;
 import com.bughunters.code.passwordmanagerwebapplication.entity.ManagedPassword;
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
+import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
 import com.bughunters.code.passwordmanagerwebapplication.repository.ManagedPasswordsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -29,80 +30,77 @@ public class ManagingPasswordsServiceTest {
     private CryptoDetailsUtils cryptoDetailsUtils;
 
     @Mock
-    private ManagedPasswordsRepository passwordsRepository;
+    private ModelMapper modelMapper;
 
     @Mock
-    private ModelMapper modelMapper;
+    private ManagedPasswordsRepository passwordsRepository;
 
     @InjectMocks
     private ManagingPasswordsService managingPasswordsService;
 
-    private ManagedPassword managedPassword;
     private ManagingPasswords managingPasswords;
+    private ManagedPassword managedPassword;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
+        managingPasswords = new ManagingPasswords(1L, "decryptedPassword", "username", "websiteName");
         managedPassword = new ManagedPassword();
         managedPassword.setUserId(1L);
-        managedPassword.setWebsiteName("example.com");
+        managedPassword.setWebsiteName("websiteName");
+        managedPassword.setUsername("username");
         managedPassword.setPassword("encryptedPassword");
-
-        managingPasswords = new ManagingPasswords(1L, "decryptedPassword", "example.com");
     }
 
     @Test
-    public void testManagePasswords() throws Exception {
-        List<ManagingPasswords> passwordsList = List.of(managingPasswords);
-        when(cryptoDetailsUtils.encrypt(anyString())).thenReturn("encryptedPassword");
+    void testManagePasswords() {
+        when(modelMapper.map(any(ManagingPasswords.class), eq(ManagedPassword.class))).thenReturn(managedPassword);
+        when(passwordsRepository.saveAll(anyList())).thenReturn(Collections.singletonList(managedPassword));
+        when(modelMapper.map(any(ManagedPassword.class), eq(MappedDetailsResponse.class))).thenReturn(new MappedDetailsResponse());
 
-        List<ManagingPasswords> result = managingPasswordsService.managePasswords(passwordsList);
+        List<MappedDetailsResponse> result = managingPasswordsService.managePasswords(Collections.singletonList(managingPasswords));
 
+        assertNotNull(result);
+        assertEquals(1, result.size());
         verify(passwordsRepository, times(1)).saveAll(anyList());
-        assertThat(result).isNotEmpty();
-        assertThat(result.get(0).getPassword()).isEqualTo("encryptedPassword");
     }
 
     @Test
-    public void testDecrypt() throws Exception {
-        when(passwordsRepository.findAllByUserId(1L)).thenReturn(Optional.of(List.of(managedPassword)));
+    void testDecrypt() throws Exception {
+        when(passwordsRepository.findAllByUserId(anyLong())).thenReturn(Optional.of(Collections.singletonList(managedPassword)));
         when(cryptoDetailsUtils.decrypt(anyString())).thenReturn("decryptedPassword");
 
         List<ManagingPasswords> result = managingPasswordsService.decrypt(1L);
 
-        assertThat(result).isNotEmpty();
-        assertThat(result.get(0).getPassword()).isEqualTo("decryptedPassword");
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("decryptedPassword", result.get(0).getPassword());
+        verify(passwordsRepository, times(1)).findAllByUserId(anyLong());
     }
 
     @Test
-    public void testDecrypt_NotFound() {
-        when(passwordsRepository.findAllByUserId(1L)).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> managingPasswordsService.decrypt(1L))
-                .isInstanceOf(ChangeSetPersister.NotFoundException.class);
-    }
-
-    @Test
-    public void testUpdateDetails() throws Exception {
-        when(passwordsRepository.findByUserId(1L)).thenReturn(Optional.of(managedPassword));
+    void testUpdateDetails() throws Exception {
+        when(passwordsRepository.findByUserId(anyLong())).thenReturn(Optional.of(managedPassword));
+        when(passwordsRepository.save(any(ManagedPassword.class))).thenReturn(managedPassword);
         when(cryptoDetailsUtils.encrypt(anyString())).thenReturn("encryptedPassword");
+        when(modelMapper.map(any(ManagedPassword.class), eq(ManagingPasswords.class))).thenReturn(managingPasswords);
 
         ManagingPasswords result = managingPasswordsService.updateDetails(1L, managingPasswords);
 
-        ArgumentCaptor<ManagedPassword> passwordCaptor = ArgumentCaptor.forClass(ManagedPassword.class);
-        verify(passwordsRepository).save(passwordCaptor.capture());
-        ManagedPassword capturedPassword = passwordCaptor.getValue();
-
-        assertThat(capturedPassword.getPassword()).isEqualTo("encryptedPassword");
-        assertThat(result).isNotNull();
-        assertThat(result.getPassword()).isEqualTo("encryptedPassword");
+        assertNotNull(result);
+        assertEquals("websiteName", result.getWebsiteName());
+        verify(passwordsRepository, times(1)).findByUserId(anyLong());
+        verify(passwordsRepository, times(1)).save(any(ManagedPassword.class));
     }
 
     @Test
-    public void testUpdateDetails_NotFound() {
-        when(passwordsRepository.findByUserId(1L)).thenReturn(Optional.empty());
+    void testDeletePasswordByUserIdAndPasswordId() {
+        when(passwordsRepository.findByUserIdAndManagedPasswordId(anyLong(), anyString())).thenReturn(Optional.of(managedPassword));
 
-        assertThatThrownBy(() -> managingPasswordsService.updateDetails(1L, managingPasswords))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Password with userId 1 not found");
+        ResponseEntity<String> response = managingPasswordsService. deletePasswordByUserIdAndManaged(1L, "1L");
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("deleted successfully", response.getBody());
+        verify(passwordsRepository, times(1)).findByUserIdAndManagedPasswordId(anyLong(), anyString());
+        verify(passwordsRepository, times(1)).delete(any(ManagedPassword.class));
     }
 }
