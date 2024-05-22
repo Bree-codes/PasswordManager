@@ -1,16 +1,13 @@
 .nav{
-    height: 100%;
-    position: sticky;
+    height: 50%;
+    position: fixed;
     top: 0;
     padding: 0;
-
-
 
 }
 
 nav ul{
 list-style: none;
-
 
 }
 nav ul li a {
@@ -123,10 +120,16 @@ nav ul li a{
     margin: 0;
     padding: 0;
     border-radius: 0;
+    position: fixed;
 }
 .container{
     width: 1200px;
     margin: 0;
     padding: 0;
     border-radius: 0;
+}
+
+#home-navbar {
+    position: fixed;
+    height: 100px;
 }

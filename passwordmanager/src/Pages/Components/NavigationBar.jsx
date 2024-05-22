@@ -1,10 +1,11 @@
 import {Link, Outlet} from "react-router-dom";
 import {Container, Nav, Navbar} from "react-bootstrap";
 import "../styling/NavigationBar.css"
+import {Footer} from "../AppPages/Footer";
 export const NavigationBar = () => {
     return (
         <>
-            <Navbar expand="md" className="bg-body-tertiary">
+            <Navbar expand="md" className="bg-body-tertiary" id={"home-navbar"}>
                 <Container fluid className={"container"}>
                     <Navbar.Toggle aria-controls="navbarScroll"/>
                     <div className={"home-md"}>
@@ -31,5 +32,6 @@ export const NavigationBar = () => {
             </Navbar>
 
             <Outlet></Outlet>
+            <Footer/>
         </>);
 }

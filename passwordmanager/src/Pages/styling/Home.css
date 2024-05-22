@@ -1,14 +1,14 @@
 
 
-.container {
-    display: flex;
+.Home {
+   display: flex;
     align-items: center;
     justify-content: space-between;
-   padding: 10px;
-   margin: 0;
+ /*  padding: 10px;
+   margin: 0;*/
     background-color:aqua;
-    width: 100%;
-    height: 100%;
+   /* width: 100%;
+    height: 100%;*/
 }
 
 .content {
@@ -16,6 +16,7 @@
     padding-right: 20px;
     width: 50%;
     height: 100%;
+    margin-top: 100px;
 }
 
 .head {

@@ -15,18 +15,24 @@ function App() {
   return (
       <>
 
-        <Routes>
+          <Routes>
 
-            <Route path={"/"}  element={(<RefreshAuthentication><NavigationBar /></RefreshAuthentication>)}>
-                <Route index element={<Home/>}/>
-                <Route path="SignUp" element={<SignUp/>}/>
-                <Route path="Login" element={<Login/>}/>
-            </Route>
-            <Route path={"home"} element={<ProtectedRoutes><Home/></ProtectedRoutes>}>
-                <Route path={"view/passwords"} element={<h1>password view page.</h1>} />
-            </Route>
-            <Route path={"*"} element={<h1>Page Not Found</h1>} />
-        </Routes>
+              <Route path={"/"} element={(<RefreshAuthentication><NavigationBar/></RefreshAuthentication>)}>
+                  <Route index element={<Home/>}/>
+                  <Route path="SignUp" element={<SignUp/>}/>
+                  <Route path="Login" element={<Login/>}/>
+              </Route>
+              <Route path={"home"} element={<ProtectedRoutes><Home/></ProtectedRoutes>}>
+                  <Route path={"view/passwords"} element={<h1>password view page.</h1>}/>
+              </Route>
+              <Route path={"*"} element={<h1>Page Not Found</h1>}/>
+          </Routes>
+          <div className="content">
+              <div className="page-section">
+                  Page Section with 120vh height
+              </div>
+
+          </div>
 
       </>);
 }

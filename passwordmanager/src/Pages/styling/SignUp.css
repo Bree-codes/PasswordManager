@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: start;
     margin-top: 20px;
+    height: 120vh;
 }
 
 .registration-form {
@@ -11,6 +12,7 @@
     padding: 15px 20px;
     border: #808080 solid 1px;
     border-radius: 20px;
+    margin-top: 100px;
 }
 
 .reg-title {

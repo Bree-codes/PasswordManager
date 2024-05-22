@@ -5,7 +5,7 @@ import {Footer} from "./Footer";
 export const Home =()=>{
     return(
         <>
-            <div className="container">
+            <div className="Home">
                 <div className="content">
                     <h2 className="head">Say goodbye to forgetting passwords</h2>
                     <h3 className="sub-head">
