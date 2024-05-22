@@ -14,5 +14,6 @@ public class ManagedPassword {
     private String managedPasswordId;
     private long userId;
     private String websiteName;
+    private String username;
     private String password;
 }
