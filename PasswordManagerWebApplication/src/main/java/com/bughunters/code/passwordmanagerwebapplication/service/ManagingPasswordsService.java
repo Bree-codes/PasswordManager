@@ -2,8 +2,11 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 
 import com.bughunters.code.passwordmanagerwebapplication.configuration.CryptoDetailsUtils;
 import com.bughunters.code.passwordmanagerwebapplication.entity.ManagedPassword;
+import com.bughunters.code.passwordmanagerwebapplication.entity.UpdatedPasswordsDetails;
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
+import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
 import com.bughunters.code.passwordmanagerwebapplication.repository.ManagedPasswordsRepository;
+import com.bughunters.code.passwordmanagerwebapplication.repository.UpdatedPasswordsRepositories;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
@@ -12,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,11 +28,16 @@ public class ManagingPasswordsService {
     private final CryptoDetailsUtils cryptoDetailsUtils;
     private final ModelMapper modelMapper;
     private final ManagedPasswordsRepository passwordsRepository;
+    private final UpdatedPasswordsRepositories updatedPasswordsRepository;
 
-    public ManagingPasswordsService(CryptoDetailsUtils cryptoDetailsUtils, ModelMapper modelMapper, ManagedPasswordsRepository passwordsRepository) {
+    public ManagingPasswordsService(CryptoDetailsUtils cryptoDetailsUtils,
+                                    ModelMapper modelMapper,
+                                    ManagedPasswordsRepository passwordsRepository,
+                                    UpdatedPasswordsRepositories updatedPasswordsRepository) {
         this.cryptoDetailsUtils = cryptoDetailsUtils;
         this.modelMapper = modelMapper;
         this.passwordsRepository = passwordsRepository;
+        this.updatedPasswordsRepository = updatedPasswordsRepository;
 
         // Initialize model mapper configuration once
         this.modelMapper.getConfiguration()
@@ -35,18 +45,19 @@ public class ManagingPasswordsService {
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
     }
 
-    public List<ManagingPasswords> managePasswords(List<ManagingPasswords> passwords) {
+    public List<MappedDetailsResponse> managePasswords(List<ManagingPasswords> passwords) {
         log.info("Service to manage passwords");
 
         try {
-            List<ManagedPassword> managedPasswordList = passwords.stream()
+            List<ManagedPassword> managedPasswordList;
+            managedPasswordList = passwords.stream()
                     .map(this::convertToManagedPassword)
                     .collect(Collectors.toList());
 
             passwordsRepository.saveAll(managedPasswordList);
 
             return managedPasswordList.stream()
-                    .map(p -> modelMapper.map(p, ManagingPasswords.class))
+                    .map(p -> modelMapper.map(p, MappedDetailsResponse.class))
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("Error managing passwords", e);
@@ -60,6 +71,7 @@ public class ManagingPasswordsService {
             ManagedPassword managedPassword = new ManagedPassword();
             managedPassword.setUserId(managingPasswords.getUserId());
             managedPassword.setWebsiteName(managingPasswords.getWebsiteName());
+            managedPassword.setUsername(managingPasswords.getUsername());
             managedPassword.setPassword(cryptoDetailsUtils.encrypt(managingPasswords.getPassword()));
             return managedPassword;
         } catch (Exception e) {
@@ -92,7 +104,7 @@ public class ManagingPasswordsService {
         try {
             cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=", "cfXyXPfwgggkgp0c");
             String decryptedPassword = cryptoDetailsUtils.decrypt(managedPassword.getPassword());
-            return new ManagingPasswords(managedPassword.getUserId(), decryptedPassword, managedPassword.getWebsiteName());
+            return new ManagingPasswords(managedPassword.getUserId(), decryptedPassword, managedPassword.getUsername(), managedPassword.getWebsiteName());
         } catch (Exception e) {
             log.error("Error decrypting password for managedPasswordId: {}", managedPassword.getUserId(), e);
             throw new RuntimeException("Decryption failed", e);
@@ -113,9 +125,16 @@ public class ManagingPasswordsService {
             cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=", "cfXyXPfwgggkgp0c");
             updatePassword.setWebsiteName(passwords.getWebsiteName());
             updatePassword.setPassword(cryptoDetailsUtils.encrypt(passwords.getPassword()));
-            updatePassword.setUserId(userId);
 
             passwordsRepository.save(updatePassword);
+
+            // Save update details in UpdatedPassword table
+            UpdatedPasswordsDetails updatedPassword = new UpdatedPasswordsDetails();
+            updatedPassword.setUserid(userId);
+            updatedPassword.setManagedPasswordId(updatePassword.getManagedPasswordId());
+            updatedPassword.setUpdatedTime(Timestamp.valueOf(LocalDateTime.now()));
+            updatedPasswordsRepository.save(updatedPassword);
+
             log.info("Update success for userId: {}", userId);
 
             return modelMapper.map(updatePassword, ManagingPasswords.class);
@@ -124,11 +143,12 @@ public class ManagingPasswordsService {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
-    public ResponseEntity<String> deletePasswordByUserIdAndPasswordId(long userId, long passwordId) {
+
+    public ResponseEntity<String> deletePasswordByUserIdAndManaged(long userId, String passwordId) {
         log.info("Deleting password with ID {} for userId: {}", passwordId, userId);
 
         try {
-            Optional<ManagedPassword> toDelete = passwordsRepository.findByUserIdAndPasswordId(userId, passwordId);
+            Optional<ManagedPassword> toDelete = passwordsRepository.findByUserIdAndManagedPasswordId(userId, passwordId);
             if (toDelete.isEmpty()) {
                 log.warn("Password with ID {} not found for userId: {}", passwordId, userId);
                 throw new IllegalArgumentException("Password with ID " + passwordId + " not found for userId " + userId);
@@ -142,8 +162,4 @@ public class ManagingPasswordsService {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
-
-
-
-
 }

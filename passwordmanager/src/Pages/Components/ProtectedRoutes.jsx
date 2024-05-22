@@ -6,7 +6,7 @@ function ProtectedRoutes({redirectPath="/login", children}){
     if(!sessionStorage.getItem("isLoggedIn")){
         return <Navigate to={redirectPath} replace state={{from:location}} />;
     }
-    /*return children || <Outlet />;*/
+    return children || <Outlet />;
 }
 
 export default ProtectedRoutes;

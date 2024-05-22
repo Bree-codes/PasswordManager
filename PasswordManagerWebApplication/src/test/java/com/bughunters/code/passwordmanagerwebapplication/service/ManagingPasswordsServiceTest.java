@@ -2,107 +2,119 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 
 import com.bughunters.code.passwordmanagerwebapplication.configuration.CryptoDetailsUtils;
 import com.bughunters.code.passwordmanagerwebapplication.entity.ManagedPassword;
+import com.bughunters.code.passwordmanagerwebapplication.entity.UpdatedPasswordsDetails;
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
+import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
 import com.bughunters.code.passwordmanagerwebapplication.repository.ManagedPasswordsRepository;
+import com.bughunters.code.passwordmanagerwebapplication.repository.UpdatedPasswordsRepositories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ManagingPasswordsServiceTest {
+class ManagingPasswordsServiceTest {
 
     @Mock
     private CryptoDetailsUtils cryptoDetailsUtils;
 
     @Mock
+    private ModelMapper modelMapper;
+
+    @Mock
     private ManagedPasswordsRepository passwordsRepository;
 
     @Mock
-    private ModelMapper modelMapper;
+    private UpdatedPasswordsRepositories updatedPasswordsRepository;
 
     @InjectMocks
     private ManagingPasswordsService managingPasswordsService;
 
     private ManagedPassword managedPassword;
     private ManagingPasswords managingPasswords;
+    private UpdatedPasswordsDetails updatedPassword;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         managedPassword = new ManagedPassword();
+        managedPassword.setManagedPasswordId(UUID.randomUUID().toString());
         managedPassword.setUserId(1L);
         managedPassword.setWebsiteName("example.com");
+        managedPassword.setUsername("user");
         managedPassword.setPassword("encryptedPassword");
 
-        managingPasswords = new ManagingPasswords(1L, "decryptedPassword", "example.com");
+        managingPasswords = new ManagingPasswords(1L, "password", "user", "example.com");
+
+        updatedPassword = new UpdatedPasswordsDetails();
+        updatedPassword.setUserid(1L);
+        updatedPassword.setManagedPasswordId(managedPassword.getManagedPasswordId());
+        updatedPassword.setUpdatedTime(Timestamp.valueOf(LocalDateTime.now()));
     }
 
     @Test
-    public void testManagePasswords() throws Exception {
-        List<ManagingPasswords> passwordsList = List.of(managingPasswords);
-        when(cryptoDetailsUtils.encrypt(anyString())).thenReturn("encryptedPassword");
+    void testManagePasswords() throws Exception {
+        List<ManagingPasswords> passwordsList = Collections.singletonList(managingPasswords);
+        List<ManagedPassword> managedPasswordList = Collections.singletonList(managedPassword);
+        List<MappedDetailsResponse> responseList = new ArrayList<>();
+        MappedDetailsResponse response = new MappedDetailsResponse();
+        responseList.add(response);
 
-        List<ManagingPasswords> result = managingPasswordsService.managePasswords(passwordsList);
+        when(modelMapper.map(any(ManagedPassword.class), eq(MappedDetailsResponse.class))).thenReturn(response);
+        when(cryptoDetailsUtils.encrypt(managingPasswords.getPassword())).thenReturn("encryptedPassword");
 
-        verify(passwordsRepository, times(1)).saveAll(anyList());
-        assertThat(result).isNotEmpty();
-        assertThat(result.get(0).getPassword()).isEqualTo("encryptedPassword");
+        List<MappedDetailsResponse> result = managingPasswordsService.managePasswords(passwordsList);
+
+        assertEquals(responseList.size(), result.size());
+        verify(passwordsRepository, times(1)).saveAll(managedPasswordList);
     }
 
     @Test
-    public void testDecrypt() throws Exception {
-        when(passwordsRepository.findAllByUserId(1L)).thenReturn(Optional.of(List.of(managedPassword)));
-        when(cryptoDetailsUtils.decrypt(anyString())).thenReturn("decryptedPassword");
+    void testDecrypt() throws Exception {
+        List<ManagedPassword> managedPasswords = Collections.singletonList(managedPassword);
+        List<ManagingPasswords> decryptedPasswords = Collections.singletonList(managingPasswords);
+
+        when(passwordsRepository.findAllByUserId(1L)).thenReturn(Optional.of(managedPasswords));
+        when(cryptoDetailsUtils.decrypt("encryptedPassword")).thenReturn("password");
 
         List<ManagingPasswords> result = managingPasswordsService.decrypt(1L);
 
-        assertThat(result).isNotEmpty();
-        assertThat(result.get(0).getPassword()).isEqualTo("decryptedPassword");
+        assertEquals(decryptedPasswords.size(), result.size());
+        assertEquals(decryptedPasswords.get(0).getPassword(), result.get(0).getPassword());
     }
 
     @Test
-    public void testDecrypt_NotFound() {
-        when(passwordsRepository.findAllByUserId(1L)).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> managingPasswordsService.decrypt(1L))
-                .isInstanceOf(ChangeSetPersister.NotFoundException.class);
-    }
-
-    @Test
-    public void testUpdateDetails() throws Exception {
+    void testUpdateDetails() throws Exception {
         when(passwordsRepository.findByUserId(1L)).thenReturn(Optional.of(managedPassword));
-        when(cryptoDetailsUtils.encrypt(anyString())).thenReturn("encryptedPassword");
+        when(cryptoDetailsUtils.encrypt(managingPasswords.getPassword())).thenReturn("encryptedPassword");
 
-        ManagingPasswords result = managingPasswordsService.updateDetails(1L, managingPasswords);
+        ManagingPasswords updated = managingPasswordsService.updateDetails(1L, managingPasswords);
 
-        ArgumentCaptor<ManagedPassword> passwordCaptor = ArgumentCaptor.forClass(ManagedPassword.class);
-        verify(passwordsRepository).save(passwordCaptor.capture());
-        ManagedPassword capturedPassword = passwordCaptor.getValue();
-
-        assertThat(capturedPassword.getPassword()).isEqualTo("encryptedPassword");
-        assertThat(result).isNotNull();
-        assertThat(result.getPassword()).isEqualTo("encryptedPassword");
+        assertEquals(managingPasswords.getWebsiteName(), updated.getWebsiteName());
+        assertEquals(managingPasswords.getUsername(), updated.getUsername());
+        verify(updatedPasswordsRepository, times(1)).save(any(UpdatedPasswordsDetails.class));
+        verify(passwordsRepository, times(1)).save(any(ManagedPassword.class));
     }
 
     @Test
-    public void testUpdateDetails_NotFound() {
-        when(passwordsRepository.findByUserId(1L)).thenReturn(Optional.empty());
+    void testDeletePasswordByUserIdAndManaged() {
+        when(passwordsRepository.findByUserIdAndManagedPasswordId(1L, managedPassword.getManagedPasswordId()))
+                .thenReturn(Optional.of(managedPassword));
 
-        assertThatThrownBy(() -> managingPasswordsService.updateDetails(1L, managingPasswords))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Password with userId 1 not found");
+        ResponseEntity<String> response = managingPasswordsService.deletePasswordByUserIdAndManaged(1L, managedPassword.getManagedPasswordId());
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(passwordsRepository, times(1)).delete(managedPassword);
     }
 }

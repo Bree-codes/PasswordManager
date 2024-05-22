@@ -1,0 +1,48 @@
+.home-header {
+    position: fixed;
+    height: 100px;
+    width: 100%;
+    background: #eee;
+    border-bottom: gainsboro solid 2px;
+    z-index: 2;
+}
+
+.view-passwords {
+    display: flex;
+    justify-content: start;
+    height: auto;
+}
+
+.passwords-page {
+    margin-top: 100px;
+    width: 30%;
+    min-height: 84vh;
+    border-right: gainsboro solid 1px;
+    z-index: 1;
+}
+
+.password-display {
+    left: 30%;
+    position: fixed;
+    margin-top: 100px;
+    width: 70%;
+    min-height: 84vh;
+}
+
+#title-holder:hover {
+    color: #422d2d;
+    background-color: rgba(211, 211, 211, 0.5);
+}
+
+#title-holder {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    border: none;
+    color: black;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+    border-bottom: darkgrey 1px solid;
+}

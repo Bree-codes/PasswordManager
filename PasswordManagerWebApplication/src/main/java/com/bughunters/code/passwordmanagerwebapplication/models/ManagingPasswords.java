@@ -7,11 +7,11 @@ import lombok.Data;
 public class ManagingPasswords {
     private long userId;
     private String websiteName;
+    private String username;
     private String password;
 
-    public ManagingPasswords( long user1, String password1, String website1) {
+
+    public ManagingPasswords(long userId, String decryptedPassword, String username, String websiteName) {
 
     }
-
-
 }
