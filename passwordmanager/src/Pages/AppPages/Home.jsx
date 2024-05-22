@@ -1,6 +1,7 @@
 import {Outlet} from "react-router-dom";
+import "./../styling/HomePage.css"
 import secure from "../pics/secure.jpeg"
-import "../styling/Home.css"
+
 export const Home =()=>{
     return(
         <>
@@ -16,8 +17,6 @@ export const Home =()=>{
                     <img src={secure}  alt={" Security pic"} />
                 </div>
             </div>
-
-
             <Outlet />
         </>
     );
