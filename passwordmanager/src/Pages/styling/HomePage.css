@@ -56,9 +56,18 @@
 
 #Password, #Username, #website-name {
     width: 40%;
+    padding: 10px;
 }
 
 .details-view-form {
    margin-left: 40px;
     margin-top: 40px;
+}
+#view {
+    background-color: transparent;
+    border: none;
+}
+
+#password-view {
+    display: flex;
 }
