@@ -2,8 +2,8 @@ package com.bughunters.code.passwordmanagerwebapplication.controllerAdvice;
 
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.models.ExceptionModel;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,13 +13,10 @@ import java.util.Date;
 
 @ControllerAdvice
 @Slf4j
+@RequiredArgsConstructor
 public class ExceptionHandling {
 
     private final ExceptionModel exceptionModel;
-    @Autowired
-    public ExceptionHandling(ExceptionModel exceptionModel) {
-        this.exceptionModel = exceptionModel;
-    }
 
     @ExceptionHandler(UserAlreadyExistException.class)
     public ResponseEntity<ExceptionModel> handleUserAlreadyExistException(UserAlreadyExistException exception){
@@ -31,4 +28,8 @@ public class ExceptionHandling {
 
         return  new ResponseEntity<>(exceptionModel,HttpStatus.FORBIDDEN);
     }
+
+
+
+
 }
