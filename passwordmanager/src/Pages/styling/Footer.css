@@ -1,5 +1,4 @@
-/* src/Footer.css */
-.footer {
+footer {
     background-color: #282c34;
     color: white;
     text-align: center;
@@ -28,3 +27,11 @@
 .footer-links a:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 600px) {
+    .footer {
+        padding: 0.5rem 0;
+    }
+}
+
+
