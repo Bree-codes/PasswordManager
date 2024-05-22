@@ -1,17 +1,7 @@
 import {Outlet} from "react-router-dom";
-<<<<<<< HEAD
 import "./../styling/HomePage.css"
-
-export const Home =()=>{
-    return(
-        <>
-            <div className={"home-header"}>
-                hello
-            </div>
-            <Outlet/>
-=======
 import secure from "../pics/secure.jpeg"
-import "../styling/Home.css"
+
 export const Home =()=>{
     return(
         <>
@@ -27,10 +17,7 @@ export const Home =()=>{
                     <img src={secure}  alt={" Security pic"} />
                 </div>
             </div>
-
-
             <Outlet />
->>>>>>> upstream/main
         </>
     );
 }
