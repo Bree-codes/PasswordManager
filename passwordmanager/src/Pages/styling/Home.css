@@ -1,0 +1,42 @@
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.content {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.head {
+    font-size: 28px;
+    color: #282c34;
+    margin-bottom: 24px;
+    font-weight: 700;
+}
+
+.sub-head{
+    font-size: 20px;
+    color: #555;
+    align-items: center;
+    margin-left: 150px;
+}
+
+.span-1{
+    display: block;
+
+}
+
+.image {
+    flex: 1;
+    text-align: center;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
