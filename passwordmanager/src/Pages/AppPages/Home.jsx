@@ -2,10 +2,14 @@ import {Outlet} from "react-router-dom";
 import "./../styling/HomePage.css"
 import secure from "../pics/secure.jpeg"
 
+import {Footer} from "./Footer";
+
+
+
 export const Home =()=>{
     return(
         <>
-            <div className="container">
+            <div className="Home">
                 <div className="content">
                     <h2 className="head">Say goodbye to forgetting passwords</h2>
                     <h3 className="sub-head">
@@ -18,6 +22,7 @@ export const Home =()=>{
                 </div>
             </div>
             <Outlet />
+            <Footer/>
         </>
     );
 }
