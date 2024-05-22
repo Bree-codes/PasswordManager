@@ -52,9 +52,28 @@ public class User implements UserDetails {
     private ForgotPassword forgotPassword;
 
 
-    @PrePersist
+    /*@PrePersist
     public void defaults(){
         this.role = Role.USER;
+    }*/
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserProfiles userProfiles;
+
+    // Other relationships and methods...
+
+    @PrePersist
+    public void defaults() {
+        this.role = Role.USER;
+        if (this.userProfiles == null) {
+            this.userProfiles = new UserProfiles();
+            this.userProfiles.setProfileImage(null);
+            //this.userProfiles.setUserId(this.id);
+            this.userProfiles.setFirstName("Default");
+            this.userProfiles.setLastName("Name");
+
+        }
     }
 
     @Override
