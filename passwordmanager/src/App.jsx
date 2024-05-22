@@ -10,6 +10,7 @@ import ProtectedRoutes from "./Pages/Components/ProtectedRoutes";
 import PasswordsPage from "./Pages/AppPages/PasswordsPage";
 import {VerifyEmail} from "./Pages/AppPages/VerifyEmail";
 import {Home} from "./Pages/AppPages/Home";
+import PasswordsHome from "./Pages/AppPages/PasswordsHome";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
                 <Route path={"verify/email"} element={<VerifyEmail/>} />
                 <Route path={"Login"} element={<Login/>} />
             </Route>
-            <Route path={"home"} element={<ProtectedRoutes><PasswordsPage/></ProtectedRoutes>}>
+            <Route path={"home"} element={<ProtectedRoutes><PasswordsHome /></ProtectedRoutes>}>
                 <Route path={"view/passwords"} element={<PasswordsPage />} />
             </Route>
             <Route path={"*"} element={<h1>Page Not Found</h1>} />
