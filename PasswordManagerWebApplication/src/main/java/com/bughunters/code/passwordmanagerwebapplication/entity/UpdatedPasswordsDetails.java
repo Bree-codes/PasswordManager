@@ -14,6 +14,6 @@ public class UpdatedPasswordsDetails {
     private long updatedId;
     private String managedPasswordId;
     private Timestamp updatedTime;
-    @ManyToOne
-    private ManagedPassword managedPassword;
+   /* @ManyToOne
+    private ManagedPassword managedPassword;*/
 }

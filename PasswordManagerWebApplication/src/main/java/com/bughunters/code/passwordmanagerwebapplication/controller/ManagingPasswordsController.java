@@ -43,8 +43,8 @@ public class ManagingPasswordsController {
     }
 
     @DeleteMapping("/{userId}/{passwordId}")
-    public ResponseEntity<ResponseEntity<String>> deletePasswordDetails(@PathVariable long passwordId, @PathVariable long userId){
+    public ResponseEntity<ResponseEntity<String>> deletePasswordDetails(@PathVariable String passwordId, @PathVariable long userId){
 
-        return ResponseEntity.status(HttpStatus.OK).body(passwordsService.deletePasswordByUserIdAndPasswordId(userId,passwordId));
+        return ResponseEntity.status(HttpStatus.OK).body(passwordsService. deletePasswordByUserIdAndManaged(userId,passwordId));
     }
 }

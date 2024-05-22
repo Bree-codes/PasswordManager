@@ -129,11 +129,11 @@ public class ManagingPasswordsService {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
-    public ResponseEntity<String> deletePasswordByUserIdAndPasswordId(long userId, long passwordId) {
+    public ResponseEntity<String> deletePasswordByUserIdAndManaged(long userId, String passwordId) {
         log.info("Deleting password with ID {} for userId: {}", passwordId, userId);
 
         try {
-            Optional<ManagedPassword> toDelete = passwordsRepository.findByUserIdAndPasswordId(userId, passwordId);
+            Optional<ManagedPassword> toDelete = passwordsRepository.findByUserIdAndManagedPasswordId(userId, passwordId);
             if (toDelete.isEmpty()) {
                 log.warn("Password with ID {} not found for userId: {}", passwordId, userId);
                 throw new IllegalArgumentException("Password with ID " + passwordId + " not found for userId " + userId);

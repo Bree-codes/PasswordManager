@@ -94,13 +94,13 @@ public class ManagingPasswordsServiceTest {
 
     @Test
     void testDeletePasswordByUserIdAndPasswordId() {
-        when(passwordsRepository.findByUserIdAndPasswordId(anyLong(), anyLong())).thenReturn(Optional.of(managedPassword));
+        when(passwordsRepository.findByUserIdAndManagedPasswordId(anyLong(), anyString())).thenReturn(Optional.of(managedPassword));
 
-        ResponseEntity<String> response = managingPasswordsService.deletePasswordByUserIdAndPasswordId(1L, 1L);
+        ResponseEntity<String> response = managingPasswordsService. deletePasswordByUserIdAndManaged(1L, "1L");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("deleted successfully", response.getBody());
-        verify(passwordsRepository, times(1)).findByUserIdAndPasswordId(anyLong(), anyLong());
+        verify(passwordsRepository, times(1)).findByUserIdAndManagedPasswordId(anyLong(), anyString());
         verify(passwordsRepository, times(1)).delete(any(ManagedPassword.class));
     }
 }
