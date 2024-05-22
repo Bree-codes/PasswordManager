@@ -1,5 +1,6 @@
 import "./../styling/HomePage.css"
 import PasswordLink from "../Components/PasswordLink";
+import PasswordView from "../Components/PasswordView";
 
 const PasswordsPage = () => {
     return(
@@ -17,9 +18,21 @@ const PasswordsPage = () => {
                 <PasswordLink />
                 <PasswordLink />
                 <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
+                <PasswordLink />
             </div>
             <div className={"password-display"}>
-                view ...
+               <PasswordView />
             </div>
         </div>);
 }
