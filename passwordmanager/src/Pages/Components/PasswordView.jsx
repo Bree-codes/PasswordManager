@@ -19,6 +19,11 @@ const PasswordView = ({websiteName, username, password, doEdit}) => {
 
 
     return (<div className={"password-view"}>
+                    <div className={"edit-delete"}>
+
+                        <Button id={"edit"}>Edit</Button>
+                        <Button id={"delete"}>Delete</Button>
+                    </div>
                 <Form className={"details-view-form"}>
                     <Form.Group>
                         <Form.Label className={"website-name"} htmlFor={"website-name"}>Website</Form.Label>
