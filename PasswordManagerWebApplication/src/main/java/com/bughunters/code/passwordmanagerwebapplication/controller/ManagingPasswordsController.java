@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/password-manager/auth")
+@RequestMapping("/api/password-manager/")
 public class ManagingPasswordsController {
 
     private final ManagingPasswordsService passwordsService;
