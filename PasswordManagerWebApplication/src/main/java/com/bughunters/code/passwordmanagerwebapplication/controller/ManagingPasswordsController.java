@@ -2,6 +2,7 @@
 package com.bughunters.code.passwordmanagerwebapplication.controller;
 
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
+import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
 import com.bughunters.code.passwordmanagerwebapplication.service.ManagingPasswordsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,10 @@ public class ManagingPasswordsController {
     }
 
     @PostMapping("/manage")
-    public ResponseEntity<List<ManagingPasswords>> managedPasswords(@RequestBody List<ManagingPasswords> passwords)
+    public ResponseEntity<List<MappedDetailsResponse>> managedPasswords(@RequestBody List<ManagingPasswords> passwords)
     {
         log.info("request to manage passwords");
-        List<ManagingPasswords> passwordsList = passwordsService.managePasswords(passwords);
+        List<MappedDetailsResponse> passwordsList = passwordsService.managePasswords(passwords);
         return ResponseEntity.status(HttpStatus.OK).body(passwordsList);
     }
 
@@ -43,9 +44,9 @@ public class ManagingPasswordsController {
     }
 
     @DeleteMapping("/{userId}/{passwordId}")
-    public ResponseEntity deletePasswordDetails(@PathVariable long passwordId, @PathVariable long userId){
+    public ResponseEntity<ResponseEntity<String>> deletePasswordDetails(@PathVariable String passwordId, @PathVariable long userId){
 
-        return ResponseEntity.status(HttpStatus.OK).body(passwordsService.deletePasswordByUserIdAndPasswordId(userId,passwordId));
+        return ResponseEntity.status(HttpStatus.OK).body(passwordsService. deletePasswordByUserIdAndManaged(userId,passwordId));
     }
 }
 

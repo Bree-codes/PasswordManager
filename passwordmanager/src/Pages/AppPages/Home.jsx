@@ -1,8 +1,15 @@
 import {Outlet} from "react-router-dom";
+import "./../styling/HomePage.css"
 import secure from "../pics/secure.jpeg"
-import "../styling/Home.css"
+
 import {Footer} from "./Footer";
-import {Profile} from "./Profile";
+
+
+
+
+
+
+
 export const Home =()=>{
     return(
         <>
@@ -18,11 +25,9 @@ export const Home =()=>{
                     <img src={secure}  alt={" Security pic"} />
                 </div>
             </div>
-
-
             <Outlet />
             <Footer/>
-            <Profile/>
+
         </>
     );
 }
