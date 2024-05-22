@@ -4,9 +4,7 @@ import secure from "../pics/secure.jpeg"
 
 import {Footer} from "./Footer";
 
-
-
-export const Home =()=>{
+export const Home =() =>{
     return(
         <>
             <div className="Home">
