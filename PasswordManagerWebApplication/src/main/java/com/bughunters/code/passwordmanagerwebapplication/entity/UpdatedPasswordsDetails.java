@@ -12,8 +12,8 @@ public class UpdatedPasswordsDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long updatedId;
+    private long userid;
     private String managedPasswordId;
     private Timestamp updatedTime;
-   /* @ManyToOne
-    private ManagedPassword managedPassword;*/
+
 }
