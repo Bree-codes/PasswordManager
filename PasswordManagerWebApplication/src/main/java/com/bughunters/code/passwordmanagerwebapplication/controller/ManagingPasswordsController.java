@@ -1,3 +1,4 @@
+
 package com.bughunters.code.passwordmanagerwebapplication.controller;
 
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
@@ -48,3 +49,4 @@ public class ManagingPasswordsController {
         return ResponseEntity.status(HttpStatus.OK).body(passwordsService. deletePasswordByUserIdAndManaged(userId,passwordId));
     }
 }
+
