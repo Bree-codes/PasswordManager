@@ -17,7 +17,8 @@ public class ChangePasswordController {
     private final ChangePasswordService changePasswordService;
 
     @PostMapping("/change-password/{Id}")
-    public ResponseEntity<String> changePassword(@PathVariable Long id, ChangePasswordRequest changePasswordRequest, @PathVariable String Id) {
+    public ResponseEntity<String> changePassword(@PathVariable Long id,
+                                                 ChangePasswordRequest changePasswordRequest) {
         changePasswordService.changePassword(id, changePasswordRequest);
         return new ResponseEntity<>("Password changed successfully.", HttpStatus.OK);
     }

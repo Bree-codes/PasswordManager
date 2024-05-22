@@ -1,9 +1,7 @@
 package com.bughunters.code.passwordmanagerwebapplication.controllerAdvice;
 
-import com.bughunters.code.passwordmanagerwebapplication.exceptions.EmailAlreadyExistException;
-import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.*;
 import com.bughunters.code.passwordmanagerwebapplication.models.ExceptionModel;
-import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,30 +16,58 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class ExceptionHandling {
 
-    private final ExceptionModel exceptionModel;
-
-    @ExceptionHandler(UserAlreadyExistException.class)
-    public ResponseEntity<ExceptionModel> handleUserAlreadyExistException(UserAlreadyExistException exception){
-        log.error("User Already ExistException occurred ");
-
+    private ResponseEntity<ExceptionModel> createResponseEntity(String message) {
+        ExceptionModel exceptionModel = new ExceptionModel();
         exceptionModel.setStatus(HttpStatus.FORBIDDEN);
-        exceptionModel.setMessage(exception.getMessage());
+        exceptionModel.setMessage(message);
         exceptionModel.setDate(new Date());
-
-        return  new ResponseEntity<>(exceptionModel,HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(exceptionModel, HttpStatus.FORBIDDEN);
     }
+
+   @ExceptionHandler(UserAlreadyExistException.class)
+   public ResponseEntity<ExceptionModel> handleUserAlreadyExistException(UserAlreadyExistException exception) {
+       log.error("UserAlreadyExistException occurred!");
+       return createResponseEntity(exception.getMessage());
+   }
 
     @ExceptionHandler(EmailAlreadyExistException.class)
     public ResponseEntity<ExceptionModel> handleEmailAlreadyExistException(EmailAlreadyExistException exception){
-
-        exceptionModel.setStatus(HttpStatus.FORBIDDEN);
-        exceptionModel.setMessage(exception.getMessage());
-        exceptionModel.setDate(new Date());
-
-        return new ResponseEntity<>(exceptionModel,HttpStatus.FORBIDDEN);
+       log.error("EmailAlreadyExistException occurred!");
+        return createResponseEntity(exception.getMessage());
     }
 
+    @ExceptionHandler(IncorrectPasswordException.class)
+    public ResponseEntity<ExceptionModel> handleIncorrectPasswordException(IncorrectPasswordException exception){
+      log.error("IncorrectPasswordException occurred!");
+       return createResponseEntity(exception.getMessage());
+    }
 
+    @ExceptionHandler(TokenRefreshmentException.class)
+    public ResponseEntity<ExceptionModel> handleTokenRefreshmentException(TokenRefreshmentException exception){
+        log.error("TokenRefreshmentException occurred!");
+        return createResponseEntity(exception.getMessage());
+   }
 
+    @ExceptionHandler(IncorrectVerificationCodeException.class)
+    public ResponseEntity<ExceptionModel> IncorrectVerificationCodeException(IncorrectVerificationCodeException exception){
+        log.error("IncorrectVerificationCodeException occurred!");
+        return createResponseEntity(exception.getMessage());
+    }
+
+    @ExceptionHandler(MailSendingException.class)
+    public ResponseEntity<ExceptionModel> MailSendingException(MailSendingException exception){
+       log.error("MailSendingException occurred!");
+        return createResponseEntity(exception.getMessage());
+   }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ExceptionModel> UserNotFoundException(UserNotFoundException exception){
+       log.error("UserNotFoundException occurred!");
+       return createResponseEntity(exception.getMessage());
+   }
 
 }
+
+
+
+
