@@ -1,6 +1,6 @@
 import {Link, Outlet} from "react-router-dom";
 import {Container, Nav, Navbar} from "react-bootstrap";
-import "./styling/NavigationBar.css"
+import "../styling/NavigationBar.css"
 export const NavigationBar = () => {
     return (
         <>

@@ -1,11 +1,13 @@
-import "./styling/SignUp.css"
+import "../styling/SignUp.css"
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
-import {userRegistration} from "./DataSource/backendUtils";
+import {userRegistration} from "../DataSource/backendUtils";
+import {useNavigate} from "react-router-dom";
 export const SignUp = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -16,8 +18,12 @@ export const SignUp = () => {
             password:password
         }
 
-        userRegistration(registrationRequest).then((respose) => {
-            //logic after registration is successful
+        userRegistration(registrationRequest).then((response) => {
+            sessionStorage.setItem("token", response.data.token);
+            sessionStorage.setItem("id", response.data.id);
+            sessionStorage.setItem("isLoggedIn", "true");
+
+            navigate("/home")
         }).catch((error) => {
             //login for error
         })
@@ -52,7 +58,8 @@ export const SignUp = () => {
 
                 <Form.Group>
                     <Form.Label className="confirm-password" htmlFor="confirm-password"> Confirm password:</Form.Label>
-                    <Form.Control id={"confirm-password"} type="password" name="cornfirm password" placeholder="confirm password"/>
+                    <Form.Control id={"confirm-password"} type="password" name="cornfirm password"
+                                  placeholder="confirm password"/>
                 </Form.Group>
 
                 <Button id={"submit"} type="submit" >Submit</Button>
