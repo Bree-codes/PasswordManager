@@ -1,6 +1,7 @@
 import {Outlet} from "react-router-dom";
 import secure from "../pics/secure.jpeg"
 import "../styling/Home.css"
+import {Footer} from "./Footer";
 export const Home =()=>{
     return(
         <>
@@ -19,6 +20,7 @@ export const Home =()=>{
 
 
             <Outlet />
+            <Footer/>
         </>
     );
 }
