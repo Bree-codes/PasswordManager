@@ -59,12 +59,13 @@ public class UserProfileService {
     }
 
     @Transactional // Ensures all changes are committed to the database
-    public void deleteUserProfile(User user) {
+    public String deleteUserProfile(User user) {
         UserProfiles userProfile = user.getUserProfiles();
         if (userProfile == null) {
             throw new IllegalArgumentException("User profile not found");
         }
 
         profileRepository.delete(userProfile);
+        return "deleted successfully";
     }
 }
