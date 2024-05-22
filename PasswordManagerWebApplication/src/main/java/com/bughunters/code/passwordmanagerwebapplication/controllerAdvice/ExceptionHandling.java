@@ -65,6 +65,11 @@ public class ExceptionHandling {
        log.error("UserNotFoundException occurred!");
        return createResponseEntity(exception.getMessage());
    }
+   @ExceptionHandler(PasswordUpdationException.class)
+    public ResponseEntity<ExceptionModel> passwordUpdationException(PasswordUpdationException e){
+        log.error("error occurred while updating password");
+        return createResponseEntity(e.getMessage());
+   }
 
 }
 

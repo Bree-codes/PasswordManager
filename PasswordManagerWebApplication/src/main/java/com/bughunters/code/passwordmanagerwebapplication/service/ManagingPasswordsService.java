@@ -3,6 +3,7 @@ package com.bughunters.code.passwordmanagerwebapplication.service;
 import com.bughunters.code.passwordmanagerwebapplication.configuration.CryptoDetailsUtils;
 import com.bughunters.code.passwordmanagerwebapplication.entity.ManagedPassword;
 import com.bughunters.code.passwordmanagerwebapplication.entity.UpdatedPasswordsDetails;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.*;
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
 import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
 import com.bughunters.code.passwordmanagerwebapplication.repository.ManagedPasswordsRepository;
@@ -61,7 +62,7 @@ public class ManagingPasswordsService {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("Error managing passwords", e);
-            throw new RuntimeException(e.getMessage(), e);
+            throw new ManagingPasswordsException("could not manage password");
         }
     }
 
@@ -76,7 +77,7 @@ public class ManagingPasswordsService {
             return managedPassword;
         } catch (Exception e) {
             log.error("Error encrypting password for userId: {}", managingPasswords.getUserId(), e);
-            throw new RuntimeException("Encryption failed", e);
+            throw new PasswordEncryptionException("Encryption failed");
         }
     }
 
@@ -95,8 +96,8 @@ public class ManagingPasswordsService {
                     .map(this::decryptPassword)
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            log.error("Error while decrypting passwords for userId: {}", userId, e);
-            throw new RuntimeException(e.getMessage(), e);
+            log.error("Error while decrypting passwords for userId: {}", userId);
+            throw new PasswordDecryptionException("could not decrypt password");
         }
     }
 
@@ -107,7 +108,7 @@ public class ManagingPasswordsService {
             return new ManagingPasswords(managedPassword.getUserId(), decryptedPassword, managedPassword.getUsername(), managedPassword.getWebsiteName());
         } catch (Exception e) {
             log.error("Error decrypting password for managedPasswordId: {}", managedPassword.getUserId(), e);
-            throw new RuntimeException("Decryption failed", e);
+            throw new PasswordDecryptionException("Decryption failed");
         }
     }
 
@@ -118,7 +119,7 @@ public class ManagingPasswordsService {
             Optional<ManagedPassword> toUpdate = passwordsRepository.findByUserId(userId);
             if (toUpdate.isEmpty()) {
                 log.warn("Password with userId {} not found", userId);
-                throw new IllegalArgumentException("Password with userId " + userId + " not found");
+                throw new PasswordNotFoundException("Password with userId " + userId + " not found");
             }
 
             ManagedPassword updatePassword = toUpdate.get();
@@ -140,7 +141,7 @@ public class ManagingPasswordsService {
             return modelMapper.map(updatePassword, ManagingPasswords.class);
         } catch (Exception e) {
             log.error("Error updating details for userId: {}", userId, e);
-            throw new RuntimeException(e.getMessage(), e);
+            throw new PasswordUpdationException("could not update the password details");
         }
     }
 
@@ -151,7 +152,7 @@ public class ManagingPasswordsService {
             Optional<ManagedPassword> toDelete = passwordsRepository.findByUserIdAndManagedPasswordId(userId, passwordId);
             if (toDelete.isEmpty()) {
                 log.warn("Password with ID {} not found for userId: {}", passwordId, userId);
-                throw new IllegalArgumentException("Password with ID " + passwordId + " not found for userId " + userId);
+                throw new PasswordNotFoundException("Password with ID " + passwordId + " not found for userId " + userId);
             }
 
             passwordsRepository.delete(toDelete.get());
@@ -159,7 +160,7 @@ public class ManagingPasswordsService {
             return ResponseEntity.status(HttpStatus.OK).body("deleted successfully");
         } catch (Exception e) {
             log.error("Error deleting password with ID {} for userId: {}", passwordId, userId, e);
-            throw new RuntimeException(e.getMessage(), e);
+            throw new PasswordDeletionException("could not delete the password details, try again");
         }
     }
 }
