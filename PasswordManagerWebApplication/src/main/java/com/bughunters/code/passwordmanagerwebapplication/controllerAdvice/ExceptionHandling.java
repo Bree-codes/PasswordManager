@@ -1,7 +1,9 @@
 package com.bughunters.code.passwordmanagerwebapplication.controllerAdvice;
 
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.EmailAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
 import com.bughunters.code.passwordmanagerwebapplication.models.ExceptionModel;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,13 +22,23 @@ public class ExceptionHandling {
 
     @ExceptionHandler(UserAlreadyExistException.class)
     public ResponseEntity<ExceptionModel> handleUserAlreadyExistException(UserAlreadyExistException exception){
-        log.error("Email Already ExistException occurred ");
+        log.error("User Already ExistException occurred ");
 
         exceptionModel.setStatus(HttpStatus.FORBIDDEN);
         exceptionModel.setMessage(exception.getMessage());
         exceptionModel.setDate(new Date());
 
         return  new ResponseEntity<>(exceptionModel,HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(EmailAlreadyExistException.class)
+    public ResponseEntity<ExceptionModel> handleEmailAlreadyExistException(EmailAlreadyExistException exception){
+
+        exceptionModel.setStatus(HttpStatus.FORBIDDEN);
+        exceptionModel.setMessage(exception.getMessage());
+        exceptionModel.setDate(new Date());
+
+        return new ResponseEntity<>(exceptionModel,HttpStatus.FORBIDDEN);
     }
 
 
