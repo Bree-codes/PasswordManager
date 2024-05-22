@@ -27,12 +27,6 @@ function App() {
               </Route>
               <Route path={"*"} element={<h1>Page Not Found</h1>}/>
           </Routes>
-          <div className="content">
-              <div className="page-section">
-                  Page Section with 120vh height
-              </div>
-
-          </div>
 
       </>);
 }

@@ -1,13 +1,15 @@
 import  { useState } from 'react';
+import "../styling/Profile.css"
 
-export const profile=()=>{
+export const Profile=()=>{
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [username ,setUsername]=useState();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [email, setEmail]=useState();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [avatar, setAvatar]=useState()
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [username, setUsername] = useState('');
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [email, setEmail] = useState('');
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [avatar, setAvatar] = useState(null);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
