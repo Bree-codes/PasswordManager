@@ -53,3 +53,12 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     margin: 15px 0 0 20px;
 }
+
+#Password, #Username, #website-name {
+    width: 40%;
+}
+
+.details-view-form {
+   margin-left: 40px;
+    margin-top: 40px;
+}

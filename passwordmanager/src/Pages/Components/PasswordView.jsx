@@ -1,9 +1,9 @@
 import {Form} from "react-bootstrap";
 import "./../styling/HomePage.css"
 
-const PasswordView = ({websiteName, username, password}) => {
+const PasswordView = ({websiteName, username, password, doEdit}) => {
     return (<div className={"password-view"}>
-                <Form>
+                <Form className={"details-view-form"}>
                     <Form.Group>
                         <Form.Label className={"website-name"} htmlFor={"website-name"}>Website</Form.Label>
                         <Form.Control id="website-name" type={"text"} disabled={true} value={"website name"} />
