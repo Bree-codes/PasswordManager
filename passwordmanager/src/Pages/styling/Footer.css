@@ -2,7 +2,8 @@ footer {
     background-color: #282c34;
     color: white;
     text-align: center;
-    padding: 1rem 0;
+    /* padding: 1rem 0;*/
+
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -15,12 +16,12 @@ footer {
 }
 
 .footer-links {
-    margin-top: 0.5rem;
+   /* margin-top: 0.5rem;*/
 }
 
 .footer-links a {
     color: white;
-    margin: 0 0.5rem;
+    /*margin: 0 0.5rem;*/
     text-decoration: none;
 }
 
@@ -30,7 +31,12 @@ footer {
 
 @media (max-width: 600px) {
     .footer {
-        padding: 0.5rem 0;
+        /*padding: 0.5rem 0;*/
+    }
+}
+@media (max-width: 280px) {
+    .footer {
+     /*   padding: 0.2rem 0;*/
     }
 }
 
