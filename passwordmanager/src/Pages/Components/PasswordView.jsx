@@ -1,4 +1,4 @@
-import {Button, Form, Image} from "react-bootstrap";
+import {Button, ButtonToolbar, Form, Image} from "react-bootstrap";
 import "./../styling/HomePage.css"
 import eyeSlash from "./../pics/eye-slash-solid.svg"
 import eye from "./../pics/eye-solid.svg"
@@ -10,6 +10,7 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
     const [doEdit, setDoEdit] = useState(true);
     const [editUsername, setEditUsername] = useState("Username");
     const [editPassword, setEditPassword] = useState("Password");
+    const [saveChanges, setSaveChanges] = useState("save-changes-hide");
 
 
     useEffect(() => {
@@ -24,29 +25,37 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
         if(!doEdit){
             setEditUsername("Username-edit");
             setEditPassword("Password-edit");
+            setSaveChanges("save-changes")
         }else {
             setEditUsername("Username");
             setEditPassword("Password");
+            setSaveChanges("save-changes-hide");
         }
     }, [doEdit]);
 
 
     return (<div className={"password-view"}>
-                    <div className={"edit-delete"}>
-
+                <div className={"edit-delete"}>
                         <Button onClick={() =>setDoEdit (false)} id={"edit"}>Edit</Button>
                         <Button id={"delete"}>Delete</Button>
-                    </div>
+                </div>
                 <Form className={"details-view-form"}>
                     <Form.Group>
                         <Form.Label className={"website-name"} htmlFor={"website-name"}>Website</Form.Label>
-                        <Form.Control id="website-name" type={"text"} disabled={true} value={"website name"} />
+                        <Form.Control id="website-name" type={"text"} disabled={true} value={websiteName} />
                     </Form.Group>
 
                     <Form.Group>
                         <Form.Label className={"username"} htmlFor={"Username"}>Username</Form.Label>
-                        <Form.Control id={editUsername} type={"text"} disabled={doEdit} value={username}
-                        onChange={(e) => setUsername(e.target.value)} />
+
+                        <div className={"username-copy"}>
+                            <Form.Control id={editUsername} type={"text"} disabled={doEdit} value={username}
+                            onChange={(e) => setUsername(e.target.value)} />
+
+                            <Button id={"password-copy"}>Copy</Button>
+
+                        </div>
+
                     </Form.Group>
 
                     <Form.Group>
@@ -61,9 +70,16 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
                             <Button onClick={() => setSee(true)}
                                     id={"view"}><Image src={eyeSlash} width={20} height={20} /></Button>}
 
+                            <Button id={"password-copy"}>Copy</Button>
+
                         </div>
                     </Form.Group>
                 </Form>
+                <div className={saveChanges}>
+                    <Button id={"save-changes"}>Save Changes</Button>
+                    <Button id={"cancel"} onClick={() => setDoEdit(true)}>Cancel</Button>
+                </div>
+
             </div>);
 }
 

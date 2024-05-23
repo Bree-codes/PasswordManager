@@ -100,3 +100,21 @@
     display: flex;
     justify-content: center;
 }
+
+.save-changes {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.save-changes-hide {
+    display: none;
+    gap: 30px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.username-copy {
+
+}
