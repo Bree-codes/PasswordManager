@@ -33,14 +33,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(req -> req.requestMatchers("/api/password-manager/auth/**"
                                 ,"/forgotPassword/**","/api/password/**")
                         .permitAll().anyRequest().authenticated())
-                .userDetailsService(userDetailsService)
+               .formLogin(Customizer.withDefaults())
+               .httpBasic(Customizer.withDefaults())
+               .userDetailsService(userDetailsService)
                .addFilterBefore(jwtFilterChain, UsernamePasswordAuthenticationFilter.class)
+               .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 

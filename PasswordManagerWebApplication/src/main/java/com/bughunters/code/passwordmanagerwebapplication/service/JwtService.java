@@ -67,7 +67,7 @@ public class JwtService {
 
 
     public Boolean isValid(String token, UserDetails userDetails){
-        return extractExpirationDate(token).compareTo(new Date()) < 0
+        return !(extractExpirationDate(token).compareTo(new Date()) < 0)
                 && getExtractUsername(token).equals(userDetails.getUsername());
     }
 

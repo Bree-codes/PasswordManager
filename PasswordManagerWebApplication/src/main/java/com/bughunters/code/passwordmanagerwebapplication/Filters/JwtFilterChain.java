@@ -1,6 +1,8 @@
 package com.bughunters.code.passwordmanagerwebapplication.Filters;
 
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.AuthenticationFailed;
 import com.bughunters.code.passwordmanagerwebapplication.service.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +39,8 @@ public class JwtFilterChain extends OncePerRequestFilter {
             @NonNull FilterChain filterChain)
             throws ServletException, IOException {
 
+        log.info("once per request....");
+
         /*Getting the Authorization details from the header*/
         try {
             String header = request.getHeader("Authorization");
@@ -49,6 +53,7 @@ public class JwtFilterChain extends OncePerRequestFilter {
 
             /*Extracting the token from the Authorization header.*/
             String token = header.substring(7);
+
 
             /*extracting the user details.*/
             String username = jwtService.getExtractUsername(token);
@@ -72,9 +77,12 @@ public class JwtFilterChain extends OncePerRequestFilter {
                 }
                 filterChain.doFilter(request, response);
             }
-        }catch (Exception e){
+        }catch (ExpiredJwtException e){
             handlerExceptionResolver.resolveException(request,response, null,e);
-            System.out.println(e);
+            throw new AuthenticationFailed("ExpiredJwtException");
+        }catch (Exception e){
+            handlerExceptionResolver.resolveException(request,response, null, e);
+            log.info(e+"");
         }
     }
 }
