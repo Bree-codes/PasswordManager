@@ -24,7 +24,7 @@ export const NavigationBar = () => {
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="nav" navbarScroll>
                             <ul className={"home"}>
-                                <li className={"home-icon"}><Link className="link" to="/">Home</Link></li>
+                                <li className={"home-icons"}><Link className="link" to="/">Home</Link></li>
                                 <ul className={"links"}>
                                     <li className="sign"><Link to="/SignUp">SignUp</Link></li>
                                     <li className="login"><Link to="/Login">Login</Link></li>

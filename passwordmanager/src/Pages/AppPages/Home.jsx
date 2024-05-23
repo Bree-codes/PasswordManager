@@ -14,7 +14,7 @@ export const Home =()=>{
     return(
         <>
             <div id ="Page">
-                <div className="content">
+                <div className="words">
                     <h2 className="head">Say goodbye to forgetting passwords</h2>
                     <h3 className="sub-head">
                         <span className="span-1">Make life</span> <br/>
