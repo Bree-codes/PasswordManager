@@ -1,6 +1,7 @@
 
+
 #NAVBAR{
-    background-color: #422d2d;
+   /*background-color: #422d2d;*/
 }
 
 .nav{
@@ -25,8 +26,8 @@ nav ul li a{
     text-decoration: none;
     color: black;
     font-weight: 700;
-    /*padding: 8px;*/
-    /*margin:  0 8px;*/
+    padding: 8px;
+    margin:  0 8px;
     border-radius: 8px;
 }
 .sign{
@@ -39,7 +40,7 @@ nav ul li a{
 }
 
 .nav {
-   /* background-color: aqua;*/
+  /*  background-color: aqua;*/
 }
 
 .home, .home-md {
@@ -47,7 +48,7 @@ nav ul li a{
     justify-content: flex-end;
     height: 100%;
     width: 100%;
-    /*background-color: gold;*/
+  /*  background-color: gold;*/
     margin-top: 20px;
    padding: 0;
     gap:40px;
@@ -69,10 +70,10 @@ nav ul li a{
     width:70%;
     height: 100%;
     list-style: none;
-  /* margin: 0 10px;*/
+     margin: 0 10px;
     /*margin-right: 10px;*/
     align-items: end;
-    margin: 0;
+   /* margin: 0;*/
     padding: 0;
 
 
@@ -84,26 +85,34 @@ nav ul li a{
 
     }
     .navbarScroll{
-        height: 50%;
+        height: 30%;
+    }
+
+    .home-icon {
+        width: 30%;
+        height: 40%;
+       /* list-style: none;
+        !*margin:0 10px;*!
+        margin-right: 30px;*/
+
     }
 
     .links {
         display: flex;
         justify-content: flex-end;
-        width: 100%;
-        height: 100%;
+        width: 70%;
+        height: 50%;
         list-style: none;
-        /* margin: 0 10px;*/
-        /*margin-right: 10px;*/
-        align-items: end;
-        margin: 0;
+        margin: 0 10px;
+       align-items: end;
+       /* margin: 0;*/
         padding: 0;
 
 
     }
     #home-navbar {
         position: fixed;
-        height: 100px;
+        height: 50%;
     }
 
 }
@@ -122,12 +131,12 @@ nav ul li a{
 .navbarScroll{
     width: 100%;
     height: 20%;
-    background-color: gold;
+/*!*    background-color: gold;*!*/
 }
 .bg-body-tertiary{
     width: 100%;
     height: 40%;
-/*    margin: 0;*/
+/*!*    margin: 0;*!*/
     padding: 0;
     border-radius: 0;
     position: fixed;
@@ -140,12 +149,12 @@ nav ul li a{
     margin: 0;
     padding: 0;
     border-radius: 0;
-    background-color: gold;
+   /*!* background-color: gold;*!*/
 }
 
 #home-navbar {
     position: fixed;
     height: 100px;
-    background-color: gold;
+  /* !* background-color: gold;*!*/
     width: 100%;
 }
