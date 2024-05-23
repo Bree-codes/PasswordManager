@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Component
 @EnableWebSecurity
@@ -26,17 +27,20 @@ public class SecurityConfig {
 
     private final JwtFilterChain jwtFilterChain;
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(req -> req.requestMatchers("/api/password-manager/auth/**","/forgotPassword/**")
+                .authorizeHttpRequests(req -> req.requestMatchers("/api/password-manager/auth/**"
+                                ,"/forgotPassword/**","/api/password/**")
                         .permitAll().anyRequest().authenticated())
-                .userDetailsService(userDetailsService)
+               .formLogin(Customizer.withDefaults())
+               .httpBasic(Customizer.withDefaults())
+               .userDetailsService(userDetailsService)
                .addFilterBefore(jwtFilterChain, UsernamePasswordAuthenticationFilter.class)
+               .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 
