@@ -16,4 +16,5 @@ public interface AccessTokenRepository extends CrudRepository<AccessTokenTable, 
 
 
     Optional<AccessTokenTable> findAllByUserAndIsLoggedOut(User user, Boolean isLoggedOut);
+
 }

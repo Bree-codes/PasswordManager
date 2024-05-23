@@ -51,12 +51,6 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user")
     private ForgotPassword forgotPassword;
 
-
-    /*@PrePersist
-    public void defaults(){
-        this.role = Role.USER;
-    }*/
-
     @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserProfiles userProfiles;
