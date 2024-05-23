@@ -6,19 +6,19 @@
     justify-content: space-between;
  /*  padding: 10px;
    margin: 0;*/
-    background-color:aqua;
+  /*  background-color:aqua;*/
    /* width: 100%;
     height: 100%;*/
     /*margin-top: 100px;*/
 }
 
-.content {
+.words {
     flex: 1;
     padding-right: 20px;
     width: 50%;
     height: 100%;
-    margin-top: 100px;
-    background-color: gold;
+  /*  margin-top: 100px;*/
+    /*background-color: gold;*/
 }
 
 .head {
@@ -44,7 +44,7 @@
 .image {
     flex: 1;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 150px;
     width: 60%;
     height: 100%;
 
@@ -63,13 +63,16 @@ img {
     }
 
     .head {
-        font-size: 28px;
+        font-size: 35px;
         margin-left: 150px;
 
     }
     .sub-head{
-        font-size: 18px;
+        font-size: 24px;
         margin-left: 300px;
+    }
+    .words2{
+        display: none;
     }
 
 
@@ -90,6 +93,9 @@ img {
         font-size: 18px;
         margin-left: 300px;
     }
+    .words2{
+        display: none;
+    }
 
 }
 @media screen  and (max-width:1201px ) {
@@ -108,6 +114,10 @@ img {
         font-size: 18px;
         margin-left: 200px;
     }
+    .words2{
+        display: none;
+    }
+
 
 }
 
@@ -117,7 +127,7 @@ img {
         width: 500px;
         height: 350px;
     }
-    .content{
+    .words{
         width: 60%;
     }
 
@@ -130,10 +140,14 @@ img {
         margin-left: 150px;
         font-size: 16px;
     }
+        .words2{
+            display: none;
+        }
 
 
 
-}
+
+    }
 @media screen  and (max-width:768px ){
 
     #Page{
@@ -143,22 +157,31 @@ img {
 
     .image{
         width: 100%;
+        height: 50%;
+        margin: 0;
+        padding: 0;
     }
    /* .img {
         width:600px;
         height: 350px;
     }*/
-    .content{
-        width: 100%;
-        background-color: gold;
+    .words{
+        display: none;
+       /* width: 100%;
+        height: 50%;*/
+      /*  background-color: gold;*/
     }
     .head {
         font-size: 25px;
+
 
     }
     .sub-head{
         margin-left: 200px;
         font-size: 16px;
+    }
+    .words2{
+        display: flow;
     }
 
 
@@ -173,14 +196,16 @@ img {
         width: 100%;
         height: 100%;
     }
-    .content{
+    .words{
         width: 100%;
         background-color: gold;
+       /* margin-top: 100px;*/
     }
 
     .head {
         font-size: 20px;
         margin-left: 50px;
+        /*margin-top: 200px;*/
 
 
     }
