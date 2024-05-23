@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/password-manager/")
+@RequestMapping("/api/password-manager")
 public class ManagingPasswordsController {
 
     private final ManagingPasswordsService passwordsService;
@@ -31,19 +31,20 @@ public class ManagingPasswordsController {
         return ResponseEntity.status(HttpStatus.OK).body(passwordsList);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/get/{userId}")
     public ResponseEntity<List<ManagingPasswords>> findAll(@PathVariable long userId) throws Exception {
+        log.info("request to get passwords...");
         List<ManagingPasswords> decrypt = passwordsService.decrypt(userId);
         return ResponseEntity.status(HttpStatus.OK).body(decrypt);
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/update/{userId}")
     public ResponseEntity<ManagingPasswords> update(@PathVariable long userId,@RequestBody ManagingPasswords passwords) throws Exception {
         ManagingPasswords managingPasswords = passwordsService.updateDetails(userId, passwords);
         return ResponseEntity.status(HttpStatus.OK).body(managingPasswords);
     }
 
-    @DeleteMapping("/{userId}/{passwordId}")
+    @DeleteMapping("/delete/{userId}/{passwordId}")
     public ResponseEntity<ResponseEntity<String>> deletePasswordDetails(@PathVariable String passwordId, @PathVariable long userId){
 
         return ResponseEntity.status(HttpStatus.OK).body(passwordsService. deletePasswordByUserIdAndManaged(userId,passwordId));

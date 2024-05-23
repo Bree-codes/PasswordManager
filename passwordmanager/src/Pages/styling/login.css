@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: start;
-    margin-top: 20px;
+   /* margin-top: 20px;*/
 }
 
 .login-form{
@@ -73,6 +73,7 @@ button{
 @media screen and (max-width: 380px) {
     .login-form{
         width: 70%;
+        border: none;
     }
 
 }
