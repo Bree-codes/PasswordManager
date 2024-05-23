@@ -1,4 +1,4 @@
-import {Button, Col, Form, Image} from "react-bootstrap";
+import {Button, Form, Image} from "react-bootstrap";
 import "./../styling/HomePage.css"
 import eyeSlash from "./../pics/eye-slash-solid.svg"
 import eye from "./../pics/eye-solid.svg"
@@ -8,6 +8,8 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
     const [see, setSee] = useState(false);
     const [passwordType, setPasswordType] = useState("");
     const [doEdit, setDoEdit] = useState(true);
+    const [editUsername, setEditUsername] = useState("Username");
+    const [editPassword, setEditPassword] = useState("Password");
 
 
     useEffect(() => {
@@ -17,6 +19,16 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
             setPasswordType("text")
         }
     }, [see]);
+
+    useEffect(() => {
+        if(!doEdit){
+            setEditUsername("Username-edit");
+            setEditPassword("Password-edit");
+        }else {
+            setEditUsername("Username");
+            setEditPassword("Password");
+        }
+    }, [doEdit]);
 
 
     return (<div className={"password-view"}>
@@ -33,15 +45,15 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
 
                     <Form.Group>
                         <Form.Label className={"username"} htmlFor={"Username"}>Username</Form.Label>
-                        <Form.Control id="Username" type={"text"} disabled={doEdit} value={username}
-                        onChange={(e) => setUsername(e.target.value)}/>
+                        <Form.Control id={editUsername} type={"text"} disabled={doEdit} value={username}
+                        onChange={(e) => setUsername(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group>
                         <Form.Label className={"password"} htmlFor={"Password"}>Password</Form.Label>
                         <div id={"password-view"}>
 
-                            <Form.Control id="Password"  type={passwordType} disabled={doEdit} value={password}
+                            <Form.Control id={editPassword}  type={passwordType} disabled={doEdit} value={password}
                             onChange={(e) => setPassword(e.target.value)} />
 
                             {see ? <Button onClick={() => setSee(false)}

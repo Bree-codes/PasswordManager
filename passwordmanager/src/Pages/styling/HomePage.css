@@ -57,12 +57,21 @@
 #Password, #Username, #website-name {
     width: 40%;
     padding: 10px;
+    border: none;
+    background-color: white;
 }
 
+#Username-edit, #Password-edit {
+    width: 40%;
+    padding: 10px;
+    border: #272a34 solid 2px;
+    background-color: rgba(192, 192, 196, 0.5);
+}
 
-#password-view {
+#password-view  {
     display: flex;
 }
+
 
 .details-view-form {
    margin-left: 40px;
