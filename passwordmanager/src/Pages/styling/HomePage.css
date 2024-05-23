@@ -24,7 +24,7 @@
 .password-display {
     left: 30%;
     position: fixed;
-    margin-top: 100px;
+    margin-top: 80px;
     width: 70%;
     min-height: 84vh;
 }
@@ -57,17 +57,79 @@
 #Password, #Username, #website-name {
     width: 40%;
     padding: 10px;
+    border: none;
+    background-color: white;
 }
+
+#Username-edit, #Password-edit {
+    width: 40%;
+    padding: 10px;
+    border: #272a34 solid 2px;
+    background-color: rgba(192, 192, 196, 0.3);
+}
+
+#password-view  {
+    display: flex;
+   align-content: center;
+}
+
 
 .details-view-form {
    margin-left: 40px;
-    margin-top: 40px;
 }
-#view {
+#view, #edit, #delete,#password-copy, #password-copied {
     background-color: transparent;
     border: none;
 }
 
-#password-view {
+#edit, #delete {
+    color: #282b34;
+    font-weight: bolder;
+    font-size: 20px;
+    font-family: Cantarell, ui-monospace;
+    margin-left: 20px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#edit:hover, #delete:hover{
+    background-color: rgba(192, 192, 192, 0.8);
+}
+
+.edit-delete {
     display: flex;
+    justify-content: center;
+}
+
+.save-changes {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.save-changes-hide {
+    display: none;
+}
+
+.username-copy {
+    display: flex;
+    gap: 42px;
+}
+
+#password-copy {
+    margin-left: 20px;
+    height: 70%;
+    background-color:rgba(192, 192, 192, 0.8);
+}
+
+#password-copied {
+    margin-left: 20px;
+    height: 70%;
+    background-color:rgba(192, 192, 192, 0.8);
+    color: green;
+}
+
+#hide{
+    display: none;
 }

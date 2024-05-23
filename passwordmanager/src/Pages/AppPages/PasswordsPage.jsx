@@ -14,29 +14,6 @@ const PasswordsPage = () => {
         <div className={"view-passwords"}>
             <div className={"passwords-page"}>
                 <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
-                <PasswordLink />
             </div>
             <div className={"password-display"}>
                <PasswordView />
