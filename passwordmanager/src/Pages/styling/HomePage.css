@@ -24,7 +24,7 @@
 .password-display {
     left: 30%;
     position: fixed;
-    margin-top: 100px;
+    margin-top: 80px;
     width: 70%;
     min-height: 84vh;
 }
@@ -65,7 +65,7 @@
     width: 40%;
     padding: 10px;
     border: #272a34 solid 2px;
-    background-color: rgba(192, 192, 196, 0.5);
+    background-color: rgba(192, 192, 196, 0.3);
 }
 
 #password-view  {
@@ -76,7 +76,6 @@
 
 .details-view-form {
    margin-left: 40px;
-    margin-top: 30px;
 }
 #view, #edit, #delete,#password-copy, #password-copied {
     background-color: transparent;
