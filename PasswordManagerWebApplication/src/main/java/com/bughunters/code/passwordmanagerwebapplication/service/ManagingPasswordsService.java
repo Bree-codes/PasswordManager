@@ -85,14 +85,11 @@ public class ManagingPasswordsService {
         log.info("Service to decrypt details for userId: {}", userId);
 
         try {
-            Optional<List<ManagedPassword>> optionalPasswords = passwordsRepository.findAllByUserId(userId);
-            if (optionalPasswords.isEmpty()) {
-                log.warn("No passwords found for userId: {}", userId);
-                throw new ChangeSetPersister.NotFoundException();
-            }
+           List<ManagedPassword> optionalPasswords = passwordsRepository.findAllByUserId(userId)
+                    .orElseThrow(ChangeSetPersister.NotFoundException::new);
 
-            List<ManagedPassword> managedPasswords = optionalPasswords.get();
-            return managedPasswords.stream()
+
+            return optionalPasswords.stream()
                     .map(this::decryptPassword)
                     .collect(Collectors.toList());
         } catch (Exception e) {
