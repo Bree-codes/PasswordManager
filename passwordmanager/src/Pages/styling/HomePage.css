@@ -70,14 +70,15 @@
 
 #password-view  {
     display: flex;
+   align-content: center;
 }
 
 
 .details-view-form {
    margin-left: 40px;
-    margin-top: 40px;
+    margin-top: 30px;
 }
-#view, #edit, #delete {
+#view, #edit, #delete,#password-copy {
     background-color: transparent;
     border: none;
 }
@@ -116,5 +117,12 @@
 }
 
 .username-copy {
+    display: flex;
+    gap: 42px;
+}
 
+#password-copy {
+    margin-left: 20px;
+    height: 70%;
+    background-color:rgba(192, 192, 192, 0.8);
 }
