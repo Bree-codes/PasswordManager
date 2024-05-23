@@ -4,9 +4,10 @@ import eyeSlash from "./../pics/eye-slash-solid.svg"
 import eye from "./../pics/eye-solid.svg"
 import {useEffect, useState} from "react";
 
-const PasswordView = ({websiteName, username, password, doEdit}) => {
+const PasswordView = ({websiteName, username, password, setUsername, setPassword}) => {
     const [see, setSee] = useState(false);
     const [passwordType, setPasswordType] = useState("");
+    const [doEdit, setDoEdit] = useState(true);
 
 
     useEffect(() => {
@@ -21,7 +22,7 @@ const PasswordView = ({websiteName, username, password, doEdit}) => {
     return (<div className={"password-view"}>
                     <div className={"edit-delete"}>
 
-                        <Button id={"edit"}>Edit</Button>
+                        <Button onClick={() =>setDoEdit (false)} id={"edit"}>Edit</Button>
                         <Button id={"delete"}>Delete</Button>
                     </div>
                 <Form className={"details-view-form"}>
@@ -32,17 +33,22 @@ const PasswordView = ({websiteName, username, password, doEdit}) => {
 
                     <Form.Group>
                         <Form.Label className={"username"} htmlFor={"Username"}>Username</Form.Label>
-                        <Form.Control id="Username" type={"text"} disabled={true} value={"username"} />
+                        <Form.Control id="Username" type={"text"} disabled={doEdit} value={username}
+                        onChange={(e) => setUsername(e.target.value)}/>
                     </Form.Group>
 
                     <Form.Group>
                         <Form.Label className={"password"} htmlFor={"Password"}>Password</Form.Label>
                         <div id={"password-view"}>
-                            <Form.Control id="Password"  type={passwordType} disabled={true} value={"password"} />
+
+                            <Form.Control id="Password"  type={passwordType} disabled={doEdit} value={password}
+                            onChange={(e) => setPassword(e.target.value)} />
+
                             {see ? <Button onClick={() => setSee(false)}
                                            id={"view"}><Image src={eye} width={20} height={20} /></Button> :
                             <Button onClick={() => setSee(true)}
                                     id={"view"}><Image src={eyeSlash} width={20} height={20} /></Button>}
+
                         </div>
                     </Form.Group>
                 </Form>
