@@ -11,6 +11,8 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
     const [editUsername, setEditUsername] = useState("Username");
     const [editPassword, setEditPassword] = useState("Password");
     const [saveChanges, setSaveChanges] = useState("save-changes-hide");
+    const [copyUsername, setCopyUsername] = useState("Copy");
+    const [copyPassword, setCopyPassword] = useState("Copy");
 
 
     useEffect(() => {
@@ -34,6 +36,15 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
     }, [doEdit]);
 
 
+    const handleCopyUsername = () => {
+
+        return navigator.clipboard.writeText(username);
+    }
+
+    const handleCopyPassword = () => {
+
+    }
+
     return (<div className={"password-view"}>
                 <div className={"edit-delete"}>
                         <Button onClick={() =>setDoEdit (false)} id={"edit"}>Edit</Button>
@@ -52,7 +63,7 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
                             <Form.Control id={editUsername} type={"text"} disabled={doEdit} value={username}
                             onChange={(e) => setUsername(e.target.value)} />
 
-                            <Button id={"password-copy"}>Copy</Button>
+                            <Button onClick={handleCopyUsername} id={"password-copy"}>{copyUsername}</Button>
 
                         </div>
 
@@ -70,7 +81,7 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
                             <Button onClick={() => setSee(true)}
                                     id={"view"}><Image src={eyeSlash} width={20} height={20} /></Button>}
 
-                            <Button id={"password-copy"}>Copy</Button>
+                            <Button onClick={handleCopyPassword} id={"password-copy"}>{copyPassword}</Button>
 
                         </div>
                     </Form.Group>
