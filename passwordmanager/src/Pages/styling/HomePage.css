@@ -111,9 +111,6 @@
 
 .save-changes-hide {
     display: none;
-    gap: 30px;
-    margin-top: 20px;
-    justify-content: center;
 }
 
 .username-copy {
@@ -132,4 +129,8 @@
     height: 70%;
     background-color:rgba(192, 192, 192, 0.8);
     color: green;
+}
+
+#hide{
+    display: none;
 }

@@ -1,4 +1,4 @@
-import {Button, ButtonToolbar, Form, Image} from "react-bootstrap";
+import {Button, Form, Image} from "react-bootstrap";
 import "./../styling/HomePage.css"
 import eyeSlash from "./../pics/eye-slash-solid.svg"
 import eye from "./../pics/eye-solid.svg"
@@ -29,11 +29,16 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
         if(!doEdit){
             setEditUsername("Username-edit");
             setEditPassword("Password-edit");
-            setSaveChanges("save-changes")
+            setSaveChanges("save-changes");
+            setCopyButtonUsername("hide");
+            setCopyButtonPassword("hide");
+
         }else {
             setEditUsername("Username");
             setEditPassword("Password");
             setSaveChanges("save-changes-hide");
+            setCopyButtonUsername("password-copy");
+            setCopyButtonPassword("password-copy");
         }
     }, [doEdit]);
 
