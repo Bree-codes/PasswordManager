@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(req -> req.requestMatchers("/api/password-manager/auth/**","/forgotPassword/**")
+                .authorizeHttpRequests(req -> req.requestMatchers("/api/password-manager/auth/**","/forgotPassword/**","/api/**")
                         .permitAll().anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
                .addFilterBefore(jwtFilterChain, UsernamePasswordAuthenticationFilter.class)

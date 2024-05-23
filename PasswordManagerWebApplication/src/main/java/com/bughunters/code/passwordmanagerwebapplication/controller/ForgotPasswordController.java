@@ -83,7 +83,7 @@ public class ForgotPasswordController {
 
         //checking if new password and confirm password are the same
         if(!Objects.equals(resetPassword.password(),resetPassword.confirmPassword())){
-            return new ResponseEntity<>("Please Re-Enter the password!",HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>("Passwords don't match./n Please Re-Enter the password!",HttpStatus.EXPECTATION_FAILED);
         }
         String encodedPassword = passwordEncoder.encode(resetPassword.password());
 

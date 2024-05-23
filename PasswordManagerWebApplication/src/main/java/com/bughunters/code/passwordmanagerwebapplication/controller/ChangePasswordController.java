@@ -1,6 +1,7 @@
 package com.bughunters.code.passwordmanagerwebapplication.controller;
 
 import com.bughunters.code.passwordmanagerwebapplication.DTO.ChangePasswordRequest;
+import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.service.ChangePasswordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +17,10 @@ public class ChangePasswordController {
 
     private final ChangePasswordService changePasswordService;
 
-    @PostMapping("/change-password/{Id}")
-    public ResponseEntity<String> changePassword(@PathVariable Long id,
-                                                 ChangePasswordRequest changePasswordRequest) {
+    @PostMapping("/change-password/{id}")
+    public ResponseEntity<String> changePassword(
+            @RequestBody ChangePasswordRequest changePasswordRequest, @PathVariable Long id) {
+        log.info("USer is requesting to change their password..");
         changePasswordService.changePassword(id, changePasswordRequest);
         return new ResponseEntity<>("Password changed successfully.", HttpStatus.OK);
     }

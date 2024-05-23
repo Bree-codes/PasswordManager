@@ -15,6 +15,7 @@ function App() {
   return (
       <>
 
+
         <Routes>
             <Route path={"/"}  element={(<RefreshAuthentication><NavigationBar /></RefreshAuthentication>)}>
                 <Route index element={<Home/>}/>
@@ -27,6 +28,7 @@ function App() {
             </Route>
             <Route path={"*"} element={<h1>Page Not Found</h1>} />
         </Routes>
+
       </>);
 }
 
