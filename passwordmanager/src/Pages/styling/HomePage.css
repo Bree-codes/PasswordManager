@@ -78,7 +78,7 @@
    margin-left: 40px;
     margin-top: 30px;
 }
-#view, #edit, #delete,#password-copy {
+#view, #edit, #delete,#password-copy, #password-copied {
     background-color: transparent;
     border: none;
 }
@@ -125,4 +125,11 @@
     margin-left: 20px;
     height: 70%;
     background-color:rgba(192, 192, 192, 0.8);
+}
+
+#password-copied {
+    margin-left: 20px;
+    height: 70%;
+    background-color:rgba(192, 192, 192, 0.8);
+    color: green;
 }

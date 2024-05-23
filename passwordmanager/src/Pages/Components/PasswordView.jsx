@@ -13,6 +13,8 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
     const [saveChanges, setSaveChanges] = useState("save-changes-hide");
     const [copyUsername, setCopyUsername] = useState("Copy");
     const [copyPassword, setCopyPassword] = useState("Copy");
+    const [copyButtonUsername, setCopyButtonUsername] = useState("password-copy");
+    const [copyButtonPassword, setCopyButtonPassword] = useState("password-copy");
 
 
     useEffect(() => {
@@ -38,11 +40,29 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
 
     const handleCopyUsername = () => {
 
+        setCopyUsername("Copied!");
+        setCopyPassword("Copy");
+        setCopyButtonUsername("password-copied");
+        setCopyButtonPassword("password-copy");
+        setTimeout(() => {
+            setCopyUsername("Copy");
+            setCopyButtonUsername("password-copy");
+        }, 10000);
+
         return navigator.clipboard.writeText(username);
     }
 
     const handleCopyPassword = () => {
 
+        setCopyPassword("Copied!");
+        setCopyUsername("Copy");
+        setCopyButtonUsername("password-copy");
+        setCopyButtonPassword("password-copied");
+        setTimeout(() => {
+            setCopyPassword("Copy");
+            setCopyButtonPassword("password-copy");
+        }, 10000);
+        return navigator.clipboard.writeText(password);
     }
 
     return (<div className={"password-view"}>
@@ -63,7 +83,7 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
                             <Form.Control id={editUsername} type={"text"} disabled={doEdit} value={username}
                             onChange={(e) => setUsername(e.target.value)} />
 
-                            <Button onClick={handleCopyUsername} id={"password-copy"}>{copyUsername}</Button>
+                            <Button onClick={handleCopyUsername} id={copyButtonUsername}>{copyUsername}</Button>
 
                         </div>
 
@@ -81,7 +101,7 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
                             <Button onClick={() => setSee(true)}
                                     id={"view"}><Image src={eyeSlash} width={20} height={20} /></Button>}
 
-                            <Button onClick={handleCopyPassword} id={"password-copy"}>{copyPassword}</Button>
+                            <Button onClick={handleCopyPassword} id={copyButtonPassword}>{copyPassword}</Button>
 
                         </div>
                     </Form.Group>
