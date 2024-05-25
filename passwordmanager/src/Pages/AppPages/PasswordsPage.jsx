@@ -4,9 +4,9 @@ import PasswordView from "../Components/PasswordView";
 import {useState} from "react";
 
 const PasswordsPage = () => {
-    const [websiteName, setWebSiteName] = useState("");
-    const [webSiteUsername, setWebSiteUsername] = useState("");
-    const [webSitePassword, setWebSitePassword] = useState("");
+    const [websiteName, setWebSiteName] = useState("google.com");
+    const [webSiteUsername, setWebSiteUsername] = useState("steve");
+    const [webSitePassword, setWebSitePassword] = useState("muish!");
 
 
 
@@ -16,7 +16,9 @@ const PasswordsPage = () => {
                 <PasswordLink />
             </div>
             <div className={"password-display"}>
-               <PasswordView />
+               <PasswordView username={webSiteUsername} setUsername={setWebSiteUsername}
+                             password={webSitePassword} setPassword={setWebSitePassword}
+                            websiteName={websiteName} />
             </div>
         </div>);
 }
