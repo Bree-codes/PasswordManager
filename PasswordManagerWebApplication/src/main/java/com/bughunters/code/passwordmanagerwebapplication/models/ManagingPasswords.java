@@ -1,6 +1,5 @@
 package com.bughunters.code.passwordmanagerwebapplication.models;
 
-import com.bughunters.code.passwordmanagerwebapplication.configuration.CryptoDetailsUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
