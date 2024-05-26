@@ -95,10 +95,10 @@ class ManagingPasswordsServiceTest {
 
     @Test
     void testUpdateDetails() throws Exception {
-        when(passwordsRepository.findByUserId(1L)).thenReturn(Optional.of(managedPassword));
+        when(passwordsRepository.findByUserIdAndManagedPasswordId(1L,"")).thenReturn(Optional.of(managedPassword));
         when(cryptoDetailsUtils.encrypt(managingPasswords.getPassword())).thenReturn("encryptedPassword");
 
-        ManagingPasswords updated = managingPasswordsService.updateDetails(1L, managingPasswords, managedPasswordId);
+        ManagingPasswords updated = managingPasswordsService.updateDetails(1L, managingPasswords, "");
 
         assertEquals(managingPasswords.getWebsiteName(), updated.getWebsiteName());
         assertEquals(managingPasswords.getUsername(), updated.getUsername());
