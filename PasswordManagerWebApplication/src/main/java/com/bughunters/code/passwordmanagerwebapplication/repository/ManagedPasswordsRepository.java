@@ -10,7 +10,5 @@ public interface ManagedPasswordsRepository extends JpaRepository<ManagedPasswor
 
     Optional<List<ManagedPassword>> findAllByUserId(long userId);
 
-    Optional<ManagedPassword> findByUserId(long userId);
-
     Optional<ManagedPassword> findByUserIdAndManagedPasswordId(long userId, String passwordId);
 }

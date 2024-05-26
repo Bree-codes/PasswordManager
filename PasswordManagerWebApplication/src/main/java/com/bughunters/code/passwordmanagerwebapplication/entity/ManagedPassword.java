@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.context.event.EventListener;
 
+import java.sql.Timestamp;
+
 @Data
 @Entity
 @EntityListeners(ManagedPasswordListener.class)
@@ -16,4 +18,5 @@ public class ManagedPassword {
     private String websiteName;
     private String username;
     private String password;
+    private Timestamp createdTime;
 }

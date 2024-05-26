@@ -38,9 +38,11 @@ public class ManagingPasswordsController {
         return ResponseEntity.status(HttpStatus.OK).body(decrypt);
     }
 
-    @PutMapping("/update/{userId}")
-    public ResponseEntity<ManagingPasswords> update(@PathVariable long userId,@RequestBody ManagingPasswords passwords) throws Exception {
-        ManagingPasswords managingPasswords = passwordsService.updateDetails(userId, passwords);
+    @PutMapping("/update/{userId}/{managedPasswordId}")
+    public ResponseEntity<ManagingPasswords> update(@PathVariable long userId,
+                                                    @RequestBody ManagingPasswords passwords,
+                                                    @PathVariable String managedPasswordId) throws Exception {
+        ManagingPasswords managingPasswords = passwordsService.updateDetails(userId, passwords,managedPasswordId);
         return ResponseEntity.status(HttpStatus.OK).body(managingPasswords);
     }
 

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -55,7 +54,7 @@ class ManagingPasswordsServiceTest {
         managedPassword.setUsername("user");
         managedPassword.setPassword("encryptedPassword");
 
-        managingPasswords = new ManagingPasswords(1L, "password", "user", "example.com");
+        managingPasswords = new ManagingPasswords(1L, "password", "user", "example.com", (List<Timestamp>) new Timestamp(System.currentTimeMillis()));
 
         updatedPassword = new UpdatedPasswordsDetails();
         updatedPassword.setUserid(1L);
@@ -99,7 +98,7 @@ class ManagingPasswordsServiceTest {
         when(passwordsRepository.findByUserId(1L)).thenReturn(Optional.of(managedPassword));
         when(cryptoDetailsUtils.encrypt(managingPasswords.getPassword())).thenReturn("encryptedPassword");
 
-        ManagingPasswords updated = managingPasswordsService.updateDetails(1L, managingPasswords);
+        ManagingPasswords updated = managingPasswordsService.updateDetails(1L, managingPasswords, managedPasswordId);
 
         assertEquals(managingPasswords.getWebsiteName(), updated.getWebsiteName());
         assertEquals(managingPasswords.getUsername(), updated.getUsername());
