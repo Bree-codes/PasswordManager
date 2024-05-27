@@ -79,7 +79,7 @@ button{
 }
 @media screen and (max-width: 355px) {
     .login-form{
-        width: 70%;
+        width: 100%;
     }
 
 }
