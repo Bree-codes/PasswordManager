@@ -13,7 +13,7 @@ public class UpdatedPasswordsDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long updatedId;
     private long userid;
-    private String managedPasswordId;
+    private long managedPasswordId;
     private Timestamp updatedTime;
 
 }
