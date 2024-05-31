@@ -22,15 +22,18 @@ public class ExceptionHandling {
 
         exceptionModel.setMessage(message);
         exceptionModel.setDate(new Date());
+
         return new ResponseEntity<>(exceptionModel, HttpStatus.FORBIDDEN);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
    @ExceptionHandler(UserAlreadyExistException.class)
    public ResponseEntity<ExceptionModel> handleUserAlreadyExistException(UserAlreadyExistException exception) {
        log.error("UserAlreadyExistException occurred!");
        return createResponseEntity(exception.getMessage());
    }
 
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(EmailAlreadyExistException.class)
     public ResponseEntity<ExceptionModel> handleEmailAlreadyExistException(EmailAlreadyExistException exception){
        log.error("EmailAlreadyExistException occurred!");
@@ -43,31 +46,37 @@ public class ExceptionHandling {
        return createResponseEntity(exception.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(TokenRefreshmentException.class)
     public ResponseEntity<ExceptionModel> handleTokenRefreshmentException(TokenRefreshmentException exception){
         log.error("TokenRefreshmentException occurred!");
         return createResponseEntity(exception.getMessage());
    }
 
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IncorrectVerificationCodeException.class)
     public ResponseEntity<ExceptionModel> IncorrectVerificationCodeException(IncorrectVerificationCodeException exception){
         log.error("IncorrectVerificationCodeException occurred!");
         return createResponseEntity(exception.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MailSendingException.class)
     public ResponseEntity<ExceptionModel> MailSendingException(MailSendingException exception){
        log.error("MailSendingException occurred!");
         return createResponseEntity(exception.getMessage());
    }
 
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ExceptionModel> UserNotFoundException(UserNotFoundException exception){
        log.error("UserNotFoundException occurred!");
        return createResponseEntity(exception.getMessage());
    }
+
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
    @ExceptionHandler(PasswordUpdationException.class)
-    public ResponseEntity<ExceptionModel> passwordUpdationException(PasswordUpdationException e){
+    public ResponseEntity<ExceptionModel> passwordUpdateException(PasswordUpdationException e){
         log.error("error occurred while updating password");
         return createResponseEntity(e.getMessage());
    }
