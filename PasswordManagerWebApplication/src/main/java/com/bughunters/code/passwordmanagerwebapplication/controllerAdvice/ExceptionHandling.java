@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Date;
 
@@ -18,7 +19,7 @@ public class ExceptionHandling {
 
     private ResponseEntity<ExceptionModel> createResponseEntity(String message) {
         ExceptionModel exceptionModel = new ExceptionModel();
-        exceptionModel.setStatus(HttpStatus.FORBIDDEN);
+
         exceptionModel.setMessage(message);
         exceptionModel.setDate(new Date());
         return new ResponseEntity<>(exceptionModel, HttpStatus.FORBIDDEN);
@@ -68,6 +69,15 @@ public class ExceptionHandling {
    @ExceptionHandler(PasswordUpdationException.class)
     public ResponseEntity<ExceptionModel> passwordUpdationException(PasswordUpdationException e){
         log.error("error occurred while updating password");
+        return createResponseEntity(e.getMessage());
+   }
+
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
+   @ExceptionHandler(InvalidUsernameOrPasswordException.class)
+    public ResponseEntity<ExceptionModel> handleInvalidUsernameOrPasswordException
+           (InvalidUsernameOrPasswordException e){
+        log.warn("InvalidUsernameOrPasswordException occurred!");
+
         return createResponseEntity(e.getMessage());
    }
 
