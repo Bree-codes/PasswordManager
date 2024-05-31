@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -80,10 +81,19 @@ public class AuthenticationService {
     public ResponseEntity<AuthorizationResponse> loginUser(
             LoginRequest loginRequest, HttpServletResponse response){
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()));
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()));
+        }catch (BadCredentialsException e){
+            log.error("Bad credentials");
+            throw new InvalidUsernameOrPasswordException("Invalid username or password");
+        }catch (Exception e){
+            System.out.println(e.getClass());
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         User user =  userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new UserNotFoundException("User Not Found!"));
@@ -99,7 +109,7 @@ public class AuthenticationService {
         response.addCookie(refreshCookieManagementService.generateRefreshToken(user)); // passing the user
 
 
-        log.info("Login completed");
+        log.info("Login successful!");
         return new ResponseEntity<>(authorizationResponse,HttpStatus.OK);
     }
 
