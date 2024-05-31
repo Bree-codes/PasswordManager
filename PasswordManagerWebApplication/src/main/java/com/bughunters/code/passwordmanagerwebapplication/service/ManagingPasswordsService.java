@@ -128,29 +128,40 @@ public class ManagingPasswordsService {
         log.info("Updating managed details for userId: {}", userId);
 
         try {
+            // Fetch the existing managed password entry
+            ManagedPassword updatePassword = passwordsRepository.findByUserIdAndManagedPasswordId(userId, managedPasswordId)
+                    .orElseThrow(() -> new PasswordUpdationException("Managed password not found"));
 
+            log.info("Fetched existing managed password details successfully");
 
-            ManagedPassword updatePassword = passwordsRepository.findByUserIdAndManagedPasswordId(userId, managedPasswordId).orElseThrow();
-            log.info("the old details got successfully");
+            // Initialize the CryptoDetailsUtils with the secret key
             cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=");
-            updatePassword.setWebsiteName(passwordsDetails.getWebsiteName());
-            log.info("website name updated");
-            updatePassword.setUsername(passwordsDetails.getUsername());
-            log.info("username updated");
-            updatePassword.setPassword(cryptoDetailsUtils.encrypt(passwordsDetails.getPassword()));
-            log.info("password updated");
 
+            // Update the managed password details
+            updatePassword.setWebsiteName(passwordsDetails.getWebsiteName());
+            log.info("Website name updated");
+
+            updatePassword.setUsername(passwordsDetails.getUsername());
+            log.info("Username updated");
+
+            // Encrypt the password before saving
+            String encryptedPassword = cryptoDetailsUtils.encrypt(passwordsDetails.getPassword());
+            updatePassword.setPassword(encryptedPassword);
+            log.info("Password encrypted and updated");
+
+            // Save the updated managed password entry
             passwordsRepository.save(updatePassword);
 
-            // Save update details in UpdatedPassword table
+            // Record the update details in the UpdatedPasswordsDetails table
             UpdatedPasswordsDetails updatedPassword = new UpdatedPasswordsDetails();
             updatedPassword.setUserid(userId);
             updatedPassword.setManagedPasswordId(updatePassword.getManagedPasswordId());
             updatedPassword.setUpdatedTime(Timestamp.valueOf(LocalDateTime.now()));
             updatedPasswordsRepository.save(updatedPassword);
 
-            log.info("Update success for userId: {}", userId);
+            log.info("Update successful for userId: {}", userId);
 
+            // Return the updated managed password details mapped to ManagingPasswords class
             return modelMapper.map(updatePassword, ManagingPasswords.class);
         } catch (Exception e) {
             log.error("Error updating details for userId: {}", userId, e);
