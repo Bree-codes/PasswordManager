@@ -1,13 +1,14 @@
 import "../styling/login.css"
 
-import {Button, Form} from "react-bootstrap";
-import {useState} from "react";
+import {Alert, Button, Form} from "react-bootstrap";
+import {useEffect, useState} from "react";
 import {login, } from "../DataSource/backendUtils";
 import {useNavigate} from "react-router-dom";
 export const    Login=()=>{
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
     const navigate = useNavigate();
+    const [loginError, setLoginError] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -26,11 +27,24 @@ export const    Login=()=>{
             navigate("/home");
 
         }).catch((error) => {
-            //login for error
+            setLoginError(error.response.data.message);
+            console.log(loginError);
         })
     }
+
+    useEffect(() => {
+        if(loginError !== ""){
+            setTimeout(() => {
+                setLoginError("")
+            }, 10000)
+        }
+    }, [loginError]);
+
+
+
     return(
         <div className="Login ">
+            {loginError && <Alert id={"error-alert"}>{loginError}</Alert>}
             <Form className={"login-form"} onSubmit={handleSubmit}>
                 <Form.Label className={"login-title"}>Login</Form.Label>
 
