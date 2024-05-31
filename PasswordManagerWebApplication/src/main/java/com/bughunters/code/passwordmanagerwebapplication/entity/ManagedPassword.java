@@ -12,11 +12,16 @@ import java.sql.Timestamp;
 @EntityListeners(ManagedPasswordListener.class)
 public class ManagedPassword {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String managedPasswordId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long managedPasswordId;
+
     private long userId;
+
     private String websiteName;
+
     private String username;
+
     private String password;
+
     private Timestamp createdTime;
 }
