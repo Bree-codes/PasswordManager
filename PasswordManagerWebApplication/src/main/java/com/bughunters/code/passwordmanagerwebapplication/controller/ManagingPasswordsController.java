@@ -3,6 +3,8 @@ package com.bughunters.code.passwordmanagerwebapplication.controller;
 
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
 import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
+import com.bughunters.code.passwordmanagerwebapplication.models.PasswordManaged;
+import com.bughunters.code.passwordmanagerwebapplication.models.UpdatingPasswordsDetails;
 import com.bughunters.code.passwordmanagerwebapplication.service.ManagingPasswordsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,22 +34,22 @@ public class ManagingPasswordsController {
     }
 
     @GetMapping("/get/{userId}")
-    public ResponseEntity<List<ManagingPasswords>> findAll(@PathVariable long userId) throws Exception {
+    public ResponseEntity<List<PasswordManaged>> findAll(@PathVariable long userId) throws Exception {
         log.info("request to get passwords...");
-        List<ManagingPasswords> decrypt = passwordsService.decrypt(userId);
+        List<PasswordManaged> decrypt = passwordsService.decrypt(userId);
         return ResponseEntity.status(HttpStatus.OK).body(decrypt);
     }
 
     @PutMapping("/update/{userId}/{managedPasswordId}")
     public ResponseEntity<ManagingPasswords> update(@PathVariable long userId,
-                                                    @RequestBody ManagingPasswords passwords,
-                                                    @PathVariable String managedPasswordId) throws Exception {
+                                                    @RequestBody UpdatingPasswordsDetails passwords,
+                                                    @PathVariable long managedPasswordId) throws Exception {
         ManagingPasswords managingPasswords = passwordsService.updateDetails(userId, passwords,managedPasswordId);
         return ResponseEntity.status(HttpStatus.OK).body(managingPasswords);
     }
 
     @DeleteMapping("/delete/{userId}/{passwordId}")
-    public ResponseEntity<ResponseEntity<String>> deletePasswordDetails(@PathVariable String passwordId, @PathVariable long userId){
+    public ResponseEntity<ResponseEntity<String>> deletePasswordDetails(@PathVariable long passwordId, @PathVariable long userId){
 
         return ResponseEntity.status(HttpStatus.OK).body(passwordsService. deletePasswordByUserIdAndManaged(userId,passwordId));
     }

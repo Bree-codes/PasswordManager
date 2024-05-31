@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Collection;
 
 public interface UpdatedPasswordsRepositories extends JpaRepository<UpdatedPasswordsDetails,Long> {
-    Collection<Object> findAllByManagedPasswordId(String s);
+    Collection<Object> findAllByManagedPasswordId(long s);
 }
