@@ -4,7 +4,6 @@ import com.bughunters.code.passwordmanagerwebapplication.exceptions.Authenticati
 import com.bughunters.code.passwordmanagerwebapplication.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-import java.io.IOException;
-
 
 @Slf4j
 @Component
@@ -32,12 +29,12 @@ public class JwtFilterChain extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
     private final HandlerExceptionResolver handlerExceptionResolver;
+
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain)
-            throws ServletException, IOException {
+            @NonNull FilterChain filterChain) {
 
         log.info("once per request....");
 
@@ -82,7 +79,7 @@ public class JwtFilterChain extends OncePerRequestFilter {
             throw new AuthenticationFailed("ExpiredJwtException");
         }catch (Exception e){
             handlerExceptionResolver.resolveException(request,response, null, e);
-            log.info(e+"");
+            log.info(String.valueOf(e));
         }
     }
 }

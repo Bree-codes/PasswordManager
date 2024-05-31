@@ -1,10 +1,7 @@
 package com.bughunters.code.passwordmanagerwebapplication.service;
 
 import com.bughunters.code.passwordmanagerwebapplication.entity.User;
-import com.bughunters.code.passwordmanagerwebapplication.exceptions.EmailAlreadyExistException;
-import com.bughunters.code.passwordmanagerwebapplication.exceptions.IncorrectVerificationCodeException;
-import com.bughunters.code.passwordmanagerwebapplication.exceptions.TokenRefreshmentException;
-import com.bughunters.code.passwordmanagerwebapplication.exceptions.UserAlreadyExistException;
+import com.bughunters.code.passwordmanagerwebapplication.exceptions.*;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.request.LoginRequest;
 import com.bughunters.code.passwordmanagerwebapplication.request.RegistrationRequest;
@@ -18,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -83,25 +81,35 @@ public class AuthenticationService {
     public ResponseEntity<AuthorizationResponse> loginUser(
             LoginRequest loginRequest, HttpServletResponse response){
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()));
 
-        User user =  userRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()));
+        }catch (BadCredentialsException e){
+            log.warn("login failed!");
+            throw new InvalidUsernameOrPasswordException("Invalid username or password!");
+        }catch (Exception e){
+            System.out.println(e.getClass());
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user =  userRepository.findByUsername(loginRequest.getUsername())
+                .orElseThrow(() -> new UserNotFoundException("User Not Found!"));
+
+
         AuthorizationResponse authorizationResponse = new AuthorizationResponse();
         authorizationResponse.setId(user.getId());
         authorizationResponse.setStatus(HttpStatus.OK);
         authorizationResponse.setMessage("Login successful!");
         authorizationResponse.setToken(accessTokenManagementService.generateAccessToken(user));
 
-
-        response.addCookie(refreshCookieManagementService.generateRefreshToken(
-                userRepository.findById(user.getId()).orElseThrow(
-                        () -> new UsernameNotFoundException("User Not Found.")))); //getting and passing the user
+        //generating a new refresh token for the user.
+        response.addCookie(refreshCookieManagementService.generateRefreshToken(user)); // passing the user
 
 
-        log.info("Login completed");
+        log.info("Login successful!");
         return new ResponseEntity<>(authorizationResponse,HttpStatus.OK);
     }
 
