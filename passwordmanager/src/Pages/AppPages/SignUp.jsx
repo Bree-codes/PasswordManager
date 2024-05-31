@@ -23,7 +23,7 @@ export const SignUp = () => {
             sessionStorage.setItem("id", response.data.id);
             sessionStorage.setItem("isLoggedIn", "true");
 
-            navigate("/home")
+            navigate("/verify/email");
         }).catch((error) => {
             //login for error
         })
