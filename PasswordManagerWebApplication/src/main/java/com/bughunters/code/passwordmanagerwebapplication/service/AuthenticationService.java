@@ -88,8 +88,8 @@ public class AuthenticationService {
                             loginRequest.getUsername(),
                             loginRequest.getPassword()));
         }catch (BadCredentialsException e){
-            log.error("Bad credentials");
-            throw new InvalidUsernameOrPasswordException("Invalid username or password");
+            log.warn("login failed!");
+            throw new InvalidUsernameOrPasswordException("Invalid username or password!");
         }catch (Exception e){
             System.out.println(e.getClass());
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

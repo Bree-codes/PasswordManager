@@ -85,6 +85,7 @@ public class ExceptionHandling {
    @ExceptionHandler(InvalidUsernameOrPasswordException.class)
     public ResponseEntity<ExceptionModel> handleInvalidUsernameOrPasswordException
            (InvalidUsernameOrPasswordException e){
+
         log.warn("InvalidUsernameOrPasswordException occurred!");
 
         return createResponseEntity(e.getMessage());
