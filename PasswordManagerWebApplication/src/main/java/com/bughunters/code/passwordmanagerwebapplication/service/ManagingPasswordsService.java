@@ -62,18 +62,21 @@ public class ManagingPasswordsService {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("Error managing passwords", e);
-            throw new ManagingPasswordsException("could not manage password");
+            throw new ManagingPasswordsException("Could not manage password");
         }
     }
 
     private ManagedPassword convertToManagedPassword(ManagingPasswords managingPasswords) {
         try {
-            cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=", "cfXyXPfwgggkgp0c");
+            cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=");
             ManagedPassword managedPassword = new ManagedPassword();
             managedPassword.setUserId(managingPasswords.getUserId());
             managedPassword.setWebsiteName(managingPasswords.getWebsiteName());
             managedPassword.setUsername(managingPasswords.getUsername());
             managedPassword.setPassword(cryptoDetailsUtils.encrypt(managingPasswords.getPassword()));
+            managedPassword.setCreatedTime(new Timestamp(System.currentTimeMillis()));
+
+
             return managedPassword;
         } catch (Exception e) {
             log.error("Error encrypting password for userId: {}", managingPasswords.getUserId(), e);
@@ -85,42 +88,49 @@ public class ManagingPasswordsService {
         log.info("Service to decrypt details for userId: {}", userId);
 
         try {
-           List<ManagedPassword> optionalPasswords = passwordsRepository.findAllByUserId(userId)
+            List<ManagedPassword> optionalPasswords = passwordsRepository.findAllByUserId(userId)
                     .orElseThrow(ChangeSetPersister.NotFoundException::new);
-
 
             return optionalPasswords.stream()
                     .map(this::decryptPassword)
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("Error while decrypting passwords for userId: {}", userId);
-            throw new PasswordDecryptionException("could not decrypt password");
+            throw new PasswordDecryptionException("Could not decrypt password");
         }
     }
 
     private ManagingPasswords decryptPassword(ManagedPassword managedPassword) {
         try {
-            cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=", "cfXyXPfwgggkgp0c");
+            cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=");
             String decryptedPassword = cryptoDetailsUtils.decrypt(managedPassword.getPassword());
-            return new ManagingPasswords(managedPassword.getUserId(), decryptedPassword, managedPassword.getUsername(), managedPassword.getWebsiteName());
+            UpdatedPasswordsDetails updatedPasswordsDetails = new UpdatedPasswordsDetails();
+            // Fetch update times
+            List<Timestamp> updateTimes = updatedPasswordsRepository.findAllByManagedPasswordId(managedPassword.getManagedPasswordId())
+                    .stream()
+                    .map(updatedTime->updatedPasswordsDetails.getUpdatedTime())
+                    .collect(Collectors.toList());
+
+            return new ManagingPasswords(managedPassword.getUserId(), decryptedPassword, managedPassword.getUsername(), managedPassword.getWebsiteName(), updateTimes);
         } catch (Exception e) {
             log.error("Error decrypting password for managedPasswordId: {}", managedPassword.getUserId(), e);
             throw new PasswordDecryptionException("Decryption failed");
         }
     }
 
-    public ManagingPasswords updateDetails(long userId, ManagingPasswords passwords) throws Exception {
+
+    public ManagingPasswords updateDetails(long userId, ManagingPasswords passwords, String managedPasswordId) throws Exception {
         log.info("Updating managed details for userId: {}", userId);
 
         try {
-            Optional<ManagedPassword> toUpdate = passwordsRepository.findByUserId(userId);
+            Optional<ManagedPassword> toUpdate = passwordsRepository.findByUserIdAndManagedPasswordId(userId,managedPasswordId);
             if (toUpdate.isEmpty()) {
                 log.warn("Password with userId {} not found", userId);
                 throw new PasswordNotFoundException("Password with userId " + userId + " not found");
             }
 
             ManagedPassword updatePassword = toUpdate.get();
-            cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=", "cfXyXPfwgggkgp0c");
+            cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=");
             updatePassword.setWebsiteName(passwords.getWebsiteName());
             updatePassword.setPassword(cryptoDetailsUtils.encrypt(passwords.getPassword()));
 
@@ -129,7 +139,7 @@ public class ManagingPasswordsService {
             // Save update details in UpdatedPassword table
             UpdatedPasswordsDetails updatedPassword = new UpdatedPasswordsDetails();
             updatedPassword.setUserid(userId);
-            updatedPassword.setManagedPasswordId(updatePassword.getManagedPasswordId());
+            updatedPassword.setManagedPasswordId(String.valueOf(updatePassword.getManagedPasswordId()));
             updatedPassword.setUpdatedTime(Timestamp.valueOf(LocalDateTime.now()));
             updatedPasswordsRepository.save(updatedPassword);
 
@@ -138,9 +148,11 @@ public class ManagingPasswordsService {
             return modelMapper.map(updatePassword, ManagingPasswords.class);
         } catch (Exception e) {
             log.error("Error updating details for userId: {}", userId, e);
-            throw new PasswordUpdationException("could not update the password details");
+            throw new PasswordUpdationException("Could not update the password details");
         }
     }
+
+
 
     public ResponseEntity<String> deletePasswordByUserIdAndManaged(long userId, String passwordId) {
         log.info("Deleting password with ID {} for userId: {}", passwordId, userId);
@@ -154,10 +166,10 @@ public class ManagingPasswordsService {
 
             passwordsRepository.delete(toDelete.get());
             log.info("Password with ID {} deleted successfully for userId: {}", passwordId, userId);
-            return ResponseEntity.status(HttpStatus.OK).body("deleted successfully");
+            return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
         } catch (Exception e) {
             log.error("Error deleting password with ID {} for userId: {}", passwordId, userId, e);
-            throw new PasswordDeletionException("could not delete the password details, try again");
+            throw new PasswordDeletionException("Could not delete the password details, try again");
         }
     }
 }

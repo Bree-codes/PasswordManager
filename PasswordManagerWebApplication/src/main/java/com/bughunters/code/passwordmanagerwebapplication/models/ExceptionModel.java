@@ -12,7 +12,5 @@ public class ExceptionModel {
 
     private String message;
 
-    private HttpStatus status;
-
     private Date date;
 }

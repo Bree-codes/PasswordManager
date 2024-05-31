@@ -2,10 +2,13 @@ import {Link, Outlet} from "react-router-dom";
 import {Container, Nav, Navbar} from "react-bootstrap";
 import "../styling/NavigationBar.css"
 import {Footer} from "../AppPages/Footer";
+
+
 export const NavigationBar = () => {
+
     return (
         <>
-            <div id="NAVBAR">
+               <div id="NAVBAR">
             <Navbar expand="md" className="bg-body-tertiary" id={"home-navbar"}>
                 <Container fluid className={"container"}>
                     <Navbar.Toggle aria-controls="navbarScroll"/>
@@ -21,7 +24,7 @@ export const NavigationBar = () => {
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="nav" navbarScroll>
                             <ul className={"home"}>
-                                <li className={"home-icon"}><Link className="link" to="/">Home</Link></li>
+                                <li className={"home-icons"}><Link className="link" to="/">Home</Link></li>
                                 <ul className={"links"}>
                                     <li className="sign"><Link to="/SignUp">SignUp</Link></li>
                                     <li className="login"><Link to="/Login">Login</Link></li>
@@ -35,5 +38,6 @@ export const NavigationBar = () => {
             <Outlet></Outlet>
             <Footer/>
             </div>
+
         </>);
 }
