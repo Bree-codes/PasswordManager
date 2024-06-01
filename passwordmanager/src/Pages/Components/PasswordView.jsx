@@ -97,7 +97,6 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
                     <Form.Group>
                         <Form.Label className={"password"} htmlFor={"Password"}>Password</Form.Label>
                         <div id={"password-view"}>
-
                             <Form.Control id={editPassword}  type={passwordType} disabled={doEdit} value={password}
                             onChange={(e) => setPassword(e.target.value)} />
 

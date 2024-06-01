@@ -73,6 +73,9 @@
    align-content: center;
 }
 
+#view{
+    margin: 0;
+}
 
 .details-view-form {
    margin-left: 40px;
@@ -118,7 +121,7 @@
 }
 
 #password-copy {
-    margin-left: 20px;
+    margin-left: 50px;
     height: 70%;
     background-color:rgba(192, 192, 192, 0.8);
 }
