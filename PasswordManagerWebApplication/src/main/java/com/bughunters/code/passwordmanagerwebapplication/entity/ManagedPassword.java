@@ -3,7 +3,6 @@ package com.bughunters.code.passwordmanagerwebapplication.entity;
 import com.bughunters.code.passwordmanagerwebapplication.configuration.ManagedPasswordListener;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.context.event.EventListener;
 
 import java.sql.Timestamp;
 

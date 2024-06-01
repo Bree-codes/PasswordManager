@@ -1,6 +1,7 @@
 
 package com.bughunters.code.passwordmanagerwebapplication.controller;
 
+import com.bughunters.code.passwordmanagerwebapplication.DTO.UpdatedResponse;
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
 import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
 import com.bughunters.code.passwordmanagerwebapplication.models.PasswordManaged;
@@ -40,12 +41,13 @@ public class ManagingPasswordsController {
         return ResponseEntity.status(HttpStatus.OK).body(decrypt);
     }
 
+
     @PutMapping("/update/{userId}/{managedPasswordId}")
-    public ResponseEntity<ManagingPasswords> update(@PathVariable long userId,
-                                                    @RequestBody UpdatingPasswordsDetails passwords,
-                                                    @PathVariable long managedPasswordId) throws Exception {
-        ManagingPasswords managingPasswords = passwordsService.updateDetails(userId, passwords,managedPasswordId);
-        return ResponseEntity.status(HttpStatus.OK).body(managingPasswords);
+    public ResponseEntity<UpdatedResponse> update(@PathVariable long userId,
+                                                  @RequestBody UpdatingPasswordsDetails passwords,
+                                                  @PathVariable long managedPasswordId) throws Exception {
+
+        return ResponseEntity.status(HttpStatus.OK).body(passwordsService.updateDetails(userId, passwords,managedPasswordId));
     }
 
     @DeleteMapping("/delete/{userId}/{passwordId}")

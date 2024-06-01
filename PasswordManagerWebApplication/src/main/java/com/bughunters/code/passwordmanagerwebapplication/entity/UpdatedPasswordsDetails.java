@@ -12,8 +12,11 @@ public class UpdatedPasswordsDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long updatedId;
+
     private long userid;
+
     private long managedPasswordId;
+
     private Timestamp updatedTime;
 
 }
