@@ -7,16 +7,17 @@ function RefreshAuthentication({redirectPath="/home", children}){
 
     useEffect(() => {
         if(!sessionStorage.getItem("isLoggedIn")) {
-
             refreshToken().then((response) => {
                 sessionStorage.setItem("isLoggedIn", "true");
                 sessionStorage.setItem("id", response.data.userId);
                 sessionStorage.setItem("token", response.data.token);
                 sessionStorage.setItem("username", response.data.username);
-
                 navigate(redirectPath);
-
             }).catch(() => {
+                sessionStorage.setItem("isLoggedIn", "null");
+                sessionStorage.setItem("id", "null");
+                sessionStorage.setItem("token", "null");
+                sessionStorage.setItem("username", "null");
                 console.log("Refresh Token Failed")
             })
         }

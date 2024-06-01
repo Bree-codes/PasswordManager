@@ -23,7 +23,7 @@ export async function login(registrationRequest){
 }
 
 export async function refreshToken(){
-    return await permittedEndPoints.put("/refresh/token").then(
+    await permittedEndPoints.put("/refresh/token").then(
         (response) => {
             sessionStorage.setItem("token", response.data.token);
             sessionStorage.setItem("id", response.data.id);
