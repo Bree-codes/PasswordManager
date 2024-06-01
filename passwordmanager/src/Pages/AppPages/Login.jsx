@@ -1,5 +1,4 @@
 import "../styling/login.css"
-
 import {Alert, Button, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {login, } from "../DataSource/backendUtils";
@@ -36,7 +35,7 @@ export const    Login=()=>{
         if(loginError !== ""){
             setTimeout(() => {
                 setLoginError("")
-            }, 10000)
+            }, 4000)
         }
     }, [loginError]);
 

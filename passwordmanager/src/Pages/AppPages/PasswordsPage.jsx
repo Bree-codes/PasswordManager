@@ -1,7 +1,7 @@
 import "./../styling/HomePage.css"
-import PasswordLink from "../Components/PasswordLink";
 import PasswordView from "../Components/PasswordView";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {Button} from "react-bootstrap";
 
 const PasswordsPage = () => {
     const [websiteName, setWebSiteName] = useState("google.com");
@@ -9,11 +9,17 @@ const PasswordsPage = () => {
     const [webSitePassword, setWebSitePassword] = useState("muish!");
 
 
+    useEffect(() => {
+
+
+    }, []);
+
+
 
     return(
         <div className={"view-passwords"}>
             <div className={"passwords-page"}>
-                <PasswordLink />
+                <Button id={"title-holder"}>Website Name.</Button>
             </div>
             <div className={"password-display"}>
                <PasswordView username={webSiteUsername} setUsername={setWebSiteUsername}
