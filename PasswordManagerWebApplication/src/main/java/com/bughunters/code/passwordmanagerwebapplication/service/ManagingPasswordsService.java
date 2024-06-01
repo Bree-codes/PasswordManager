@@ -6,6 +6,8 @@ import com.bughunters.code.passwordmanagerwebapplication.entity.UpdatedPasswords
 import com.bughunters.code.passwordmanagerwebapplication.exceptions.*;
 import com.bughunters.code.passwordmanagerwebapplication.models.ManagingPasswords;
 import com.bughunters.code.passwordmanagerwebapplication.models.MappedDetailsResponse;
+import com.bughunters.code.passwordmanagerwebapplication.models.PasswordManaged;
+import com.bughunters.code.passwordmanagerwebapplication.models.UpdatingPasswordsDetails;
 import com.bughunters.code.passwordmanagerwebapplication.repository.ManagedPasswordsRepository;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UpdatedPasswordsRepositories;
 import lombok.extern.slf4j.Slf4j;
@@ -84,7 +86,7 @@ public class ManagingPasswordsService {
         }
     }
 
-    public List<ManagingPasswords> decrypt(long userId) throws Exception {
+    public List<PasswordManaged> decrypt(long userId) throws Exception {
         log.info("Service to decrypt details for userId: {}", userId);
 
         try {
@@ -100,10 +102,13 @@ public class ManagingPasswordsService {
         }
     }
 
-    private ManagingPasswords decryptPassword(ManagedPassword managedPassword) {
+    private PasswordManaged decryptPassword(ManagedPassword managedPassword) {
         try {
             cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=");
             String decryptedPassword = cryptoDetailsUtils.decrypt(managedPassword.getPassword());
+            ManagedPassword createdTime = passwordsRepository.findByUserIdAndManagedPasswordId(managedPassword.getUserId(), managedPassword.getManagedPasswordId())
+                    .orElseThrow();
+            Timestamp time = createdTime.getCreatedTime();
             UpdatedPasswordsDetails updatedPasswordsDetails = new UpdatedPasswordsDetails();
             // Fetch update times
             List<Timestamp> updateTimes = updatedPasswordsRepository.findAllByManagedPasswordId(managedPassword.getManagedPasswordId())
@@ -111,7 +116,7 @@ public class ManagingPasswordsService {
                     .map(updatedTime->updatedPasswordsDetails.getUpdatedTime())
                     .collect(Collectors.toList());
 
-            return new ManagingPasswords(managedPassword.getUserId(), decryptedPassword, managedPassword.getUsername(), managedPassword.getWebsiteName(), updateTimes);
+            return new PasswordManaged(managedPassword.getUserId(), decryptedPassword, managedPassword.getUsername(), managedPassword.getWebsiteName(),time,updateTimes);
         } catch (Exception e) {
             log.error("Error decrypting password for managedPasswordId: {}", managedPassword.getUserId(), e);
             throw new PasswordDecryptionException("Decryption failed");
@@ -119,32 +124,44 @@ public class ManagingPasswordsService {
     }
 
 
-    public ManagingPasswords updateDetails(long userId, ManagingPasswords passwords, String managedPasswordId) throws Exception {
+    public ManagingPasswords updateDetails(long userId, UpdatingPasswordsDetails passwordsDetails, long managedPasswordId) throws Exception {
         log.info("Updating managed details for userId: {}", userId);
 
         try {
-            Optional<ManagedPassword> toUpdate = passwordsRepository.findByUserIdAndManagedPasswordId(userId,managedPasswordId);
-            if (toUpdate.isEmpty()) {
-                log.warn("Password with userId {} not found", userId);
-                throw new PasswordNotFoundException("Password with userId " + userId + " not found");
-            }
+            // Fetch the existing managed password entry
+            ManagedPassword updatePassword = passwordsRepository.findByUserIdAndManagedPasswordId(userId, managedPasswordId)
+                    .orElseThrow(() -> new PasswordUpdationException("Managed password not found"));
 
-            ManagedPassword updatePassword = toUpdate.get();
+            log.info("Fetched existing managed password details successfully");
+
+            // Initialize the CryptoDetailsUtils with the secret key
             cryptoDetailsUtils.initFromStrings("3k8C9JS6p0d4LwgF+PSa9a4qjNWPh/klCJC3Lm0wmuY=");
-            updatePassword.setWebsiteName(passwords.getWebsiteName());
-            updatePassword.setPassword(cryptoDetailsUtils.encrypt(passwords.getPassword()));
 
+            // Update the managed password details
+            updatePassword.setWebsiteName(passwordsDetails.getWebsiteName());
+            log.info("Website name updated");
+
+            updatePassword.setUsername(passwordsDetails.getUsername());
+            log.info("Username updated");
+
+            // Encrypt the password before saving
+            String encryptedPassword = cryptoDetailsUtils.encrypt(passwordsDetails.getPassword());
+            updatePassword.setPassword(encryptedPassword);
+            log.info("Password encrypted and updated");
+
+            // Save the updated managed password entry
             passwordsRepository.save(updatePassword);
 
-            // Save update details in UpdatedPassword table
+            // Record the update details in the UpdatedPasswordsDetails table
             UpdatedPasswordsDetails updatedPassword = new UpdatedPasswordsDetails();
             updatedPassword.setUserid(userId);
-            updatedPassword.setManagedPasswordId(String.valueOf(updatePassword.getManagedPasswordId()));
+            updatedPassword.setManagedPasswordId(updatePassword.getManagedPasswordId());
             updatedPassword.setUpdatedTime(Timestamp.valueOf(LocalDateTime.now()));
             updatedPasswordsRepository.save(updatedPassword);
 
-            log.info("Update success for userId: {}", userId);
+            log.info("Update successful for userId: {}", userId);
 
+            // Return the updated managed password details mapped to ManagingPasswords class
             return modelMapper.map(updatePassword, ManagingPasswords.class);
         } catch (Exception e) {
             log.error("Error updating details for userId: {}", userId, e);
@@ -154,7 +171,7 @@ public class ManagingPasswordsService {
 
 
 
-    public ResponseEntity<String> deletePasswordByUserIdAndManaged(long userId, String passwordId) {
+    public ResponseEntity<String> deletePasswordByUserIdAndManaged(long userId, long passwordId) {
         log.info("Deleting password with ID {} for userId: {}", passwordId, userId);
 
         try {

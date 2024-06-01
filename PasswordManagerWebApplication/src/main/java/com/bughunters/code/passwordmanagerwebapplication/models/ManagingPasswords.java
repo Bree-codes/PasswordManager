@@ -14,15 +14,15 @@ public class ManagingPasswords {
     private String password;
     private String username;
     private String websiteName;
-    private List<Timestamp> updateTimes;
+
+
 
     // Existing constructors, getters, and setters
 
-    public ManagingPasswords(long userId, String password, String username, String websiteName, List<Timestamp> updateTimes) {
+    public ManagingPasswords(long userId,String password, String username, String websiteName) {
         this.userId = userId;
         this.password = password;
         this.username = username;
         this.websiteName = websiteName;
-        this.updateTimes = updateTimes;
     }
 }
