@@ -33,6 +33,29 @@ button{
 .passwords{
     margin-top: 20px;
 }
+
+#error-alert{
+    position: absolute;
+    border: red solid 2px;
+    animation: slide-down 2s ease-in;
+    background-color: white;
+    left: 40%;
+    top:105px;
+}
+
+@keyframes slide-down {
+
+    from{
+        transform: translateY(-110px);
+    }
+
+    to{
+        transform: translateY(0px);
+    }
+}
+
+
+
 @media screen and (max-width: 1080px) {
     .login-form {
         width: 30%;
