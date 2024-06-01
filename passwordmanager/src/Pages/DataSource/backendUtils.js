@@ -7,6 +7,13 @@ const permittedEndPoints = axios.create({
     withCredentials:true
 });
 
+const secureEndpoints = axios.create({
+    baseURL:"http://localhost:8080/api/password-manager",
+    withCredentials:true,
+})
+
+secureEndpoints.interceptors.request.use(refreshToken);
+
 
 export async function userRegistration(registrationRequest){
     return await permittedEndPoints.post("/register", registrationRequest);
@@ -16,5 +23,18 @@ export async function login(registrationRequest){
 }
 
 export async function refreshToken(){
-    return await permittedEndPoints.put("/refresh/token");
+    return await permittedEndPoints.put("/refresh/token").then(
+        (response) => {
+            sessionStorage.setItem("token", response.data.token);
+            sessionStorage.setItem("id", response.data.id);
+            sessionStorage.setItem("isLoggedIn", "true");
+        }).catch((error) => {
+            sessionStorage.setItem("token", "null");
+            sessionStorage.setItem("id", "null");
+            sessionStorage.setItem("isLoggedIn", "null");
+        });
+}
+
+export async function getPasswords(userId){
+    return
 }

@@ -1,12 +1,18 @@
 import "./../styling/HomePage.css"
 import PasswordView from "../Components/PasswordView";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
 
 const PasswordsPage = () => {
     const [websiteName, setWebSiteName] = useState("google.com");
     const [webSiteUsername, setWebSiteUsername] = useState("steve");
     const [webSitePassword, setWebSitePassword] = useState("muish!");
+
+
+    useEffect(() => {
+
+
+    }, []);
 
 
 
