@@ -12,7 +12,7 @@ const secureEndpoints = axios.create({
     withCredentials:true,
 })
 
-secureEndpoints.interceptors.request.use(refreshToken);
+secureEndpoints.interceptors.request.use(refreshRequestToken);
 
 
 export async function userRegistration(registrationRequest){
@@ -22,17 +22,24 @@ export async function login(registrationRequest){
     return await permittedEndPoints.post("/login",registrationRequest);
 }
 
-export async function refreshToken(){
-    await permittedEndPoints.put("/refresh/token").then(
+export async function refreshRequestToken(){
+    return await permittedEndPoints.put("/refresh/token").then(
         (response) => {
             sessionStorage.setItem("token", response.data.token);
-            sessionStorage.setItem("id", response.data.id);
+            sessionStorage.setItem("id", response.data.userId);
+            sessionStorage.setItem("username", response.data.username)
             sessionStorage.setItem("isLoggedIn", "true");
+
+            console.log(response.data);
         }).catch((error) => {
-            sessionStorage.setItem("token", "null");
-            sessionStorage.setItem("id", "null");
-            sessionStorage.setItem("isLoggedIn", "null");
+            sessionStorage.setItem("token", "");
+            sessionStorage.setItem("id", "");
+            sessionStorage.setItem("isLoggedIn", "");
         });
+}
+
+export async  function refreshToken(){
+    return await permittedEndPoints.put("/refresh/token");
 }
 
 export async function getPasswords(userId){
