@@ -11,16 +11,18 @@ public class PasswordManaged {
     private String websiteName;
     private String username;
     private String password;
-    private Timestamp createdTime;
     private List<Timestamp> updatedTime;
 
     public PasswordManaged(long userId, String websiteName, String username,
-                           String password, Timestamp createdTime, List<Timestamp> updatedTime) {
+                           String password, List<Timestamp> updatedTime) {
         this.userId = userId;
+
         this.websiteName = websiteName;
+
         this.username = username;
+
         this.password = password;
-        this.createdTime = createdTime;
+
         this.updatedTime = updatedTime;
     }
 }
