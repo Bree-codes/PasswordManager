@@ -30,15 +30,13 @@ public class ManagingPasswordsController {
     public ResponseEntity<List<MappedDetailsResponse>> managedPasswords(@RequestBody List<ManagingPasswords> passwords)
     {
         log.info("request to manage passwords");
-        List<MappedDetailsResponse> passwordsList = passwordsService.managePasswords(passwords);
-        return ResponseEntity.status(HttpStatus.OK).body(passwordsList);
+        return ResponseEntity.status(HttpStatus.OK).body(passwordsService.managePasswords(passwords));
     }
 
     @GetMapping("/get/{userId}")
     public ResponseEntity<List<PasswordManaged>> findAll(@PathVariable long userId) throws Exception {
         log.info("request to get passwords...");
-        List<PasswordManaged> decrypt = passwordsService.decrypt(userId);
-        return ResponseEntity.status(HttpStatus.OK).body(decrypt);
+        return ResponseEntity.status(HttpStatus.OK).body(passwordsService.decrypt(userId));
     }
 
 
