@@ -27,7 +27,6 @@ export const    Login=()=>{
 
         }).catch((error) => {
             setLoginError(error.response.data.message);
-            console.log(loginError);
         })
     }
 

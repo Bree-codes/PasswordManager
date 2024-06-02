@@ -10,7 +10,10 @@ const permittedEndPoints = axios.create({
 const secureEndpoints = axios.create({
     baseURL:"http://localhost:8080/api/password-manager",
     withCredentials:true,
-})
+    headers:{
+        Authorization:`${sessionStorage.getItem("token")}`
+    }
+});
 
 secureEndpoints.interceptors.request.use(refreshRequestToken);
 
@@ -43,5 +46,5 @@ export async  function refreshToken(){
 }
 
 export async function getPasswords(userId){
-    return
+    return await  secureEndpoints.get(`/get/${userId}`);
 }

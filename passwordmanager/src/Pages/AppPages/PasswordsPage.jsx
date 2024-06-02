@@ -2,6 +2,7 @@ import "./../styling/HomePage.css"
 import PasswordView from "../Components/PasswordView";
 import {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
+import {getPasswords} from "../DataSource/backendUtils";
 
 const PasswordsPage = () => {
     const [websiteName, setWebSiteName] = useState("google.com");
@@ -11,7 +12,11 @@ const PasswordsPage = () => {
 
     useEffect(() => {
 
-
+        getPasswords((response) => {
+            //console.log(response.data);
+        }).catch((error) => {
+            //console.log(error.response);
+        })
     }, []);
 
 
