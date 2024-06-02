@@ -32,8 +32,6 @@ export async function refreshRequestToken(){
             sessionStorage.setItem("id", response.data.userId);
             sessionStorage.setItem("username", response.data.username)
             sessionStorage.setItem("isLoggedIn", "true");
-
-            console.log(response.data);
         }).catch((error) => {
             sessionStorage.setItem("token", "");
             sessionStorage.setItem("id", "");
