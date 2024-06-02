@@ -2,7 +2,7 @@ import {Navigate, Outlet, useLocation, useNavigate} from "react-router-dom";
 import {refreshToken} from "../DataSource/backendUtils";
 import {useEffect} from "react";
 
-function RefreshAuthentication({redirectPath="/home", children}){
+function RefreshAuthentication({redirectPath="/home/view/passwords", children}){
     const navigate = useNavigate();
 
     useEffect(() => {

@@ -23,7 +23,7 @@ export const    Login=()=>{
             sessionStorage.setItem("id", response.data.id);
             sessionStorage.setItem("isLoggedIn", "true");
 
-            navigate("/home");
+            navigate("/home/view/passwords");
 
         }).catch((error) => {
             setLoginError(error.response.data.message);
