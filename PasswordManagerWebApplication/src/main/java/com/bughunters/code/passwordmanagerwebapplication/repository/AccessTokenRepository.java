@@ -15,6 +15,6 @@ import java.util.Optional;
 public interface AccessTokenRepository extends CrudRepository<AccessTokenTable, Long> {
 
 
-    Optional<AccessTokenTable> findAllByUserAndIsLoggedOut(User user, Boolean isLoggedOut);
+    Optional<List<AccessTokenTable>> findAllByUserAndIsLoggedOut(User user, Boolean isLoggedOut);
 
 }
