@@ -40,9 +40,9 @@ export async function refreshRequestToken(){
 }
 
 export async  function refreshToken(){
-    return await permittedEndPoints.put("/refresh/token");
+    return await (permittedEndPoints.put("/refresh/token"));
 }
 
 export async function getPasswords(userId){
-    return await  secureEndpoints.get(`/get/${userId}`);
+    return await (secureEndpoints.get(`/get/${userId}`));
 }
