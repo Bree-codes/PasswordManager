@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: start;
-   /* margin-top: 20px;*/
+
 }
 
 .login-form{
@@ -22,9 +22,10 @@
     height: 100%;
     align-items: center;
 }
-button{
+#submit {
     margin-top: 20px;
-    padding: 0;
+    background-color: grey;
+    border-color: grey;
 }
 .name,  .password {
     margin: 15px;
