@@ -9,7 +9,6 @@ const PasswordsPage = () => {
     const [webSiteUsername, setWebSiteUsername] = useState("steve");
     const [webSitePassword, setWebSitePassword] = useState("muish!");
 
-
     useEffect(() => {
         console.log("making get password call.")
         getPasswords().then((response) => {
