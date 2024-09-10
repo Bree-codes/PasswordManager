@@ -6,9 +6,12 @@ import com.bughunters.code.passwordmanagerwebapplication.models.ProfileResponse;
 import com.bughunters.code.passwordmanagerwebapplication.models.ProfilesFromFront;
 import com.bughunters.code.passwordmanagerwebapplication.repository.UserRepository;
 import com.bughunters.code.passwordmanagerwebapplication.service.UserProfileService;
+import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Base64;
 
 @RestController
 @RequestMapping("/api/password-manager/")
@@ -25,6 +28,7 @@ public class ProfilesController {
     @PutMapping("/profiles")
     public ResponseEntity<ProfileResponse> updateProfile(@RequestBody ProfilesFromFront profilesFromFront,
                                                          @AuthenticationPrincipal User user) {
+        // Update the profile
         ProfileResponse profileResponse = userProfileService.updateProfile(profilesFromFront, user);
         return ResponseEntity.ok(profileResponse);
     }
@@ -33,8 +37,8 @@ public class ProfilesController {
     public ResponseEntity<?> getUserProfile(@PathVariable Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
-        ProfileResponse userProfile = userProfileService.getUserProfile(user);
-        return ResponseEntity.ok(userProfile);
+
+        return ResponseEntity.ok(userProfileService.getUserProfile(user));
     }
 
     @DeleteMapping("/profiles/{userId}")

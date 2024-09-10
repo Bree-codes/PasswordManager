@@ -9,7 +9,6 @@ public class UserProfiles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long profileId;
-    @Lob
     private byte[] profileImage;
     private String firstName;
     private String lastName;
