@@ -5,7 +5,7 @@ import eye from "./../pics/eye-solid.svg"
 import {useEffect, useState} from "react";
 
 const PasswordView = ({websiteName, username, password, setUsername, setPassword}) => {
-    const [see, setSee] = useState(false);
+    const [see, setSee] = useState(true);
     const [passwordType, setPasswordType] = useState("");
     const [doEdit, setDoEdit] = useState(true);
     const [editUsername, setEditUsername] = useState("Username");
@@ -97,7 +97,6 @@ const PasswordView = ({websiteName, username, password, setUsername, setPassword
                     <Form.Group>
                         <Form.Label className={"password"} htmlFor={"Password"}>Password</Form.Label>
                         <div id={"password-view"}>
-
                             <Form.Control id={editPassword}  type={passwordType} disabled={doEdit} value={password}
                             onChange={(e) => setPassword(e.target.value)} />
 

@@ -1,5 +1,4 @@
 import "../styling/login.css"
-
 import {Alert, Button, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {login, } from "../DataSource/backendUtils";
@@ -24,11 +23,10 @@ export const    Login=()=>{
             sessionStorage.setItem("id", response.data.id);
             sessionStorage.setItem("isLoggedIn", "true");
 
-            navigate("/home");
+            navigate("/home/view/passwords");
 
         }).catch((error) => {
             setLoginError(error.response.data.message);
-            console.log(loginError);
         })
     }
 
@@ -36,7 +34,7 @@ export const    Login=()=>{
         if(loginError !== ""){
             setTimeout(() => {
                 setLoginError("")
-            }, 10000)
+            }, 4000)
         }
     }, [loginError]);
 
