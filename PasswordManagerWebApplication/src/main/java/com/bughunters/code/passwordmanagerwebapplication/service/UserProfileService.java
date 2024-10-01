@@ -60,8 +60,9 @@ public class UserProfileService {
                 throw new ProfileNotFoundException("User profile not found");
             }
 
+            log.info("getting the profile for userId :{}",user.getId());
             ProfileResponse profileResponse = new ProfileResponse();
-            profileResponse.setEmail(user.getEmail()); // Assuming email is part of the User entity
+            profileResponse.setEmail(user.getEmail());
             profileResponse.setProfileImage(userProfile.getProfileImage());
             profileResponse.setFirstName(userProfile.getFirstName());
             profileResponse.setLastName(userProfile.getLastName());

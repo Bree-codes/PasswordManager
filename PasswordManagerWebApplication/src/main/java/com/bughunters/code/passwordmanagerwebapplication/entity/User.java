@@ -63,7 +63,7 @@ public class User implements UserDetails {
         if (this.userProfiles == null) {
             this.userProfiles = new UserProfiles();
             this.userProfiles.setProfileImage(null);
-            //this.userProfiles.setUserId(this.id);
+            this.userProfiles.setUser(this);
             this.userProfiles.setFirstName("Default");
             this.userProfiles.setLastName("Name");
 
